@@ -21,12 +21,12 @@ const firstSection = [
     {
         icon: VideoIcon,
         label: "Meeting",
-        href: "/dashboard/meeting",
+        href: "/meeting",
     },
     {
         icon: BotIcon,
         label: "Agent",
-        href: "/dashboard/agent",
+        href: "/agents",
     },
 ];
 
