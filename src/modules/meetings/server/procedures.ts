@@ -13,9 +13,15 @@ export const meetingRouter = createTRPCRouter({
     getOne: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ input, ctx }) => {
         try {
             const [existingMeeting] = await db
-                .select({ ...getTableColumns(meeting) })
-                .from(meeting)
-                .where(and(eq(meeting.id, input.id), eq(meeting.userId, ctx.auth.user.id)));
+                .select({
+                    ...getTableColumns(meeting),
+                    agent: agents,
+                    duration: sql<number>`EXTRACT(EPOCH FROM (ended_at - started_at))`.as('duration'),
+                })
+                .from(meeting).innerJoin(
+                    agents,
+                    eq(meeting.agentId, agents.id)
+                ).where(and(eq(meeting.id, input.id), eq(meeting.userId, ctx.auth.user.id)));
 
             if (!existingMeeting) {
                 throw new TRPCError({
@@ -147,5 +153,26 @@ export const meetingRouter = createTRPCRouter({
                 message: 'An unknown error occurred',
             });
         }
+    }),
+     remove: protectedProcedure.input(z.object({ id: z.string() })).mutation(async ({ input, ctx }) => {
+        try {
+            const [deletedMeeting] = await db.delete(meeting).where(and(eq(meeting.id, input.id), eq(meeting.userId, ctx.auth.user.id))).returning();
+            if (!deletedMeeting) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: 'Meeting not found',
+                });
+            }
+            return deletedMeeting;
+        } catch (error) {
+            if (error instanceof TRPCError) {
+                throw error;
+            }
+            throw new TRPCError({
+                code: 'INTERNAL_SERVER_ERROR',
+                message: 'An unknown error occurred',
+            });
+        }
+
     }),
 })
