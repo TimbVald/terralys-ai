@@ -4,3 +4,11 @@ import { inferRouterOutputs } from "@trpc/server";
 
 export type MeetingGetOne = inferRouterOutputs<AppRouter>["meeting"]["getOne"];
 export type MeetingGetMany = inferRouterOutputs<AppRouter>["meeting"]["getMany"]["items"];
+
+export enum MeetingStatus {
+    Upcoming = "upcoming",
+    Active= "active",
+    Completed = "completed",
+    Processing = "processing",
+    Cancelled = "cancelled",
+}
