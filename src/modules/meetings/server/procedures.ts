@@ -6,6 +6,7 @@ import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
+import { meetingInsertSchema, meetingUpdateSchema } from "../schema";
 
 export const meetingRouter = createTRPCRouter({
     getOne: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ input, ctx }) => {
@@ -75,6 +76,48 @@ export const meetingRouter = createTRPCRouter({
                 total: total.count,
                 totalPages,
             };
+        } catch (error) {
+            if (error instanceof TRPCError) {
+                throw error;
+            }
+            throw new TRPCError({
+                code: 'INTERNAL_SERVER_ERROR',
+                message: 'An unknown error occurred',
+            });
+        }
+    }),
+
+     create: protectedProcedure.input(meetingInsertSchema).mutation(async ({ input, ctx }) => {
+        try {
+            const [createdMeeting] = await db.insert(meeting).values({
+                ...input,
+                userId: ctx.auth.user.id,
+            }).returning();
+            
+            return createdMeeting;
+
+        } catch (error) {
+            if (error instanceof TRPCError) {
+                throw error;
+            }
+            throw new TRPCError({
+                code: 'INTERNAL_SERVER_ERROR',
+                message: 'An unknown error occurred',
+            });
+        }
+    }),
+
+     update: protectedProcedure.input(meetingUpdateSchema).mutation(async ({ input, ctx }) => {
+        try {
+            const [updatedMeeting] = await db.update(meeting).set(input).where(and(eq(meeting.id, input.id), eq(meeting.userId, ctx.auth.user.id))).returning();
+            
+            if (!updatedMeeting) {
+                throw new TRPCError({
+                    code: 'NOT_FOUND',
+                    message: 'Meeting not found',
+                });
+            }
+            return updatedMeeting;
         } catch (error) {
             if (error instanceof TRPCError) {
                 throw error;

@@ -16,6 +16,7 @@ interface Props {
 
 const AgentPage = async ({searchParams}: Props) => {
     const filters = await loadSearchParams(searchParams);
+    
     const session = await auth.api.getSession({
         headers: await headers(),
     });
