@@ -14,9 +14,17 @@ interface Props {
 export default async function Page({params}: Props) {
     const {meetingId} = await params;
 
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
+    let session;
+    try {
+        session = await auth.api.getSession({
+            headers: await headers(),
+        });
+    } catch (error) {
+        // Handle database connection errors gracefully
+        console.error('Database connection error in meeting page:', error);
+        // Redirect to sign-in if we can't verify session due to DB issues
+        redirect('/sign-in');
+    }
 
     if (!session) {
         redirect('/sign-in');
@@ -37,4 +45,4 @@ export default async function Page({params}: Props) {
         </HydrationBoundary>
     )
 
-} 
+}

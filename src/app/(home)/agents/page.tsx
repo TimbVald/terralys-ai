@@ -17,9 +17,17 @@ interface Props {
 const AgentPage = async ({searchParams}: Props) => {
     const filters = await loadSearchParams(searchParams);
     
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
+    let session;
+    try {
+        session = await auth.api.getSession({
+            headers: await headers(),
+        });
+    } catch (error) {
+        // Handle database connection errors gracefully
+        console.error('Database connection error in agents page:', error);
+        // Redirect to sign-in if we can't verify session due to DB issues
+        redirect('/sign-in');
+    }
 
     if (!session) {
         redirect('/sign-in');

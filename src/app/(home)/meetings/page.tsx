@@ -17,13 +17,21 @@ interface Props {
 const MeetingPage = async ({searchParams}: Props) => {
   const filters = await loadSearchParams(searchParams);
 
-  const session = await auth.api.getSession({
-        headers: await headers(),
+  let session;
+  try {
+    session = await auth.api.getSession({
+      headers: await headers(),
     });
+  } catch (error) {
+    // Handle database connection errors gracefully
+    console.error('Database connection error in meetings page:', error);
+    // Redirect to sign-in if we can't verify session due to DB issues
+    redirect('/sign-in');
+  }
 
-    if (!session) {
-        redirect('/sign-in');
-    }
+  if (!session) {
+    redirect('/sign-in');
+  }
 
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(trpc.meeting.getMany.queryOptions({

@@ -24,11 +24,24 @@ export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
 
 export const protectedProcedure = baseProcedure.use(async ({ctx, next}) => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  })
-  if (!session) {
-    throw new TRPCError({code: 'UNAUTHORIZED'})
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    })
+    if (!session) {
+      throw new TRPCError({code: 'UNAUTHORIZED'})
+    }
+    return next({ctx: {...ctx, auth: session}})
+  } catch (error) {
+    // Handle database connection errors
+    if (error instanceof Error && error.message.includes('Connect Timeout Error')) {
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Database connection timeout. Please try again.',
+        cause: error
+      })
+    }
+    // Re-throw other errors
+    throw error
   }
-  return next({ctx: {...ctx, auth: session}})
 })

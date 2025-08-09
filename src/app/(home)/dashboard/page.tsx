@@ -6,9 +6,17 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 const HomePage = async () => {
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
+    let session;
+    try {
+        session = await auth.api.getSession({
+            headers: await headers(),
+        });
+    } catch (error) {
+        // Handle database connection errors gracefully
+        console.error('Database connection error in dashboard page:', error);
+        // Redirect to sign-in if we can't verify session due to DB issues
+        redirect('/sign-in');
+    }
 
     if (!session) {
         redirect('/sign-in');
