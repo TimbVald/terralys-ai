@@ -137,10 +137,10 @@ const SignInView = () => {
                                 </div>
                                 <div className='grid grid-cols-2 gap-4'>
                                     <Button onClick={() => onSocial("google")} variant='outline' type='button' className='w-full' disabled={pending}>
-                                        {pending ? <Loader2 className='animate-spin' /> : 'Google'}
+                                        Google
                                     </Button>
                                     <Button onClick={() => onSocial("github")} variant='outline' type='button' className='w-full' disabled={pending}>
-                                        {pending ? <Loader2 className='animate-spin' /> : 'GitHub'}
+                                        GitHub
                                     </Button>
                                 </div>
                                 <div className='text-center text-sm'>

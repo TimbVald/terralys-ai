@@ -117,11 +117,17 @@ export const meetingRouter = createTRPCRouter({
 
     create: protectedProcedure.input(meetingInsertSchema).mutation(async ({ input, ctx }) => {
         try {
+            console.log('Creating meeting with input:', input);
+            console.log('User ID:', ctx.auth.user.id);
+            
             const [createdMeeting] = await db.insert(meeting).values({
                 ...input,
                 userId: ctx.auth.user.id,
             }).returning();
+            
+            console.log('Meeting created in DB:', createdMeeting);
 
+            console.log('Creating Stream Video call...');
             const call = streamVideo.video.call("default", createdMeeting.id);
             await call.create({
                 data: {
@@ -143,8 +149,11 @@ export const meetingRouter = createTRPCRouter({
                     }
                 }
             });
+            
+            console.log('Stream Video call created successfully');
 
             const [existingAgent] = await db.select().from(agents).where(eq(agents.id, createdMeeting.agentId));
+            console.log('Found agent:', existingAgent);
 
             if (!existingAgent) {
                 throw new TRPCError({
@@ -153,6 +162,7 @@ export const meetingRouter = createTRPCRouter({
                 });
             }
 
+            console.log('Upserting user in Stream Video...');
             await streamVideo.upsertUsers([{
                 id: existingAgent.id,
                 name: existingAgent.name,
@@ -162,16 +172,20 @@ export const meetingRouter = createTRPCRouter({
                     variant: "botttsNeutral",
                 }),
             }]);
+            
+            console.log('User upserted successfully');
+            console.log('Meeting creation completed:', createdMeeting);
 
             return createdMeeting;
 
         } catch (error) {
+            console.error('Error in meeting.create:', error);
             if (error instanceof TRPCError) {
                 throw error;
             }
             throw new TRPCError({
                 code: 'INTERNAL_SERVER_ERROR',
-                message: 'An unknown error occurred',
+                message: 'An unknown error occurred: ' + (error as Error).message,
             });
         }
     }),

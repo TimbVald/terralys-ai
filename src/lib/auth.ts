@@ -18,6 +18,10 @@ export const auth = betterAuth({
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string, 
         }, 
     },
+    trustedOrigins: [
+        "http://localhost:3000",
+        "https://enormous-shiner-crack.ngrok-free.app"
+    ],
     database: drizzleAdapter(db, {
         provider: "pg", // or "mysql", "sqlite"
         schema: {

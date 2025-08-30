@@ -13,10 +13,26 @@ export const CallUI = ({meetingName}: Props) => {
     const [show, setShow] = useState<"lobby" | "call" | "ended">("lobby");
 
     const handleJoin = async () => {
-        if (!call) return;
+        if (!call) {
+            console.error('Aucun appel disponible pour rejoindre');
+            return;
+        }
 
-        await call.join();
-        setShow("call");
+        try {
+            console.log('Tentative de connexion à l\'appel:', call.id);
+            await call.join();
+            console.log('Connexion à l\'appel réussie');
+            setShow("call");
+        } catch (error) {
+            console.error('Erreur lors de la connexion à l\'appel:', {
+                error,
+                callId: call.id,
+                callState: call.state,
+                message: error instanceof Error ? error.message : 'Erreur inconnue'
+            });
+            // Optionnel: afficher un message d'erreur à l'utilisateur
+            alert('Impossible de rejoindre l\'appel. Vérifiez votre connexion et réessayez.');
+        }
     };
 
     const handleLeave = () => {
