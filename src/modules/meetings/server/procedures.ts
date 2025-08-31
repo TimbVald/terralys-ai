@@ -138,7 +138,7 @@ export const meetingRouter = createTRPCRouter({
                     },
                     settings_override: {
                         transcription: {
-                            language: "fr",
+                            language: "en",
                             mode: "auto-on",
                             closed_caption_mode: "auto-on",
                         },
