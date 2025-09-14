@@ -114,8 +114,8 @@ export const NavUser = () => {
                             <DropdownMenuItem className="cursor-pointer">
                                 <BadgeCheck />
                                 Account
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            </DropdownMenuItem >
+                            <DropdownMenuItem className="cursor-pointer" onClick={() => authClient.customer.portal()}>
                                 <CreditCard />
                                 Billing
                             </DropdownMenuItem>

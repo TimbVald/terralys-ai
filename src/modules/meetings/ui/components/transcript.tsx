@@ -15,7 +15,7 @@ interface Props {
 
 export const Transcript = ({ meetingId }: Props) => {
     const trpc = useTRPC()
-    const { data } = useQuery(trpc.meeting.getTranscript.queryOptions({ meetingId }))
+    const { data } = useQuery(trpc.meeting.getTranscript.queryOptions({ id: meetingId }))
 
     const [searchQuery, setSearchQuery] = useState('')
     const filteredData = (data ?? []).filter((item) => item.text.toString().toLowerCase().includes(searchQuery.toLowerCase()))

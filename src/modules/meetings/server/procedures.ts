@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { baseProcedure, createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import { } from "@trpc/client";
 import { agents, meeting, user } from "@/db/schema";
 import { and, count, desc, eq, getTableColumns, ilike, inArray, sql } from "drizzle-orm";
@@ -117,7 +117,7 @@ export const meetingRouter = createTRPCRouter({
         }
     }),
 
-    create: protectedProcedure.input(meetingInsertSchema).mutation(async ({ input, ctx }) => {
+    create: premiumProcedure("meetings").input(meetingInsertSchema).mutation(async ({ input, ctx }) => {
         try {
             console.log('Creating meeting with input:', input);
             console.log('User ID:', ctx.auth.user.id);
@@ -258,10 +258,10 @@ export const meetingRouter = createTRPCRouter({
         return token;
     }),
 
-    getTranscript: protectedProcedure.input(z.object({ meetingId: z.string() })).query(async ({ input, ctx }) => {
+    getTranscript: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ input, ctx }) => {
         const [existingMeeting] = await db.select()
             .from(meeting)
-            .where(and(eq(meeting.id, input.meetingId), eq(meeting.userId, ctx.auth.user.id)));
+            .where(and(eq(meeting.id, input.id), eq(meeting.userId, ctx.auth.user.id)));
 
         if (!existingMeeting) {
             throw new TRPCError({

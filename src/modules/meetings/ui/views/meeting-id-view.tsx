@@ -31,8 +31,11 @@ export const MeetingIdView = ({ meetingId }: Props) => {
      const [updateMeetingDialogOpen, setUpdateMeetingDialogOpen] = useState(false);
 
      const removeMeeting = useMutation(trpc.meeting.remove.mutationOptions({
-        onSuccess: () => {
-            queryClient.invalidateQueries(trpc.meeting.getMany.queryOptions({}));
+        onSuccess: async () => {
+            await queryClient.invalidateQueries(trpc.meeting.getMany.queryOptions({}));
+            await queryClient.invalidateQueries(
+                    trpc.premium.getFreeUsage.queryOptions(),
+                );
             router.push("/meetings");
         },
         onError: (error) => {

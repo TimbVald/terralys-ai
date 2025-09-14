@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NavUser } from './dashboard-user-button';
+import { DashboardTrial } from './dashboard-trial';
 
 // const data = {
 //   user: {
@@ -34,7 +35,7 @@ const secondSection = [
     {
         icon: StarIcon,
         label: "Upgrade",
-        href: "/dashboard/upgrade",
+        href: "/upgrade",
     },
 ];
 
@@ -93,6 +94,7 @@ export const DashboardSidebar = () => {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter className='text-white'>
+                <DashboardTrial />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
