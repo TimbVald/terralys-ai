@@ -10,6 +10,9 @@ import { redirect } from 'next/navigation';
 import type { SearchParams } from 'nuqs';
 import { loadSearchParams } from '@/modules/agents/params';
 
+// Force dynamic rendering due to headers usage
+export const dynamic = 'force-dynamic';
+
 interface Props {
     searchParams: Promise<SearchParams>;
 }

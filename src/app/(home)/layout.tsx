@@ -1,6 +1,6 @@
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { DashboardSidebar } from '@/modules/dashboard/ui/components/dashboard-sidebar'
-import React from 'react'
+
 
 import { DashboarNavbar as DashboardNavbar } from '@/modules/dashboard/ui/components/dashboard-navbar'
 

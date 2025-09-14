@@ -1,6 +1,6 @@
 "use client"
 
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { LoadingState } from "@/components/loading-state";
 import { ErrorState } from "@/components/error-state";
@@ -32,7 +32,7 @@ export const MeetingsView = () => {
             onPageChange={(page) => setFilters({page})}
             />
             {data.items.length === 0 && (
-            <EmptyState title="Create your first meeting" description="Shedule a meeting to connect with others. Each meeting let's you collaborate, share ideas, and interact with participants in real-time." />
+            <EmptyState title="Create your first meeting" description="Schedule a meeting to connect with others. Each meeting lets you collaborate, share ideas, and interact with participants in real-time." />
            )}
         </div>
     )

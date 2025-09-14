@@ -10,6 +10,9 @@ import { SearchParams } from 'nuqs/server';
 import React, { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary';
 
+// Force dynamic rendering due to headers usage
+export const dynamic = 'force-dynamic';
+
 interface Props {
     searchParams: Promise<SearchParams>;
 }

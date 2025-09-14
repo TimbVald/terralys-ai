@@ -1,9 +1,11 @@
 
-import React from 'react'
 import { HomeView } from '@/modules/dashboard/ui/views/home-view';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+// Force dynamic rendering due to headers usage
+export const dynamic = 'force-dynamic';
 
 const HomePage = async () => {
     let session;

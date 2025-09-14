@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { baseProcedure, createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
+import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import { } from "@trpc/client";
 import { agents, meeting, user } from "@/db/schema";
 import { and, count, desc, eq, getTableColumns, ilike, inArray, sql } from "drizzle-orm";

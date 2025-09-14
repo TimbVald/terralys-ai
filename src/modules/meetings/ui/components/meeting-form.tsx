@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -163,7 +163,7 @@ export const MeetingForm = ({
                                 />
                             </FormControl>
                             <FormDescription>
-                                Not founud what you're looking for ? {" "}
+                                Not found what you're looking for? {" "}
                                 <button type="button" className="text-primary hover:underline" onClick={() => setOpenNewAgentDialog(true)}>
                                     Create new agent
                                 </button>

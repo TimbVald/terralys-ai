@@ -25,7 +25,6 @@ export const CommandSelect = ({
     onSearch,
     value,
     placeholder = "Select an option",
-    isSearchable,
     className,
 }: Props) => {
     const [open, setOpen] = useState(false);

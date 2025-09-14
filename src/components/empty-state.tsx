@@ -1,4 +1,3 @@
-import { AlertCircleIcon, Loader2Icon } from "lucide-react";
 import Image from "next/image"
 
 interface props {
