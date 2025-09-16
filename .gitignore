@@ -19,7 +19,7 @@
 
 # production
 /build
-
+/docs
 /test
 /scripts
 
