@@ -145,54 +145,53 @@ export default function AppHero() {
   };
  
   return (
-    <section className="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-black py-16 text-white sm:px-6 lg:px-8 lg:py-2">
-      <div className="absolute inset-0 z-0 h-full w-full rotate-180 items-center px-5 py-24 opacity-80 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
+    <section className="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 py-16 text-white sm:px-6 lg:px-8 lg:py-2">
+      {/* Fond principal avec gradient moderne */}
+      <div className="absolute inset-0 z-0 h-full w-full opacity-90">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-slate-950/80 to-black"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-indigo-600/15 via-transparent to-transparent"></div>
+      </div>
+
+      {/* Effet de bruit subtil */}
       <svg
-        id="noice"
-        className="absolute inset-0 z-10 h-full w-full opacity-30"
+        id="noise"
+        className="absolute inset-0 z-10 h-full w-full opacity-20"
       >
         <filter id="noise-filter">
           <feTurbulence
             type="fractalNoise"
-            baseFrequency="1.34"
-            numOctaves="4"
+            baseFrequency="0.8"
+            numOctaves="3"
             stitchTiles="stitch"
           ></feTurbulence>
           <feColorMatrix type="saturate" values="0"></feColorMatrix>
           <feComponentTransfer>
-            <feFuncR type="linear" slope="0.46"></feFuncR>
-            <feFuncG type="linear" slope="0.46"></feFuncG>
-            <feFuncB type="linear" slope="0.47"></feFuncB>
-            <feFuncA type="linear" slope="0.37"></feFuncA>
-          </feComponentTransfer>
-          <feComponentTransfer>
-            <feFuncR type="linear" slope="1.47" intercept="-0.23" />
-            <feFuncG type="linear" slope="1.47" intercept="-0.23" />
-            <feFuncB type="linear" slope="1.47" intercept="-0.23" />
+            <feFuncR type="linear" slope="0.3"></feFuncR>
+            <feFuncG type="linear" slope="0.3"></feFuncG>
+            <feFuncB type="linear" slope="0.35"></feFuncB>
+            <feFuncA type="linear" slope="0.25"></feFuncA>
           </feComponentTransfer>
         </filter>
         <rect width="100%" height="100%" filter="url(#noise-filter)"></rect>
       </svg>
-      {/* Background effects */}
+
+      {/* Effets de fond améliorés */}
       <div className="absolute inset-0 z-0">
-        {/* Radial gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/30 via-black/70 to-gray-950 blur-3xl"></div>
- 
-        {/* Grid pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+        {/* Grille moderne */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div className="h-full w-full bg-[linear-gradient(to_right,rgba(59,130,246,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.3)_1px,transparent_1px)] bg-[size:6rem_6rem]"></div>
         </div>
  
-        {/* Enhanced glow spots */}
-        <div className="absolute -left-20 top-20 h-60 w-60 rounded-full bg-purple-600/20 blur-[100px]"></div>
-        <div className="absolute -right-20 bottom-20 h-60 w-60 rounded-full bg-blue-600/20 blur-[100px]"></div>
+        {/* Spots lumineux améliorés */}
+        <div className="absolute -left-32 top-20 h-80 w-80 rounded-full bg-blue-500/10 blur-[120px]"></div>
+        <div className="absolute -right-32 bottom-20 h-80 w-80 rounded-full bg-indigo-500/10 blur-[120px]"></div>
         <motion.div
           animate={glowAnimation}
-          className="absolute left-1/4 top-1/3 h-40 w-40 rounded-full bg-indigo-500/10 blur-[80px]"
+          className="absolute left-1/4 top-1/3 h-60 w-60 rounded-full bg-blue-400/8 blur-[100px]"
         ></motion.div>
         <motion.div
           animate={glowAnimation}
-          className="absolute bottom-1/3 right-1/4 h-40 w-40 rounded-full bg-purple-500/10 blur-[80px]"
+          className="absolute bottom-1/3 right-1/4 h-60 w-60 rounded-full bg-indigo-400/8 blur-[100px]"
         ></motion.div>
  
         {/* Particle effects - subtle dots */}
@@ -249,36 +248,36 @@ export default function AppHero() {
         />
         <motion.div
           variants={tooltipVariants}
-          className="absolute -left-4 top-4 rounded-lg border border-purple-500/30 bg-black/80 p-2 backdrop-blur-md lg:-left-20 lg:top-1/4"
+          className="absolute -left-4 top-4 rounded-lg border border-blue-500/30 bg-black/80 p-2 backdrop-blur-md lg:-left-20 lg:top-1/4"
         >
           <div className="flex items-center gap-2">
-            <Zap className="h-4 w-4 text-purple-400" />
-            <span className="text-xs font-medium text-purple-200">
-              Maintenance Préventive
-            </span>
-          </div>
-        </motion.div>
- 
-        <motion.div
-          variants={tooltipVariants}
-          className="absolute -right-4 top-1/2 rounded-lg border border-blue-500/30 bg-black/80 p-2 backdrop-blur-md lg:-right-24"
-        >
-          <div className="flex items-center gap-2">
-            <Database className="h-4 w-4 text-blue-400" />
+            <Video className="h-4 w-4 text-blue-400" />
             <span className="text-xs font-medium text-blue-200">
-              Gestion des Stocks
+              Enregistrement Auto
             </span>
           </div>
         </motion.div>
  
         <motion.div
           variants={tooltipVariants}
-          className="absolute bottom-4 left-4 rounded-lg border border-indigo-500/30 bg-black/80 p-2 backdrop-blur-md lg:bottom-1/4 lg:left-8"
+          className="absolute -right-4 top-1/2 rounded-lg border border-indigo-500/30 bg-black/80 p-2 backdrop-blur-md lg:-right-24"
         >
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-indigo-400" />
+            <Bot className="h-4 w-4 text-indigo-400" />
             <span className="text-xs font-medium text-indigo-200">
-              IA & Analytics
+              Agents IA Personnalisés
+            </span>
+          </div>
+        </motion.div>
+ 
+        <motion.div
+          variants={tooltipVariants}
+          className="absolute bottom-4 left-4 rounded-lg border border-purple-500/30 bg-black/80 p-2 backdrop-blur-md lg:bottom-1/4 lg:left-8"
+        >
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-purple-400" />
+            <span className="text-xs font-medium text-purple-200">
+              Transcription IA
             </span>
           </div>
         </motion.div>
@@ -295,22 +294,22 @@ export default function AppHero() {
           <div className="w-full lg:w-auto">
             <motion.div
               variants={itemVariants}
-              className="mb-4 inline-flex items-center rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-sm text-purple-300"
+              className="mb-6 inline-flex items-center rounded-full border border-blue-500/30 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 px-4 py-2 text-sm text-blue-300 backdrop-blur-sm"
             >
-              <Bot className="mr-2 h-3 w-3" />
-              <span className="mr-2 rounded-full bg-purple-500 px-2 py-0.5 text-xs font-semibold text-white">
-                Nouveau
+              <Sparkles className="mr-2 h-4 w-4 text-blue-400" />
+              <span className="mr-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
+                IA Avancée
               </span>
-              IA Terralys pour l'analyse de meetings
+              Plateforme TerraLys - Meetings Intelligents
             </motion.div>
  
             <motion.h1
               variants={itemVariants}
-              className="mb-6 bg-gradient-to-r from-white/70 via-white to-slate-500/80 bg-clip-text text-3xl leading-tight text-transparent sm:text-4xl md:text-5xl lg:text-6xl"
+              className="mb-8 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-4xl font-bold leading-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl"
             >
-              Révolutionnez vos <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Meetings avec l'IA
+              Transformez vos <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                Réunions en Insights
               </span>
             </motion.h1>
  
@@ -386,43 +385,43 @@ export default function AppHero() {
               className="mb-8 flex flex-col flex-wrap gap-4 sm:flex-row lg:justify-end"
             >
               <Button
-                className="group rounded-full border-t border-purple-400 bg-gradient-to-b from-purple-700 to-slate-950/80 px-6 py-6 text-white shadow-lg shadow-purple-600/20 transition-all hover:shadow-purple-600/40"
+                className="group rounded-xl border border-blue-400/50 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 px-8 py-4 text-white shadow-xl shadow-blue-600/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/40"
                 size="lg"
               >
-                Commencer Gratuitement
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                Démarrer Gratuitement
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>
  
               <Button
                 variant="outline"
-                className="rounded-full border-purple-500/30 bg-transparent text-white hover:bg-purple-500/10 hover:text-white"
+                className="rounded-xl border-white/20 bg-white/5 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:border-white/30 hover:text-white"
                 size="lg"
               >
-                <Video className="mr-2 h-4 w-4" />
+                <Video className="mr-2 h-5 w-5" />
                 Voir la Démo
               </Button>
             </motion.div>
  
-            {/* Social proof */}
+            {/* Preuve sociale */}
             <motion.div
               variants={itemVariants}
-              className="mx-auto flex items-center gap-3 rounded-full border border-slate-800 bg-slate-900/50 px-3 py-1 backdrop-blur-sm lg:mx-0 lg:ml-auto"
+              className="mx-auto flex items-center gap-3 rounded-xl border border-blue-500/20 bg-gradient-to-r from-blue-950/50 to-indigo-950/50 px-4 py-2 backdrop-blur-sm lg:mx-0 lg:ml-auto"
             >
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="h-6 w-6 overflow-hidden rounded-full border-2 border-slate-900 bg-slate-800"
+                    className="h-7 w-7 overflow-hidden rounded-full border-2 border-blue-400/30 bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg"
                   >
-                    <div className="h-full w-full bg-gradient-to-br from-purple-500 to-blue-600 opacity-80"></div>
+                    <div className="h-full w-full bg-gradient-to-br from-blue-400 to-indigo-500 opacity-90"></div>
                   </div>
                 ))}
               </div>
-              <span className="text-xs text-slate-300">
-                <span className="font-semibold text-white">500+</span>{' '}
-                équipes utilisent TerraLys
+              <span className="text-sm text-blue-100">
+                <span className="font-bold text-white">1000+</span>{' '}
+                entreprises font confiance à TerraLys
               </span>
-              <ArrowUpRight className="h-3 w-3 text-purple-400" />
+              <ArrowUpRight className="h-4 w-4 text-blue-400" />
             </motion.div>
           </div>
         </motion.div>

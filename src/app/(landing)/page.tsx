@@ -16,8 +16,8 @@ const Pricing = dynamic(() => import('@/components/landing/pricing'));
 const Contact = dynamic(() => import('@/components/landing/contact'));
 
 export const metadata: Metadata = {
-  title: "Machine Care - Accueil",
-  description: "Ceci est la page d'accueil de Machine Care",
+  title: "Terralys AI - Accueil",
+  description: "Ceci est la page d'accueil de Terralys",
 };
 
 export default function Homepage() {
