@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import type { AnalysisRecord } from '../types';
 import { BugIcon, ShieldIcon } from './icons';
+import { usePDFExport } from '../../../hooks/use-pdf-export';
+import { Download, FileText, Loader2 } from 'lucide-react';
+import '../../../styles/pdf-export.css';
 
 /**
  * Interface pour les props du composant PredictionResult
@@ -19,6 +22,9 @@ interface PredictionResultProps {
 export function PredictionResult({ result, className = ''}: PredictionResultProps) {
   const [aiInstruction, setAiInstruction] = useState<string>('');
   const [isLoadingInstruction, setIsLoadingInstruction] = useState(true);
+  
+  // Hook pour l'exportation PDF
+  const { isExporting, exportToPDF, error: exportError } = usePDFExport();
 
   // Génération de l'instruction par défaut dynamique
   useEffect(() => {
@@ -46,6 +52,19 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
     generateDefaultInstruction();
   }, [result]);
+
+  // Fonction pour gérer l'exportation PDF
+  const handleExportPDF = async () => {
+    const timestamp = new Date().toISOString().slice(0, 10);
+    const plantName = result.plantName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+    const filename = `analyse-${plantName}-${timestamp}.pdf`;
+    
+    await exportToPDF('prediction-result-content', {
+      filename,
+      quality: 0.95,
+      scale: 2
+    });
+  };
 
   console.log('🎨 [DEBUG] PredictionResult - Composant rendu avec:', result);
   console.log('🎨 [DEBUG] PredictionResult - Props reçues:', { result, className});
@@ -85,7 +104,33 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
   };
 
   return (
-    <div className={`bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl border border-gray-200 overflow-hidden backdrop-blur-sm ${className}`}>
+    <div className={`relative bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl border border-gray-200 overflow-hidden backdrop-blur-sm ${className}`}>
+      {/* Bouton d'exportation PDF */}
+      <div className="absolute top-4 right-4 z-10 pdf-export-button">
+        <button
+          onClick={handleExportPDF}
+          disabled={isExporting}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl disabled:cursor-not-allowed"
+          title="Exporter en PDF"
+        >
+          {isExporting ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <Download className="w-4 h-4" />
+          )}
+          <span className="text-sm font-medium">
+            {isExporting ? 'Export...' : 'PDF'}
+          </span>
+        </button>
+        {exportError && (
+          <div className="absolute top-full right-0 mt-2 p-2 bg-red-100 border border-red-200 text-red-700 text-xs rounded-lg shadow-lg max-w-xs">
+            {exportError}
+          </div>
+        )}
+      </div>
+
+      {/* Contenu principal avec ID pour l'exportation */}
+      <div id="prediction-result-content">
       {/* Aperçu de l'image analysée */}
       {result.imageUrl && (
         <div className="relative bg-gradient-to-br from-emerald-50 via-teal-50 to-blue-50 p-8 border-b border-gray-200">
@@ -231,24 +276,22 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
                       🌱
                     </span>
                     <div className="flex-1">
-                      <h5 className="font-semibold text-gray-800 mb-2">{nutrient.name}</h5>
-                      <p className="text-gray-700 mb-3 leading-relaxed">{nutrient.description}</p>
-
+                      <h5 className="font-semibold text-gray-800 mb-2">{nutrient.nutrient}</h5>
+                      
                       <div className="space-y-3">
                         <div className="p-3 bg-white rounded-lg border border-yellow-200">
-                          <h6 className="font-medium text-gray-800 mb-1">Symptômes de carence :</h6>
-                          <p className="text-gray-700 text-sm">{nutrient.deficiencySymptoms}</p>
+                          <h6 className="font-medium text-gray-800 mb-1">Symptômes observés :</h6>
+                          <p className="text-gray-700 text-sm">{nutrient.symptoms}</p>
                         </div>
 
                         <div className="p-3 bg-white rounded-lg border border-yellow-200">
-                          <h6 className="font-medium text-gray-800 mb-2">Sources recommandées :</h6>
-                          <div className="flex flex-wrap gap-2">
-                            {nutrient.sources.map((source, sourceIndex) => (
-                              <span key={sourceIndex} className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
-                                {source}
-                              </span>
-                            ))}
-                          </div>
+                          <h6 className="font-medium text-gray-800 mb-1">Correction recommandée :</h6>
+                          <p className="text-gray-700 text-sm">{nutrient.correction}</p>
+                        </div>
+
+                        <div className="p-3 bg-white rounded-lg border border-yellow-200">
+                          <h6 className="font-medium text-gray-800 mb-1">Délai de récupération :</h6>
+                          <p className="text-gray-700 text-sm">{nutrient.timeline}</p>
                         </div>
                       </div>
                     </div>
@@ -596,6 +639,7 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
           )}
         </div>
       </div>
+      </div> {/* Fermeture de prediction-result-content */}
     </div>
   );
 }

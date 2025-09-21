@@ -10,10 +10,10 @@ export interface PestInfo {
 }
 
 export interface NutrientInfo {
-  name: string;
-  description: string;
-  deficiencySymptoms: string;
-  sources: string[];
+  nutrient: string;
+  symptoms: string;
+  correction: string;
+  timeline: string;
 }
 
 export interface EnvironmentalData {

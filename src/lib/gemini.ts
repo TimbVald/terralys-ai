@@ -19,10 +19,17 @@ export interface EnhancedAnalysisResponse {
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 let gemini: GoogleGenerativeAI | null = null;
 if (GEMINI_API_KEY) {
-  gemini = new GoogleGenerativeAI(GEMINI_API_KEY);
-  console.log("Service Gemini API configuré.");
+  try {
+    gemini = new GoogleGenerativeAI(GEMINI_API_KEY);
+    console.log("Service Gemini API configuré avec succès.");
+  } catch (error) {
+    console.error("Erreur lors de l'initialisation de Gemini:", error);
+    gemini = null;
+  }
 } else {
-  console.warn("GEMINI_API_KEY non trouvée. Le service Gemini est désactivé.");
+  console.warn("GEMINI_API_KEY non trouvée dans les variables d'environnement.");
+  console.warn("Veuillez ajouter votre clé API Gemini dans le fichier .env.local");
+  console.warn("Exemple: GEMINI_API_KEY=votre_cle_api_ici");
 }
 
 /**
@@ -34,120 +41,103 @@ export function isGeminiConfigured(): boolean {
 }
 
 /**
- * Construit un prompt dynamique en intégrant les données d'environnement
- * @param crop Le nom de la culture
- * @param disease Le nom de la maladie
- * @param confidence Le score de confiance
- * @param environmentalData Les données environnementales optionnelles
- * @returns Le prompt formaté
+ * Construit un prompt dynamique pour l'analyse des maladies des plantes
  */
-function buildPrompt(
-    crop: string, 
-    disease: string, 
-    confidence: number, 
-    environmentalData?: EnvironmentalData
-): string {
-    let prompt = `
-        En tant qu'expert phytopathologiste, fournis des recommandations complètes pour traiter la maladie "${disease}" affectant la culture "${crop}".
-        La confiance du diagnostic est de ${Math.round(confidence * 100)}%.
-    `;
+function buildPrompt(crop: string, disease: string, environmentalData?: EnvironmentalData): string {
+    const basePrompt = `
+Vous êtes un expert en phytopathologie, entomologie agricole et nutrition des plantes avec 20 ans d'expérience. Analysez cette situation phytosanitaire et fournissez des recommandations détaillées et scientifiquement fondées.
 
-    // Intégration des données environnementales
-    if (environmentalData) {
-        prompt += `\n\nConsidère le contexte environnemental suivant fourni par l'utilisateur :`;
-        
-        // Données de localisation
-        if (environmentalData.location) {
-            prompt += `
-            - Localisation : ${environmentalData.location}
-            - Utilise cette localisation pour inférer les conditions météorologiques locales, les parasites/maladies régionaux communs, et le type de sol. Intègre fortement ces facteurs dans ton diagnostic et tes recommandations.
-            `;
-        }
-        
-        // Données environnementales mesurées
-        const environmentalFactors = [];
-        if (environmentalData.temperature !== undefined) {
-            environmentalFactors.push(`Température : ${environmentalData.temperature}°C`);
-        }
-        if (environmentalData.humidity !== undefined) {
-            environmentalFactors.push(`Humidité : ${environmentalData.humidity}%`);
-        }
-        if (environmentalData.soilMoisture !== undefined) {
-            environmentalFactors.push(`Humidité du sol : ${environmentalData.soilMoisture}%`);
-        }
-        if (environmentalData.lightIntensity !== undefined) {
-            environmentalFactors.push(`Intensité lumineuse : ${environmentalData.lightIntensity} lux`);
-        }
-        if (environmentalData.phLevel !== undefined) {
-            environmentalFactors.push(`pH du sol : ${environmentalData.phLevel}`);
-        }
-        if (environmentalData.soilType) {
-            environmentalFactors.push(`Type de sol : ${environmentalData.soilType}`);
-        }
-        if (environmentalData.lastWatering) {
-            environmentalFactors.push(`Dernier arrosage : ${environmentalData.lastWatering}`);
-        }
-        if (environmentalData.fertilizer) {
-            environmentalFactors.push(`Engrais utilisé : ${environmentalData.fertilizer}`);
-        }
-        
-        if (environmentalFactors.length > 0) {
-            prompt += `\n\nFacteurs environnementaux mesurés :\n- ${environmentalFactors.join('\n- ')}`;
-        }
-        
-        // Informations supplémentaires de l'interface utilisateur
-        const additionalFactors = [];
-        if (environmentalData.sunlight) {
-            additionalFactors.push(`Exposition au soleil : ${environmentalData.sunlight}`);
-        }
-        if (environmentalData.watering) {
-            additionalFactors.push(`Fréquence d'arrosage : ${environmentalData.watering}`);
-        }
-        if (environmentalData.notes) {
-            additionalFactors.push(`Notes : ${environmentalData.notes}`);
-        }
-        if (environmentalData.additionalInfo) {
-            additionalFactors.push(`Informations supplémentaires : ${environmentalData.additionalInfo}`);
-        }
-        
-        if (additionalFactors.length > 0) {
-            prompt += `\n\nInformations complémentaires :\n- ${additionalFactors.join('\n- ')}`;
-        }
-        
-        // Préférence pour les solutions biologiques
-        if (environmentalData.organicPreference) {
-            prompt += `\n\nL'utilisateur préfère des solutions biologiques et durables. Priorise ces approches dans tes recommandations.`;
-        }
-        
-        prompt += `\n\nIntègre tous ces facteurs environnementaux dans ton analyse pour fournir des recommandations personnalisées et adaptées aux conditions spécifiques de la plante.`;
+**CONTEXTE D'ANALYSE :**
+- Culture analysée : ${crop}
+- Problème identifié : ${disease}`;
+
+    const environmentalSection = environmentalData ? `
+- Conditions environnementales actuelles :
+  * Température ambiante : ${environmentalData.temperature}°C
+  * Taux d'humidité relative : ${environmentalData.humidity}%
+  * pH du sol mesuré : ${environmentalData.phLevel}
+  * Type de substrat : ${environmentalData.soilType}
+  * Dernière fertilisation appliquée : ${environmentalData.fertilizer}
+  * Régime d'arrosage actuel : ${environmentalData.watering}` : '';
+
+    return `${basePrompt}${environmentalSection}
+
+**MISSION D'EXPERTISE :**
+Effectuez une analyse phytosanitaire complète en tenant compte des conditions environnementales spécifiques. Votre réponse doit être un JSON structuré et détaillé suivant EXACTEMENT ce format :
+
+{
+  "treatment": {
+    "immediate_actions": [
+      "Action urgente 1 avec justification technique",
+      "Action urgente 2 avec timing précis",
+      "Action urgente 3 avec méthode d'application"
+    ],
+    "treatment_options": {
+      "organic": [
+        "Solution biologique 1 : produit + dosage + fréquence",
+        "Solution biologique 2 : méthode naturelle + application",
+        "Solution biologique 3 : biocontrôle + conditions d'efficacité"
+      ],
+      "chemical": [
+        "Traitement chimique 1 : matière active + concentration + délai",
+        "Traitement chimique 2 : fongicide/insecticide + mode d'action",
+        "Traitement chimique 3 : systémique/contact + précautions"
+      ],
+      "cultural": [
+        "Pratique culturale 1 : modification environnementale + bénéfices",
+        "Pratique culturale 2 : ajustement technique + mise en œuvre",
+        "Pratique culturale 3 : prévention intégrée + suivi"
+      ]
+    },
+    "prevention_strategy": [
+      "Stratégie préventive 1 : méthode + période d'application",
+      "Stratégie préventive 2 : surveillance + indicateurs clés",
+      "Stratégie préventive 3 : rotation/résistance + planification"
+    ],
+    "monitoring_followup": [
+      "Suivi 1 : observation + fréquence + critères d'évaluation",
+      "Suivi 2 : mesures + outils + seuils d'intervention",
+      "Suivi 3 : ajustements + décisions + documentation"
+    ],
+    "expected_timeline": "Délai détaillé : amélioration visible en X jours, contrôle en Y semaines, résolution complète en Z mois avec conditions de réussite",
+    "confidence_level": "élevé/moyen/faible avec justification basée sur les données disponibles"
+  },
+  "pestIdentification": [
+    {
+      "name": "Nom scientifique et commun du ravageur/pathogène",
+      "description": "Description détaillée des symptômes, cycle de vie, conditions favorables",
+      "severity": "élevé/moyen/faible avec impact économique estimé",
+      "treatment": "Traitement spécifique : produit + méthode + timing + efficacité attendue"
     }
+  ],
+  "nutrientDeficiencies": [
+     {
+       "nutrient": "Nom du nutriment (N, P, K, Ca, Mg, Fe, etc.)",
+       "symptoms": "Symptômes visuels détaillés + localisation + évolution",
+       "correction": "Méthode de correction : type d'amendement + dosage + mode d'application + absorption",
+       "timeline": "Délai de correction : premiers signes en X jours, correction complète en Y semaines"
+     }
+   ]
+}
 
+**DIRECTIVES TECHNIQUES SPÉCIALISÉES :**
 
+1. **Adaptation environnementale** : Intégrez obligatoirement les conditions spécifiques (température, humidité, pH, sol) dans chaque recommandation
+2. **Approche IPM** : Privilégiez la lutte intégrée avec hiérarchisation : biologique > cultural > chimique
+3. **Spécificité culturale** : Adaptez chaque conseil aux besoins physiologiques et phénologiques de ${crop}
+4. **Précision technique** : Incluez dosages, concentrations, délais de carence, conditions d'application
+5. **Évaluation des risques** : Considérez résistances, phytotoxicité, impact environnemental
+6. **Monitoring scientifique** : Proposez des indicateurs mesurables et des seuils d'intervention
+7. **Chronologie réaliste** : Basez les délais sur la biologie des organismes et les conditions actuelles
 
-    prompt += `
-        
-        Fournis une réponse structurée au format JSON (uniquement l'objet JSON, sans markdown) avec les clés suivantes :
-        
-        "treatment": {
-            "immediate_actions" (array de string), 
-            "treatment_options" (objet avec clés "organic", "chemical", "cultural"), 
-            "prevention_strategy" (array de string), 
-            "monitoring_followup" (array de string), 
-            "expected_timeline" (string),
-            "confidence_level" (string)
-        },
-        
-        "pestIdentification": array d'objets avec les clés suivantes pour chaque parasite détecté :
-            "name" (string), "description" (string), "treatment" (string), "severity" ("low"|"medium"|"high")
-        
-        "nutrientDeficiencies": array d'objets avec les clés suivantes pour chaque carence détectée :
-            "name" (string), "description" (string), "deficiencySymptoms" (string), "sources" (array de string)
-        
-        Si aucun parasite ou carence n'est détecté, retourne un array vide pour ces champs.
-        Sois pratique et concis dans tes recommandations.
-    `;
+**CONTRAINTES DE RÉPONSE :**
+- Format JSON strict sans markdown ni commentaires
+- Toutes les clés obligatoires présentes
+- Minimum 3 éléments par array
+- Informations techniques précises et applicables
+- Cohérence entre les recommandations et les conditions environnementales
 
-    return prompt;
+Générez uniquement le JSON structuré, sans texte additionnel.`;
 }
 
 /**
@@ -170,63 +160,49 @@ export async function getEnhancedRemedySuggestions(
         return getOfflineRemedySuggestions(crop, disease, confidenceLevel);
     }
     
-    const geminiModel = gemini.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
-    const prompt = buildPrompt(crop, disease, confidence, environmentalData);
+    // Liste des modèles à essayer par ordre de préférence
+    const modelsToTry = [
+        "gemini-2.0-flash-exp", 
+        "gemini-1.5-flash"
+    ];
+    
+    const prompt = buildPrompt(crop, disease, environmentalData);
+    let lastError: Error | null = null;
 
-    try {
-        const result = await geminiModel.generateContent(prompt);
-        const responseText = result.response.text();
-        
-        // Nettoyer la réponse en supprimant les markdown code blocks si présents
-        let cleanedResponse = responseText.trim();
-        if (cleanedResponse.startsWith('```json')) {
-            cleanedResponse = cleanedResponse.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-        } else if (cleanedResponse.startsWith('```')) {
-            cleanedResponse = cleanedResponse.replace(/^```\s*/, '').replace(/\s*```$/, '');
-        }
-        
+    // Essayer chaque modèle jusqu'à ce qu'un fonctionne
+    for (const modelName of modelsToTry) {
         try {
-            const parsedResponse = JSON.parse(cleanedResponse) as EnhancedAnalysisResponse;
-            console.log('Réponse parsée:', parsedResponse);
-            return parsedResponse;
-        } catch (parseError) {
-            console.error('Erreur lors du parsing JSON:', parseError);
-            console.log('Réponse à parser:', cleanedResponse);
-            throw new Error('Format de réponse invalide de Gemini');
+            console.log(`Tentative avec le modèle: ${modelName}`);
+            const geminiModel = gemini.getGenerativeModel({ model: modelName });
+            const result = await geminiModel.generateContent(prompt);
+            const responseText = result.response.text();
+            
+            // Nettoyer la réponse en supprimant les markdown code blocks si présents
+            let cleanedResponse = responseText.trim();
+            if (cleanedResponse.startsWith('```json')) {
+                cleanedResponse = cleanedResponse.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+            } else if (cleanedResponse.startsWith('```')) {
+                cleanedResponse = cleanedResponse.replace(/^```\s*/, '').replace(/\s*```$/, '');
+            }
+            
+            try {
+                const parsedResponse = JSON.parse(cleanedResponse) as EnhancedAnalysisResponse;
+                console.log(`Succès avec le modèle: ${modelName}`);
+                return parsedResponse;
+            } catch (parseError) {
+                console.error(`Erreur de parsing avec le modèle ${modelName}:`, parseError);
+                throw new Error('Format de réponse invalide de Gemini');
+            }
+        } catch (error) {
+            console.error(`Erreur avec le modèle ${modelName}:`, error);
+            lastError = error as Error;
+            // Continuer avec le modèle suivant
         }
-    } catch (error) {
-        console.error("Erreur avec l'API Gemini, utilisation du fallback:", error);
-        
-        // Fallback avec des recommandations génériques
-        return {
-            treatment: {
-                immediate_actions: [
-                    "Isoler la plante affectée",
-                    "Retirer les parties malades visibles",
-                    "Améliorer la circulation d'air"
-                ],
-                treatment_options: {
-                    organic: ["Traitement biologique adapté", "Renforcement naturel des défenses"],
-                    chemical: ["Fongicide approprié selon les recommandations locales"],
-                    cultural: ["Ajustement des pratiques de culture", "Modification de l'arrosage"]
-                },
-                prevention_strategy: [
-                    "Surveillance régulière",
-                    "Maintien de bonnes conditions de culture",
-                    "Rotation des cultures si applicable"
-                ],
-                monitoring_followup: [
-                    "Vérifier l'évolution dans 7-10 jours",
-                    "Surveiller l'apparition de nouveaux symptômes",
-                    "Ajuster le traitement si nécessaire"
-                ],
-                expected_timeline: "Amélioration attendue dans 2-3 semaines avec un traitement approprié",
-                confidence_level: confidenceLevel
-            },
-            pestIdentification: [],
-            nutrientDeficiencies: []
-        };
     }
+    
+    // Si tous les modèles ont échoué, utiliser le fallback
+    console.error("Tous les modèles Gemini ont échoué, utilisation du fallback:", lastError);
+    return getOfflineRemedySuggestions(crop, disease, confidenceLevel);
 }
 
 

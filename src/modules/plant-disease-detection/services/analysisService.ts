@@ -16,7 +16,7 @@ export async function* analyzeImage(
     imageFile: File,
     environmentalData?: EnvironmentalData,
     previousAnalysis?: AnalysisRecord
-): AsyncGenerator<string | PredictionData, PredictionData, unknown> {
+): AsyncGenerator<string | AnalysisRecord, AnalysisRecord, unknown> {
     yield "Initialisation de l'analyse...";
     
     try {
@@ -69,24 +69,32 @@ export async function* analyzeImage(
         console.log('📊 [DEBUG] Classification:', classificationResult);
         console.log('💊 [DEBUG] Treatment:', treatmentData);
         
-        // Convertir le résultat au format attendu
-        const result: PredictionData = {
-            confidence: classificationResult.confidence,
-            disease: classificationResult.disease,
-            crop: classificationResult.crop,
+        // Convertir le résultat au format AnalysisRecord complet
+        const result: AnalysisRecord = {
+            id: Date.now().toString(),
+            timestamp: new Date().toISOString(),
+            imageUrl: URL.createObjectURL(imageFile),
+            plantName: classificationResult.crop || 'Plante inconnue',
+            isHealthy: classificationResult.disease === 'Sain' || classificationResult.disease === 'Healthy',
+            diseaseName: classificationResult.disease !== 'Sain' && classificationResult.disease !== 'Healthy' ? classificationResult.disease : undefined,
             description: classificationResult.disease_info || "Analyse effectuée avec succès.",
-            treatment: treatmentData?.immediate_actions?.join('. ') || "Consultez un expert pour des recommandations spécifiques.",
-            prevention: treatmentData?.prevention_strategy?.join('. ') || "Maintenez de bonnes pratiques culturales.",
+            treatmentSuggestions: treatmentData?.immediate_actions || ["Consultez un expert pour des recommandations spécifiques."],
+            benefits: ['Diagnostic effectué', 'Informations disponibles'],
+            confidenceScore: Math.round((classificationResult.confidence || 0) * 100),
+            preventativeCareTips: treatmentData?.prevention_strategy || ["Maintenez de bonnes pratiques culturales."],
             severity: classificationResult.confidence > 0.8 ? "high" : 
                      classificationResult.confidence > 0.5 ? "medium" : "low" as const,
-            environmentalFactors: environmentalData ? [
-                `Température: ${environmentalData.temperature}°C`,
-                `Humidité: ${environmentalData.humidity}%`
-            ] : [],
-            recommendedActions: treatmentData?.treatment_options ? 
+            environmentalData: environmentalData || undefined,
+            notes: '',
+            service: 'backend' as const,
+            preventiveMeasures: treatmentData?.prevention_strategy || ['Surveillance régulière'],
+            recommendations: treatmentData?.treatment_options ? 
                 Object.values(treatmentData.treatment_options).flat() : [
                 "Surveiller régulièrement l'évolution"
-            ]
+            ],
+            treatment: treatmentData,
+            pestIdentification: analysisResult.pestIdentification || [],
+            nutrientDeficiencies: analysisResult.nutrientDeficiencies || []
         };
         
         console.log('🚀 [DEBUG] AnalysisService - Résultat créé:', result);

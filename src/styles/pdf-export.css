@@ -1,0 +1,245 @@
+/* Styles optimisés pour l'exportation PDF */
+
+/* Styles généraux pour l'impression */
+@media print {
+  #prediction-result-content {
+    background: white !important;
+    color: black !important;
+    font-family: 'Arial', 'Helvetica', sans-serif !important;
+    line-height: 1.4 !important;
+    padding: 20px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  /* Masquer le bouton d'exportation lors de l'impression */
+  .pdf-export-button {
+    display: none !important;
+  }
+
+  /* Optimisation des couleurs pour l'impression */
+  #prediction-result-content * {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* Optimisation des arrière-plans */
+  #prediction-result-content .bg-gradient-to-br,
+  #prediction-result-content .bg-gradient-to-r {
+    background: white !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  /* Optimisation des couleurs de fond claires */
+  #prediction-result-content .bg-gray-50,
+  #prediction-result-content .bg-blue-50,
+  #prediction-result-content .bg-green-50,
+  #prediction-result-content .bg-yellow-50,
+  #prediction-result-content .bg-red-50,
+  #prediction-result-content .bg-purple-50 {
+    background: white !important;
+    border: 1px solid #d1d5db !important;
+  }
+
+  /* Optimisation des couleurs de fond plus foncées */
+  #prediction-result-content .bg-gray-100,
+  #prediction-result-content .bg-blue-100,
+  #prediction-result-content .bg-green-100,
+  #prediction-result-content .bg-yellow-100,
+  #prediction-result-content .bg-red-100,
+  #prediction-result-content .bg-purple-100 {
+    background: #f9fafb !important;
+    border: 1px solid #d1d5db !important;
+  }
+
+  /* Optimisation des textes colorés */
+  #prediction-result-content .text-gray-600,
+  #prediction-result-content .text-gray-700 {
+    color: #374151 !important;
+  }
+
+  #prediction-result-content .text-blue-600,
+  #prediction-result-content .text-blue-700 {
+    color: #1d4ed8 !important;
+  }
+
+  #prediction-result-content .text-green-600,
+  #prediction-result-content .text-green-700 {
+    color: #059669 !important;
+  }
+
+  #prediction-result-content .text-yellow-600,
+  #prediction-result-content .text-yellow-700 {
+    color: #d97706 !important;
+  }
+
+  #prediction-result-content .text-red-600,
+  #prediction-result-content .text-red-700 {
+    color: #dc2626 !important;
+  }
+
+  /* Suppression des ombres et effets */
+  #prediction-result-content * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Optimisation des images */
+  #prediction-result-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 8px !important;
+  }
+
+  /* Optimisation des espacements */
+  #prediction-result-content .space-y-4 > * + * {
+    margin-top: 16px !important;
+  }
+
+  #prediction-result-content .space-y-3 > * + * {
+    margin-top: 12px !important;
+  }
+
+  #prediction-result-content .space-y-2 > * + * {
+    margin-top: 8px !important;
+  }
+
+  /* Optimisation des bordures */
+  #prediction-result-content .border {
+    border: 1px solid #d1d5db !important;
+  }
+
+  #prediction-result-content .border-gray-200 {
+    border-color: #e5e7eb !important;
+  }
+
+  #prediction-result-content .border-blue-200 {
+    border-color: #bfdbfe !important;
+  }
+
+  #prediction-result-content .border-green-200 {
+    border-color: #bbf7d0 !important;
+  }
+
+  #prediction-result-content .border-yellow-200 {
+    border-color: #fef3c7 !important;
+  }
+
+  #prediction-result-content .border-red-200 {
+    border-color: #fecaca !important;
+  }
+
+  /* Optimisation des titres */
+  #prediction-result-content h1,
+  #prediction-result-content h2,
+  #prediction-result-content h3,
+  #prediction-result-content h4,
+  #prediction-result-content h5,
+  #prediction-result-content h6 {
+    color: #111827 !important;
+    font-weight: bold !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Éviter les coupures de page dans les éléments importants */
+  #prediction-result-content .avoid-break {
+    page-break-inside: avoid !important;
+  }
+
+  /* Optimisation des listes */
+  #prediction-result-content ul,
+  #prediction-result-content ol {
+    page-break-inside: avoid !important;
+  }
+
+  /* Optimisation des tableaux */
+  #prediction-result-content table {
+    page-break-inside: avoid !important;
+    border-collapse: collapse !important;
+  }
+
+  #prediction-result-content td,
+  #prediction-result-content th {
+    border: 1px solid #d1d5db !important;
+    padding: 8px !important;
+  }
+}
+
+/* Styles pour la classe PDF-ready (appliqués dynamiquement) */
+.pdf-ready {
+  background: white !important;
+  color: black !important;
+  font-family: 'Arial', 'Helvetica', sans-serif !important;
+  line-height: 1.4 !important;
+  padding: 20px !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  max-width: none !important;
+  width: 210mm !important;
+}
+
+.pdf-ready * {
+  color-adjust: exact !important;
+  -webkit-print-color-adjust: exact !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.pdf-ready .bg-gradient-to-br,
+.pdf-ready .bg-gradient-to-r {
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.pdf-ready .bg-gray-50,
+.pdf-ready .bg-blue-50,
+.pdf-ready .bg-green-50,
+.pdf-ready .bg-yellow-50,
+.pdf-ready .bg-red-50,
+.pdf-ready .bg-purple-50 {
+  background: white !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.pdf-ready .bg-gray-100,
+.pdf-ready .bg-blue-100,
+.pdf-ready .bg-green-100,
+.pdf-ready .bg-yellow-100,
+.pdf-ready .bg-red-100,
+.pdf-ready .bg-purple-100 {
+  background: #f9fafb !important;
+  border: 1px solid #d1d5db !important;
+}
+
+.pdf-ready .text-gray-600,
+.pdf-ready .text-gray-700 {
+  color: #374151 !important;
+}
+
+.pdf-ready .text-blue-600,
+.pdf-ready .text-blue-700 {
+  color: #1d4ed8 !important;
+}
+
+.pdf-ready .text-green-600,
+.pdf-ready .text-green-700 {
+  color: #059669 !important;
+}
+
+.pdf-ready .text-yellow-600,
+.pdf-ready .text-yellow-700 {
+  color: #d97706 !important;
+}
+
+.pdf-ready .text-red-600,
+.pdf-ready .text-red-700 {
+  color: #dc2626 !important;
+}

@@ -60,33 +60,12 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
           setStreamingText(prev => prev + update);
           setAnalysisProgress('Analyse en cours...');
         } else {
-          // Résultat final - traitement simplifié
-          console.log('📊 [DEBUG] Résultat final reçu:', update);
+          // Résultat final - AnalysisRecord complet reçu directement
+          console.log('📊 [DEBUG] AnalysisRecord final reçu:', update);
           
-          const predictionData = update as PredictionData;
+          const analysisRecord = update as AnalysisRecord;
           
-          // Création simplifiée de l'AnalysisRecord
-          const analysisRecord: AnalysisRecord = {
-            id: Date.now().toString(),
-            timestamp: new Date().toISOString(),
-            imageUrl: URL.createObjectURL(file),
-            plantName: predictionData.crop || 'Plante inconnue',
-            isHealthy: predictionData.disease === 'Sain' || predictionData.disease === 'Healthy',
-            diseaseName: predictionData.disease !== 'Sain' && predictionData.disease !== 'Healthy' ? predictionData.disease : 'Plante saine',
-            confidenceScore: Math.round(predictionData.confidence || 0),
-            description: predictionData.description || 'Analyse effectuée avec succès',
-            treatmentSuggestions: predictionData.treatment ? [predictionData.treatment] : ['Aucun traitement spécifique requis'],
-            benefits: ['Diagnostic effectué', 'Informations disponibles'],
-            preventativeCareTips: predictionData.prevention ? [predictionData.prevention] : ['Maintenir un arrosage régulier'],
-            environmentalData: environmentalData || undefined,
-            notes: '',
-            severity: predictionData.severity || 'medium',
-            service: 'backend',
-            preventiveMeasures: predictionData.environmentalFactors || ['Surveillance régulière'],
-            recommendations: predictionData.recommendedActions || ['Continuer la surveillance']
-          };
-          
-          console.log('✅ [DEBUG] AnalysisRecord créé:', analysisRecord);
+          console.log('✅ [DEBUG] AnalysisRecord avec données complètes:', analysisRecord);
           
           // Sauvegarder l'analyse dans l'historique
           try {
@@ -292,7 +271,6 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
                   </div>
                 );
               } else {
-                console.log('❌ [DEBUG] RÉSULTAT NON AFFICHÉ - Conditions non remplies');
                 return null;
               }
             })()}

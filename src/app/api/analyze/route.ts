@@ -150,7 +150,6 @@ export async function POST(request: NextRequest): Promise<NextResponse<AnalysisR
         const enhancedAnalysis = await getEnhancedRemedySuggestions(
             crop,
             disease,
-            classification.score,
             environmentalData
         );
         console.log('✅ [API] Recommandations générées:', enhancedAnalysis);
