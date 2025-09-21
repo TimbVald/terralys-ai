@@ -59,9 +59,7 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
     const plantName = result.plantName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
     const filename = `analyse-${plantName}-${timestamp}.pdf`;
     
-    await exportToPDF('prediction-result-content', {
-      filename,
-      quality: 0.95,
+    await exportToPDF('prediction-result-content', filename, {
       scale: 2
     });
   };
