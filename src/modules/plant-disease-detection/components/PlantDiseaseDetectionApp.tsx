@@ -9,6 +9,8 @@ import { AnalysisHistory } from './AnalysisHistory';
 import { LoadingSpinner } from './Spinner';
 import type { AnalysisRecord, EnvironmentalData, PredictionData } from '../types';
 import { analyzeImage } from '../services/analysisService';
+import { useTRPC } from '@/trpc/client';
+import { useMutation } from '@tanstack/react-query';
 
 /**
  * Interface pour les props du composant principal
@@ -29,6 +31,167 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
   const [environmentalData, setEnvironmentalData] = useState<EnvironmentalData | null>(null);
   const [activeTab, setActiveTab] = useState<'analyze' | 'profiles'>('analyze');
   const [currentView, setCurrentView] = useState<'upload' | 'analyzing' | 'result'>('upload');
+
+  // Hook tRPC pour enregistrer les analyses en base de données
+  const trpc = useTRPC();
+  const createAnalysisMutation = useMutation(
+    trpc.plantDiseaseDetection.createAnalysis.mutationOptions({
+      onSuccess: (data: any) => {
+        console.log('✅ [DEBUG] Analyse enregistrée en base de données:', data);
+      },
+      onError: (error: any) => {
+        console.error('❌ [ERROR] Erreur lors de l\'enregistrement en base de données:', error);
+      },
+    })
+  );
+
+  // Mutations pour les données associées
+  const addEnvironmentalDataMutation = useMutation(
+    trpc.plantDiseaseDetection.addEnvironmentalData.mutationOptions()
+  );
+  
+  const addPestIdentificationMutation = useMutation(
+    trpc.plantDiseaseDetection.addPestIdentification.mutationOptions()
+  );
+  
+  const addNutrientDeficiencyMutation = useMutation(
+    trpc.plantDiseaseDetection.addNutrientDeficiency.mutationOptions()
+  );
+  
+  const addTreatmentRecommendationMutation = useMutation(
+    trpc.plantDiseaseDetection.addTreatmentRecommendation.mutationOptions()
+  );
+
+  /**
+   * Enregistre automatiquement les données d'analyse en base de données
+   * Inclut l'enregistrement des données associées (environnementales, parasites, carences, recommandations)
+   */
+  const saveAnalysisToDatabase = useCallback(async (analysisRecord: AnalysisRecord) => {
+    try {
+      console.log('💾 [DEBUG] Enregistrement en base de données:', analysisRecord);
+      
+      // Préparer les données pour l'enregistrement selon le schéma plantAnalysisInsertSchema
+      const analysisData = {
+        imageUrl: analysisRecord.imageUrl,
+        plantName: analysisRecord.plantName,
+        isHealthy: analysisRecord.isHealthy,
+        diseaseName: analysisRecord.diseaseName,
+        description: analysisRecord.description,
+        treatmentSuggestions: analysisRecord.treatmentSuggestions,
+        benefits: analysisRecord.benefits,
+        confidenceScore: analysisRecord.confidenceScore,
+        preventativeCareTips: analysisRecord.preventativeCareTips,
+        progressAssessment: analysisRecord.progressAssessment,
+        comparativeAnalysis: analysisRecord.comparativeAnalysis,
+        notes: analysisRecord.notes,
+        severity: analysisRecord.severity,
+        service: analysisRecord.service || 'backend',
+        preventiveMeasures: analysisRecord.preventiveMeasures,
+        recommendations: analysisRecord.recommendations,
+      };
+
+      // Enregistrer l'analyse principale
+      const savedAnalysis = await createAnalysisMutation.mutateAsync(analysisData);
+      console.log('✅ [DEBUG] Analyse principale enregistrée avec succès:', savedAnalysis);
+      
+      const analysisId = savedAnalysis.id;
+
+      // Enregistrer les données environnementales si disponibles
+      if (analysisRecord.environmentalData) {
+        try {
+          const environmentalDataForDB = {
+            analysisId,
+            temperature: analysisRecord.environmentalData.temperature,
+            humidity: analysisRecord.environmentalData.humidity,
+            soilMoisture: analysisRecord.environmentalData.soilMoisture,
+            lightIntensity: analysisRecord.environmentalData.lightIntensity,
+            phLevel: analysisRecord.environmentalData.phLevel,
+            location: analysisRecord.environmentalData.location,
+            soilType: analysisRecord.environmentalData.soilType,
+            lastWatering: analysisRecord.environmentalData.lastWatering,
+            fertilizer: analysisRecord.environmentalData.fertilizer,
+            additionalInfo: analysisRecord.environmentalData.additionalInfo,
+            sunlight: analysisRecord.environmentalData.sunlight,
+            watering: analysisRecord.environmentalData.watering,
+            notes: analysisRecord.environmentalData.notes,
+            organicPreference: analysisRecord.environmentalData.organicPreference
+          };
+
+          await addEnvironmentalDataMutation.mutateAsync(environmentalDataForDB);
+          console.log('✅ [DEBUG] Données environnementales enregistrées');
+        } catch (error) {
+          console.error('❌ [ERROR] Erreur lors de l\'enregistrement des données environnementales:', error);
+        }
+      }
+
+      // Enregistrer les identifications de parasites si disponibles
+      if (analysisRecord.pestIdentification && analysisRecord.pestIdentification.length > 0) {
+        try {
+          for (const pest of analysisRecord.pestIdentification) {
+            const pestData = {
+              analysisId,
+              name: pest.name,
+              description: pest.description,
+              treatment: pest.treatment,
+              severity: pest.severity
+            };
+            await addPestIdentificationMutation.mutateAsync(pestData);
+          }
+          console.log('✅ [DEBUG] Identifications de parasites enregistrées');
+        } catch (error) {
+          console.error('❌ [ERROR] Erreur lors de l\'enregistrement des parasites:', error);
+        }
+      }
+
+      // Enregistrer les carences nutritionnelles si disponibles
+      if (analysisRecord.nutrientDeficiencies && analysisRecord.nutrientDeficiencies.length > 0) {
+        try {
+          for (const deficiency of analysisRecord.nutrientDeficiencies) {
+            const deficiencyData = {
+              analysisId,
+              name: deficiency.nutrient,
+              description: deficiency.symptoms,
+              deficiencySymptoms: deficiency.correction,
+              sources: [deficiency.timeline] // Adapter selon la structure disponible
+            };
+            await addNutrientDeficiencyMutation.mutateAsync(deficiencyData);
+          }
+          console.log('✅ [DEBUG] Carences nutritionnelles enregistrées');
+        } catch (error) {
+          console.error('❌ [ERROR] Erreur lors de l\'enregistrement des carences:', error);
+        }
+      }
+
+      // Enregistrer les recommandations de traitement si disponibles
+      if (analysisRecord.treatment) {
+        try {
+          const treatmentData = {
+            analysisId,
+            immediateActions: analysisRecord.treatment.immediate_actions,
+            treatmentOptions: analysisRecord.treatment.treatment_options,
+            preventionStrategy: analysisRecord.treatment.prevention_strategy,
+            monitoringFollowup: analysisRecord.treatment.monitoring_followup,
+            expectedTimeline: analysisRecord.treatment.expected_timeline,
+            confidenceLevel: analysisRecord.treatment.confidence_level
+          };
+          await addTreatmentRecommendationMutation.mutateAsync(treatmentData);
+          console.log('✅ [DEBUG] Recommandations de traitement enregistrées');
+        } catch (error) {
+          console.error('❌ [ERROR] Erreur lors de l\'enregistrement des recommandations:', error);
+        }
+      }
+      
+    } catch (error) {
+      console.error('❌ [ERROR] Erreur lors de l\'enregistrement en base:', error);
+      // Ne pas bloquer l'interface utilisateur en cas d'erreur de sauvegarde
+    }
+  }, [
+    createAnalysisMutation, 
+    addEnvironmentalDataMutation, 
+    addPestIdentificationMutation, 
+    addNutrientDeficiencyMutation, 
+    addTreatmentRecommendationMutation
+  ]);
 
   /**
    * Gère l'analyse d'une image avec une approche simplifiée similaire au test
@@ -67,7 +230,7 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
           
           console.log('✅ [DEBUG] AnalysisRecord avec données complètes:', analysisRecord);
           
-          // Sauvegarder l'analyse dans l'historique
+          // Sauvegarder l'analyse dans l'historique local
           try {
             const existingHistory = localStorage.getItem('plant-analysis-history');
             const history = existingHistory ? JSON.parse(existingHistory) : [];
@@ -79,10 +242,13 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
             }
             
             localStorage.setItem('plant-analysis-history', JSON.stringify(history));
-            console.log('💾 [DEBUG] Analyse sauvegardée dans l\'historique');
+            console.log('💾 [DEBUG] Analyse sauvegardée dans l\'historique local');
           } catch (error) {
-            console.error('❌ [ERROR] Erreur lors de la sauvegarde:', error);
+            console.error('❌ [ERROR] Erreur lors de la sauvegarde locale:', error);
           }
+
+          // Enregistrer automatiquement en base de données
+          await saveAnalysisToDatabase(analysisRecord);
           
           setCurrentResult(analysisRecord);
           setCurrentView('result');
@@ -116,6 +282,9 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
             preventiveMeasures: parsedData.environmentalFactors || ['Surveillance régulière'],
             recommendations: parsedData.recommendedActions || ['Continuer la surveillance']
           };
+          
+          // Enregistrer automatiquement en base de données
+          await saveAnalysisToDatabase(analysisRecord);
           
           setCurrentResult(analysisRecord);
           setCurrentView('result');
@@ -151,7 +320,7 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
     } finally {
       setIsAnalyzing(false);
     }
-  }, [environmentalData]);
+  }, [environmentalData, saveAnalysisToDatabase]);
 
   /**
    * Gère la mise à jour des données environnementales

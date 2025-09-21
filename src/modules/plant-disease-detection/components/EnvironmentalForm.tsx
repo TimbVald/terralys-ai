@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import type { EnvironmentalData } from '../types';
 import { LocationIcon } from './icons';
 import { useIPLocation } from '../hooks/useIPLocation';
+import { useTRPC } from '@/trpc/client';
+import { useMutation } from '@tanstack/react-query';
 
 /**
  * Interface pour les props du composant EnvironmentalForm
@@ -12,6 +14,8 @@ interface EnvironmentalFormProps {
   onDataChange: (data: EnvironmentalData) => void;
   initialData?: Partial<EnvironmentalData>;
   className?: string;
+  analysisId?: string; // ID de l'analyse pour enregistrer les données en base
+  autoSave?: boolean; // Enregistrement automatique en base de données
 }
 
 /**
@@ -22,7 +26,9 @@ interface EnvironmentalFormProps {
 export function EnvironmentalForm({ 
   onDataChange, 
   initialData = {},
-  className = '' 
+  className = '',
+  analysisId,
+  autoSave = false
 }: EnvironmentalFormProps) {
   const [data, setData] = useState<EnvironmentalData>({
     temperature: initialData.temperature || 20,
@@ -36,6 +42,19 @@ export function EnvironmentalForm({
     fertilizer: initialData.fertilizer || '',
     ...initialData
   });
+
+  // Hook tRPC pour l'enregistrement des données environnementales
+  const trpc = useTRPC();
+  const addEnvironmentalDataMutation = useMutation(
+    trpc.plantDiseaseDetection.addEnvironmentalData.mutationOptions({
+      onSuccess: () => {
+        console.log('Données environnementales enregistrées avec succès');
+      },
+      onError: (error) => {
+        console.error('Erreur lors de l\'enregistrement des données environnementales:', error);
+      }
+    })
+  );
 
   // Hook pour la géolocalisation IP
   const {
@@ -52,11 +71,35 @@ export function EnvironmentalForm({
 
   /**
    * Met à jour les données et notifie le parent
+   * Enregistre automatiquement en base si autoSave est activé et analysisId fourni
    */
   const updateData = (updates: Partial<EnvironmentalData>) => {
     const newData = { ...data, ...updates };
     setData(newData);
     onDataChange(newData);
+
+    // Enregistrement automatique en base de données si configuré
+    if (autoSave && analysisId && !addEnvironmentalDataMutation.isPending) {
+      const environmentalDataForDB = {
+        analysisId,
+        temperature: newData.temperature,
+        humidity: newData.humidity,
+        soilMoisture: newData.soilMoisture,
+        lightIntensity: newData.lightIntensity,
+        phLevel: newData.phLevel,
+        location: newData.location,
+        soilType: newData.soilType,
+        lastWatering: newData.lastWatering,
+        fertilizer: newData.fertilizer,
+        additionalInfo: newData.additionalInfo,
+        sunlight: newData.sunlight,
+        watering: newData.watering,
+        notes: newData.notes,
+        organicPreference: newData.organicPreference
+      };
+
+      addEnvironmentalDataMutation.mutate(environmentalDataForDB);
+    }
   };
 
   /**

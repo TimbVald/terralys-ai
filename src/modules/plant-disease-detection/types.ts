@@ -71,6 +71,58 @@ export interface AnalysisRecord {
   treatment?: TreatmentRecommendation;
 }
 
+// Type pour les données venant de la base de données via tRPC
+export interface DatabaseAnalysisRecord {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  imageUrl: string;
+  plantName: string;
+  isHealthy: boolean;
+  diseaseName: string | null;
+  description: string;
+  treatmentSuggestions: string[];
+  benefits: string[];
+  confidenceScore: number;
+  preventativeCareTips: string[];
+  progressAssessment: string | null;
+  comparativeAnalysis: string | null;
+  notes: string | null;
+  severity: 'low' | 'medium' | 'high' | null;
+  service: 'local' | 'backend' | 'gemini';
+  preventiveMeasures: string[] | null;
+  recommendations: string[] | null;
+  pestCount: number;
+  deficiencyCount: number;
+}
+
+/**
+ * Convertit les données de la base de données vers le format AnalysisRecord
+ */
+export function convertDatabaseToAnalysisRecord(dbRecord: DatabaseAnalysisRecord): AnalysisRecord {
+  return {
+    id: dbRecord.id,
+    timestamp: dbRecord.createdAt,
+    imageUrl: dbRecord.imageUrl,
+    plantName: dbRecord.plantName,
+    isHealthy: dbRecord.isHealthy,
+    diseaseName: dbRecord.diseaseName || undefined,
+    description: dbRecord.description,
+    treatmentSuggestions: dbRecord.treatmentSuggestions,
+    benefits: dbRecord.benefits,
+    confidenceScore: dbRecord.confidenceScore,
+    preventativeCareTips: dbRecord.preventativeCareTips,
+    progressAssessment: dbRecord.progressAssessment || undefined,
+    comparativeAnalysis: dbRecord.comparativeAnalysis || undefined,
+    notes: dbRecord.notes || undefined,
+    severity: dbRecord.severity || undefined,
+    service: dbRecord.service,
+    preventiveMeasures: dbRecord.preventiveMeasures || undefined,
+    recommendations: dbRecord.recommendations || undefined,
+  };
+}
+
 export interface PlantProfile {
   id: string;
   name: string;

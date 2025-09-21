@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import type { AnalysisRecord } from '../types';
+import React, { useState, useEffect, useMemo } from 'react';
+import { AnalysisRecord, DatabaseAnalysisRecord, convertDatabaseToAnalysisRecord } from '../types';
 import { PredictionResult } from './PredictionResult';
 import { HistoryIcon } from './icons';
-import {TrashIcon, SearchIcon, CalendarIcon} from 'lucide-react'
+import {TrashIcon, SearchIcon, CalendarIcon} from 'lucide-react';
+import { useTRPC } from '@/trpc/client';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 /**
  * Interface pour les props du composant AnalysisHistory
@@ -18,49 +20,49 @@ interface AnalysisHistoryProps {
  * Affiche et gère l'historique des analyses effectuées
  */
 export function AnalysisHistory({ className = '' }: AnalysisHistoryProps) {
-  const [analysisHistory, setAnalysisHistory] = useState<AnalysisRecord[]>([]);
-  const [filteredHistory, setFilteredHistory] = useState<AnalysisRecord[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedAnalysis, setSelectedAnalysis] = useState<AnalysisRecord | null>(null);
   const [sortBy, setSortBy] = useState<'date' | 'plant' | 'health'>('date');
   const [filterBy, setFilterBy] = useState<'all' | 'healthy' | 'diseased'>('all');
 
-  /**
-   * Charge l'historique des analyses depuis le localStorage
-   */
-  useEffect(() => {
-    const loadHistory = () => {
-      try {
-        const savedHistory = localStorage.getItem('plant-analysis-history');
-        if (savedHistory) {
-          const history = JSON.parse(savedHistory) as AnalysisRecord[];
-          setAnalysisHistory(history);
-        }
-      } catch (error) {
-        console.error('Erreur lors du chargement de l\'historique:', error);
-      }
-    };
+  // Hook tRPC
+  const trpc = useTRPC();
+  
+  // Hook tRPC pour récupérer la liste des analyses
+  const { data: analysisHistoryData, isLoading, error, refetch } = useQuery(
+    trpc.plantDiseaseDetection.getAnalyses.queryOptions({
+      page: 1,
+      pageSize: 50,
+    })
+  );
 
-    loadHistory();
-    
-    // Écouter les changements dans le localStorage
-    const handleStorageChange = () => {
-      loadHistory();
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  const analysisHistory = useMemo(() => {
+    if (!analysisHistoryData?.items) return [];
+    return analysisHistoryData.items.map((item: DatabaseAnalysisRecord) => 
+      convertDatabaseToAnalysisRecord(item)
+    );
+  }, [analysisHistoryData?.items]);
 
-  /**
-   * Filtre et trie l'historique selon les critères sélectionnés
-   */
-  useEffect(() => {
-    let filtered = [...analysisHistory];
+  // Mutation tRPC pour supprimer une analyse
+  const deleteAnalysisMutation = useMutation(
+    trpc.plantDiseaseDetection.deleteAnalysis.mutationOptions({
+      onSuccess: () => {
+        console.log('✅ [DEBUG] Analyse supprimée avec succès');
+        refetch(); // Recharger la liste après suppression
+      },
+      onError: (error: any) => {
+        console.error('❌ [ERROR] Erreur lors de la suppression:', error);
+      },
+    })
+  );
+
+  // Filtrage et tri de l'historique
+  const filteredHistory = useMemo(() => {
+    let filtered = analysisHistory || [];
 
     // Filtrage par terme de recherche
     if (searchTerm) {
-      filtered = filtered.filter(analysis =>
+      filtered = filtered.filter((analysis: AnalysisRecord) =>
         analysis.plantName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (analysis.diseaseName && analysis.diseaseName.toLowerCase().includes(searchTerm.toLowerCase())) ||
         analysis.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -69,35 +71,36 @@ export function AnalysisHistory({ className = '' }: AnalysisHistoryProps) {
 
     // Filtrage par état de santé
     if (filterBy !== 'all') {
-      filtered = filtered.filter(analysis =>
+      filtered = filtered.filter((analysis: AnalysisRecord) =>
         filterBy === 'healthy' ? analysis.isHealthy : !analysis.isHealthy
       );
     }
 
     // Tri
-    filtered.sort((a, b) => {
+    filtered.sort((a: AnalysisRecord, b: AnalysisRecord) => {
       switch (sortBy) {
-        case 'date':
-          return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
         case 'plant':
           return a.plantName.localeCompare(b.plantName);
         case 'health':
           return Number(b.isHealthy) - Number(a.isHealthy);
+        case 'date':
         default:
-          return 0;
+          return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
       }
     });
 
-    setFilteredHistory(filtered);
-  }, [analysisHistory, searchTerm, sortBy, filterBy]);
+    return filtered;
+  }, [analysisHistory, searchTerm, filterBy, sortBy]);
 
   /**
    * Supprime une analyse de l'historique
    */
-  const handleDeleteAnalysis = (analysisId: string) => {
-    const updatedHistory = analysisHistory.filter(analysis => analysis.id !== analysisId);
-    setAnalysisHistory(updatedHistory);
-    localStorage.setItem('plant-analysis-history', JSON.stringify(updatedHistory));
+  const handleDeleteAnalysis = async (analysisId: string) => {
+    try {
+      await deleteAnalysisMutation.mutateAsync({ id: analysisId });
+    } catch (error) {
+      console.error('❌ [ERROR] Erreur lors de la suppression:', error);
+    }
     
     if (selectedAnalysis?.id === analysisId) {
       setSelectedAnalysis(null);
@@ -107,11 +110,19 @@ export function AnalysisHistory({ className = '' }: AnalysisHistoryProps) {
   /**
    * Vide complètement l'historique
    */
-  const handleClearHistory = () => {
+  const handleClearHistory = async () => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer tout l\'historique ?')) {
-      setAnalysisHistory([]);
-      setSelectedAnalysis(null);
-      localStorage.removeItem('plant-analysis-history');
+      try {
+        // Supprimer toutes les analyses une par une
+        const analyses = analysisHistory || [];
+        for (const analysis of analyses) {
+          await deleteAnalysisMutation.mutateAsync({ id: analysis.id });
+        }
+        setSelectedAnalysis(null);
+        console.log('✅ [DEBUG] Historique vidé avec succès');
+      } catch (error) {
+        console.error('❌ [ERROR] Erreur lors du vidage de l\'historique:', error);
+      }
     }
   };
 
@@ -144,10 +155,10 @@ export function AnalysisHistory({ className = '' }: AnalysisHistoryProps) {
               <p className="text-gray-600 text-sm mt-1">Consultez et gérez vos analyses précédentes</p>
             </div>
             <span className="ml-4 px-3 py-1.5 bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-800 text-sm font-semibold rounded-full border border-indigo-200">
-              {analysisHistory.length}
+              {analysisHistory?.length || 0}
             </span>
           </div>
-          {analysisHistory.length > 0 && (
+          {(analysisHistory?.length || 0) > 0 && (
             <button
               onClick={handleClearHistory}
               className="flex items-center px-4 py-2.5 text-red-600 bg-red-50 border border-red-200 rounded-xl hover:bg-red-100 hover:border-red-300 transition-all duration-300 font-medium shadow-sm hover:shadow-md"
@@ -227,7 +238,7 @@ export function AnalysisHistory({ className = '' }: AnalysisHistoryProps) {
             </div>
           ) : (
             <div className="p-4 lg:p-6 space-y-3">
-              {filteredHistory.map((analysis) => (
+              {filteredHistory.map((analysis: AnalysisRecord) => (
                 <div
                   key={analysis.id}
                   onClick={() => setSelectedAnalysis(analysis)}

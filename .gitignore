@@ -22,6 +22,7 @@
 /docs
 /test
 /scripts
+/drizzle
 
 # misc
 .DS_Store
