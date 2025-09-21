@@ -46,6 +46,10 @@ export function usePDFExport(): UsePDFExportReturn {
 
       // Préparation de l'élément pour l'impression
       const originalStyle = element.style.cssText;
+      const originalClassName = element.className;
+      
+      // Application de la classe pdf-ready pour les couleurs compatibles
+      element.classList.add('pdf-ready');
       
       // Application de styles optimisés pour l'impression
       element.style.cssText = `
@@ -109,6 +113,7 @@ export function usePDFExport(): UsePDFExportReturn {
 
       // Restauration des styles originaux
       element.style.cssText = originalStyle;
+      element.className = originalClassName;
       childElements.forEach((child, index) => {
         const htmlChild = child as HTMLElement;
         htmlChild.style.cssText = originalChildStyles[index];
