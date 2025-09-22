@@ -3,6 +3,8 @@ import "./globals.css";
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
 import {NuqsAdapter} from "nuqs/adapters/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,6 +24,8 @@ export default function RootLayout({
           >
             <Toaster position="top-right" richColors/>
             {children}
+             <SpeedInsights/>
+             <Analytics/>
           </body>
         </html>
       </TRPCReactProvider>

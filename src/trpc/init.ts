@@ -7,33 +7,17 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import { count, eq } from 'drizzle-orm';
 import { headers } from 'next/headers';
 import { cache } from 'react';
-
-/**
- * Type du contexte tRPC
- */
-export type TRPCContext = {
-  session: Awaited<ReturnType<typeof auth.api.getSession>> | null;
-};
-
-export const createTRPCContext = cache(async (): Promise<TRPCContext> => {
+export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
    */
-  try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-    return { session };
-  } catch (error) {
-    return { session: null };
-  }
+  return { userId: 'user_123' };
 });
-
 // Avoid exporting the entire t-object
 // since it's not very descriptive.
 // For instance, the use of a t variable
 // is common in i18n libraries.
-const t = initTRPC.context<TRPCContext>().create({
+const t = initTRPC.create({
   /**
    * @see https://trpc.io/docs/server/data-transformers
    */
@@ -46,10 +30,13 @@ export const baseProcedure = t.procedure;
 
 export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
   try {
-    if (!ctx.session) {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    })
+    if (!session) {
       throw new TRPCError({ code: 'UNAUTHORIZED' })
     }
-    return next({ ctx: { ...ctx, auth: ctx.session } })
+    return next({ ctx: { ...ctx, auth: session } })
   } catch (error) {
     // Handle database connection errors
     if (error instanceof Error && error.message.includes('Connect Timeout Error')) {
