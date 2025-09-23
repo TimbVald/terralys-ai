@@ -3,7 +3,7 @@
 import { Separator } from '@/components/ui/separator';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils';
-import { BotIcon, StarIcon, VideoIcon } from 'lucide-react'
+import { BotIcon, StarIcon, VideoIcon, SproutIcon, GripIcon, SettingsIcon, BookOpenTextIcon, HomeIcon } from 'lucide-react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -20,14 +20,29 @@ import { DashboardTrial } from './dashboard-trial';
 
 const firstSection = [
     {
+        icon: GripIcon,
+        label: "Dashboard",
+        href: "/dashboard",
+    },
+    {
+        icon: SproutIcon,
+        label: "Plant Detector",
+        href: "/plant-disease-detection",
+    },
+    {
         icon: VideoIcon,
-        label: "Meeting",
+        label: "Meetings",
         href: "/meetings",
     },
     {
         icon: BotIcon,
-        label: "Agent",
+        label: "Agent AI",
         href: "/agents",
+    },
+    {
+        icon: BookOpenTextIcon,
+        label: "Encyclopedia",
+        href: "/encyclopedia",
     },
 ];
 
@@ -36,6 +51,16 @@ const secondSection = [
         icon: StarIcon,
         label: "Upgrade",
         href: "/upgrade",
+    },
+    {
+        icon: HomeIcon,
+        label: "Home",
+        href: "/",
+    },
+    {
+        icon: SettingsIcon,
+        label: "Settings",
+        href: "/settings",
     },
 ];
 
