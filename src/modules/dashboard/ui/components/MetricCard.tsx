@@ -81,21 +81,21 @@ export function MetricCard({
   const formattedGrowth = Math.abs(metrics.growth).toFixed(1);
 
   const sizeClasses = {
-    sm: 'p-4',
-    md: 'p-6',
-    lg: 'p-8'
+    sm: 'p-3 sm:p-4',
+    md: 'p-4 sm:p-5 lg:p-6',
+    lg: 'p-6 sm:p-7 lg:p-8'
   };
 
   const titleSizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-lg'
+    sm: 'text-xs sm:text-sm',
+    md: 'text-sm sm:text-base',
+    lg: 'text-base sm:text-lg'
   };
 
   const valueSizeClasses = {
-    sm: 'text-xl',
-    md: 'text-2xl',
-    lg: 'text-3xl'
+    sm: 'text-lg sm:text-xl',
+    md: 'text-xl sm:text-2xl lg:text-2xl',
+    lg: 'text-2xl sm:text-3xl lg:text-3xl'
   };
 
   return (
@@ -105,16 +105,16 @@ export function MetricCard({
       className
     )}>
       {/* En-tête avec titre et icône */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
         <h3 className={cn(
-          "font-medium text-gray-900",
+          "font-medium text-gray-900 line-clamp-2",
           titleSizeClasses[size]
         )}>
           {title}
         </h3>
         {icon && (
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <div className="w-5 h-5 text-blue-600">
+          <div className="p-1.5 sm:p-2 bg-blue-50 rounded-lg flex-shrink-0 ml-2">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600">
               {icon}
             </div>
           </div>
@@ -122,9 +122,9 @@ export function MetricCard({
       </div>
 
       {/* Valeur principale */}
-      <div className="mb-3">
+      <div className="mb-2 sm:mb-3">
         <div className={cn(
-          "font-bold text-gray-900",
+          "font-bold text-gray-900 break-words",
           valueSizeClasses[size]
         )}>
           {formattedValue}
@@ -132,9 +132,9 @@ export function MetricCard({
       </div>
 
       {/* Indicateur de tendance */}
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-1 sm:space-x-2 flex-wrap">
         <div className={cn(
-          "flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium",
+          "flex items-center space-x-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium",
           trendInfo.color,
           trendInfo.bgColor
         )}>
@@ -143,8 +143,11 @@ export function MetricCard({
             {metrics.growth > 0 ? '+' : ''}{formattedGrowth}%
           </span>
         </div>
-        <span className="text-xs text-gray-500">
+        <span className="text-xs text-gray-500 hidden sm:inline">
           vs période précédente
+        </span>
+        <span className="text-xs text-gray-500 sm:hidden">
+          vs précédent
         </span>
       </div>
     </div>
@@ -173,14 +176,14 @@ export function MetricGrid({
   className
 }: MetricGridProps) {
   const gridClasses = {
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
   };
 
   return (
     <div className={cn(
-      "grid gap-4",
+      "grid gap-3 sm:gap-4 lg:gap-6",
       gridClasses[columns],
       className
     )}>

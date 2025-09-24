@@ -331,54 +331,56 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
 
   return (
     <div className={`min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 ${className}`}>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
         {/* En-tête */}
         <Header />
 
         {/* Navigation par onglets avec design amélioré */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-1.5 flex">
+        <div className="flex justify-center mb-6 sm:mb-8 lg:mb-12">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-1 sm:p-1.5 flex w-full max-w-md sm:max-w-lg">
             <button
               onClick={() => setActiveTab('analyze')}
-              className={`px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`flex-1 px-3 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 text-sm sm:text-base ${
                 activeTab === 'analyze'
                   ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg transform scale-105'
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
               }`}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              Analyser
+              <span className="hidden sm:inline">Analyser</span>
+              <span className="sm:hidden">Analyse</span>
             </button>
             <button
               onClick={() => setActiveTab('profiles')}
-              className={`px-8 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`flex-1 px-3 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 text-sm sm:text-base ${
                 activeTab === 'profiles'
                   ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg transform scale-105'
                   : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
               }`}
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
-              Mes Plantes
+              <span className="hidden sm:inline">Mes Plantes</span>
+              <span className="sm:hidden">Plantes</span>
             </button>
           </div>
         </div>
 
         {/* Contenu principal */}
         {activeTab === 'analyze' ? (
-          <div className="max-w-5xl mx-auto space-y-8">
+          <div className="max-w-5xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8">
             {/* Formulaire environnemental avec design amélioré */}
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/30 p-8 transition-all duration-300 hover:shadow-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-white/30 p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl">
+              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="p-1.5 sm:p-2 bg-green-100 rounded-lg">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">Données Environnementales</h2>
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">Données Environnementales</h2>
               </div>
               <EnvironmentalForm
                 onDataChange={handleEnvironmentalDataChange}
@@ -386,15 +388,15 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
             </div>
 
             {/* Uploader d'image avec design amélioré */}
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/30 p-8 transition-all duration-300 hover:shadow-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-white/30 p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl">
+              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="p-1.5 sm:p-2 bg-blue-100 rounded-lg">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">Analyse d'Image</h2>
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">Analyse d'Image</h2>
               </div>
               <ImageUploader
                 onImageSelect={handleImageAnalysis}
@@ -405,7 +407,7 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
 
             {/* Indicateur de progression avec design amélioré */}
             {isAnalyzing && (
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-xl border border-blue-200 p-8 animate-pulse">
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl sm:rounded-2xl shadow-xl border border-blue-200 p-4 sm:p-6 lg:p-8 animate-pulse">
                 <LoadingSpinner
                   message={analysisProgress || 'Analyse en cours...'}
                   size="lg"
@@ -424,14 +426,14 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
               if (currentResult && !isAnalyzing) {
                 console.log('✅ [DEBUG] RÉSULTAT AFFICHÉ - Composant PredictionResult rendu');
                 return (
-                  <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/30 p-8 transition-all duration-300 hover:shadow-2xl">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="p-2 bg-purple-100 rounded-lg">
-                        <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-white/30 p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                      <div className="p-1.5 sm:p-2 bg-purple-100 rounded-lg">
+                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                       </div>
-                      <h2 className="text-2xl font-bold text-gray-800">Résultats de l'Analyse</h2>
+                      <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">Résultats de l'Analyse</h2>
                     </div>
                     <PredictionResult
                       result={currentResult}
@@ -445,18 +447,18 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
             })()}
 
             {/* Service backend avec design amélioré */}
-            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200/50 rounded-2xl p-6 shadow-lg">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                <div className="p-1.5 sm:p-2 bg-blue-100 rounded-lg">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                   </svg>
                 </div>
-                <h3 className="font-semibold text-blue-800 text-lg">
+                <h3 className="font-semibold text-blue-800 text-sm sm:text-base lg:text-lg">
                   Service d'analyse: Serveur Backend
                 </h3>
               </div>
-              <p className="text-blue-700">
+              <p className="text-blue-700 text-xs sm:text-sm lg:text-base">
                 Analyse avancée via notre serveur haute performance. Nécessite une connexion internet pour des résultats optimaux.
               </p>
             </div>
@@ -464,16 +466,16 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
         ) : (
           /* Onglet Historique des analyses avec design amélioré */
           <div className="max-w-7xl mx-auto">
-            <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-white/30 p-8 transition-all duration-300 hover:shadow-2xl">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="p-3 bg-indigo-100 rounded-xl">
-                  <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-white/30 p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                <div className="p-2 sm:p-3 bg-indigo-100 rounded-xl">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-800">Historique des Analyses</h2>
-                  <p className="text-gray-600 mt-1">Consultez vos analyses précédentes et suivez l'évolution de vos plantes</p>
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">Historique des Analyses</h2>
+                  <p className="text-gray-600 mt-1 text-sm sm:text-base">Consultez vos analyses précédentes et suivez l'évolution de vos plantes</p>
                 </div>
               </div>
               <AnalysisHistory />

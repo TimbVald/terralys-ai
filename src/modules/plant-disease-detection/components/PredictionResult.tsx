@@ -94,12 +94,12 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
   return (
     <div className={`relative bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl border border-gray-200 overflow-hidden backdrop-blur-sm ${className}`}>
       {/* Bouton d'impression */}
-      <div className="absolute top-4 right-4 z-10 no-print">
+      <div className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 no-print">
         <PrintButton
           documentName={`analyse-${result.plantName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}-${new Date().toISOString().slice(0, 10)}`}
           variant="outline"
           size="sm"
-          className="shadow-lg"
+          className="shadow-lg text-xs sm:text-sm"
         >
           <PrintableAnalysisReport result={result} />
         </PrintButton>
@@ -109,17 +109,17 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
       <div>
       {/* Aperçu de l'image analysée */}
       {result.imageUrl && (
-        <div className="relative bg-gradient-to-br from-emerald-50 via-teal-50 to-blue-50 p-8 border-b border-gray-200">
-          <div className="flex items-center justify-between mb-6">
-            <h4 className="text-xl font-bold text-gray-800 flex items-center">
-              <div className="relative mr-4">
+        <div className="relative bg-gradient-to-br from-emerald-50 via-teal-50 to-blue-50 p-4 sm:p-6 lg:p-8 border-b border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
+            <h4 className="text-lg sm:text-xl font-bold text-gray-800 flex items-center">
+              <div className="relative mr-3 sm:mr-4">
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full blur-sm opacity-30 animate-pulse"></div>
-                <div className="relative w-3 h-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
+                <div className="relative w-2 h-2 sm:w-3 sm:h-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
               </div>
               Image analysée
             </h4>
-            <div className="flex items-center gap-2 text-sm text-gray-600 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-sm">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-emerald-500">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 bg-white/80 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-gray-200 shadow-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="sm:w-4 sm:h-4 text-emerald-500">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
                 <polyline points="12,6 12,12 16,14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -132,7 +132,7 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
               <img
                 src={result.imageUrl}
                 alt="Image analysée"
-                className="relative max-w-xs max-h-48 object-contain rounded-xl shadow-lg border-2 border-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
+                className="relative max-w-full max-h-32 sm:max-h-48 lg:max-h-64 object-contain rounded-xl shadow-lg border-2 border-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
@@ -140,36 +140,36 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
         </div>
       )}
 
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {/* En-tête avec résultat principal - Amélioré visuellement */}
-        <div className="flex items-center justify-between mb-10 p-6 bg-gradient-to-r from-emerald-50 via-teal-50 to-blue-50 rounded-2xl border border-emerald-200 shadow-lg">
-          <div className="flex items-center space-x-6">
-            <div className={`relative p-4 rounded-2xl ${result.isHealthy ? 'bg-gradient-to-br from-green-100 to-emerald-100' : 'bg-gradient-to-br from-red-100 to-pink-100'} shadow-lg`}>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 sm:mb-8 lg:mb-10 p-4 sm:p-6 bg-gradient-to-r from-emerald-50 via-teal-50 to-blue-50 rounded-2xl border border-emerald-200 shadow-lg space-y-4 lg:space-y-0">
+          <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 lg:space-x-6">
+            <div className={`relative p-3 sm:p-4 rounded-2xl ${result.isHealthy ? 'bg-gradient-to-br from-green-100 to-emerald-100' : 'bg-gradient-to-br from-red-100 to-pink-100'} shadow-lg`}>
               <div className={`absolute inset-0 ${result.isHealthy ? 'bg-gradient-to-r from-green-400 to-emerald-400' : 'bg-gradient-to-r from-red-400 to-pink-400'} rounded-2xl blur-lg opacity-20 animate-pulse`}></div>
               {result.isHealthy ? (
-                <ShieldIcon className="relative w-10 h-10 text-green-600" />
+                <ShieldIcon className="relative w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
               ) : (
-                <BugIcon className="relative w-10 h-10 text-red-600" />
+                <BugIcon className="relative w-8 h-8 sm:w-10 sm:h-10 text-red-600" />
               )}
             </div>
             <div>
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent mb-2">
                 {result.diseaseName || 'Analyse effectuée'}
               </h3>
               <div className="flex items-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-emerald-500">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5 text-emerald-500">
                   <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                <p className="text-gray-700 font-semibold text-lg">
+                <p className="text-gray-700 font-semibold text-sm sm:text-base lg:text-lg">
                   Culture: <span className="text-emerald-600 font-bold">{result.plantName}</span>
                 </p>
               </div>
             </div>
           </div>
 
-          <div className={`px-6 py-3 rounded-2xl text-sm font-bold border-2 shadow-lg backdrop-blur-sm ${getConfidenceBgColor(result.confidenceScore)}`}>
+          <div className={`px-4 py-2 sm:px-6 sm:py-3 rounded-2xl text-xs sm:text-sm font-bold border-2 shadow-lg backdrop-blur-sm ${getConfidenceBgColor(result.confidenceScore)}`}>
             <div className="flex items-center gap-2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className={getConfidenceColor(result.confidenceScore)}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className={`sm:w-4 sm:h-4 ${getConfidenceColor(result.confidenceScore)}`}>
                 <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -183,12 +183,12 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Description de la maladie - Améliorée visuellement */}
         {result.description && (
-          <div className="mb-8 p-5 bg-gray-50 rounded-xl border border-gray-100">
-            <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
+          <div className="mb-6 sm:mb-8 p-4 sm:p-5 bg-gray-50 rounded-xl border border-gray-100">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 flex items-center">
               <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
               Description
             </h4>
-            <p className="text-gray-700 leading-relaxed text-justify">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed text-justify">
               {result.description}
             </p>
           </div>
@@ -196,24 +196,26 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Identification des parasites */}
         {result.pestIdentification && result.pestIdentification.length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
-              Parasites identifiés
-              <span className="ml-2 text-sm bg-red-100 text-red-600 px-2 py-1 rounded-full">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0">
+              <div className="flex items-center">
+                <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
+                Parasites identifiés
+              </div>
+              <span className="ml-0 sm:ml-2 text-xs sm:text-sm bg-red-100 text-red-600 px-2 py-1 rounded-full">
                 {result.pestIdentification.length} parasite{result.pestIdentification.length > 1 ? 's' : ''}
               </span>
             </h4>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {result.pestIdentification.map((pest, index) => (
-                <div key={index} className="p-5 bg-red-50 rounded-xl border border-red-100 hover:bg-red-100 transition-colors">
-                  <div className="flex items-start space-x-4">
-                    <span className="flex-shrink-0 w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center text-lg shadow-md">
+                <div key={index} className="p-4 sm:p-5 bg-red-50 rounded-xl border border-red-100 hover:bg-red-100 transition-colors">
+                  <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
+                    <span className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-red-500 text-white rounded-full flex items-center justify-center text-base sm:text-lg shadow-md">
                       🐛
                     </span>
                     <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <h5 className="font-semibold text-gray-800">{pest.name}</h5>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 space-y-2 sm:space-y-0">
+                        <h5 className="font-semibold text-sm sm:text-base text-gray-800">{pest.name}</h5>
                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${pest.severity === 'high' ? 'bg-red-200 text-red-800' :
                             pest.severity === 'medium' ? 'bg-yellow-200 text-yellow-800' :
                               'bg-green-200 text-green-800'
@@ -221,10 +223,10 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
                           {pest.severity === 'high' ? 'Élevée' : pest.severity === 'medium' ? 'Moyenne' : 'Faible'}
                         </span>
                       </div>
-                      <p className="text-gray-700 mb-3 leading-relaxed">{pest.description}</p>
+                      <p className="text-xs sm:text-sm text-gray-700 mb-3 leading-relaxed">{pest.description}</p>
                       <div className="p-3 bg-white rounded-lg border border-red-200">
-                        <h6 className="font-medium text-gray-800 mb-1">Traitement recommandé :</h6>
-                        <p className="text-gray-700 text-sm">{pest.treatment}</p>
+                        <h6 className="font-medium text-xs sm:text-sm text-gray-800 mb-1">Traitement recommandé :</h6>
+                        <p className="text-xs sm:text-sm text-gray-700">{pest.treatment}</p>
                       </div>
                     </div>
                   </div>
@@ -236,38 +238,40 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Carences nutritionnelles */}
         {result.nutrientDeficiencies && result.nutrientDeficiencies.length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
-              Carences nutritionnelles
-              <span className="ml-2 text-sm bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0">
+              <div className="flex items-center">
+                <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
+                Carences nutritionnelles
+              </div>
+              <span className="ml-0 sm:ml-2 text-xs sm:text-sm bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">
                 {result.nutrientDeficiencies.length} carence{result.nutrientDeficiencies.length > 1 ? 's' : ''}
               </span>
             </h4>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {result.nutrientDeficiencies.map((nutrient, index) => (
-                <div key={index} className="p-5 bg-yellow-50 rounded-xl border border-yellow-100 hover:bg-yellow-100 transition-colors">
-                  <div className="flex items-start space-x-4">
-                    <span className="flex-shrink-0 w-10 h-10 bg-yellow-500 text-white rounded-full flex items-center justify-center text-lg shadow-md">
+                <div key={index} className="p-4 sm:p-5 bg-yellow-50 rounded-xl border border-yellow-100 hover:bg-yellow-100 transition-colors">
+                  <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-4">
+                    <span className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-yellow-500 text-white rounded-full flex items-center justify-center text-base sm:text-lg shadow-md">
                       🌱
                     </span>
                     <div className="flex-1">
-                      <h5 className="font-semibold text-gray-800 mb-2">{nutrient.nutrient}</h5>
+                      <h5 className="font-semibold text-sm sm:text-base text-gray-800 mb-2">{nutrient.nutrient}</h5>
                       
                       <div className="space-y-3">
                         <div className="p-3 bg-white rounded-lg border border-yellow-200">
-                          <h6 className="font-medium text-gray-800 mb-1">Symptômes observés :</h6>
-                          <p className="text-gray-700 text-sm">{nutrient.symptoms}</p>
+                          <h6 className="font-medium text-xs sm:text-sm text-gray-800 mb-1">Symptômes observés :</h6>
+                          <p className="text-xs sm:text-sm text-gray-700">{nutrient.symptoms}</p>
                         </div>
 
                         <div className="p-3 bg-white rounded-lg border border-yellow-200">
-                          <h6 className="font-medium text-gray-800 mb-1">Correction recommandée :</h6>
-                          <p className="text-gray-700 text-sm">{nutrient.correction}</p>
+                          <h6 className="font-medium text-xs sm:text-sm text-gray-800 mb-1">Correction recommandée :</h6>
+                          <p className="text-xs sm:text-sm text-gray-700">{nutrient.correction}</p>
                         </div>
 
                         <div className="p-3 bg-white rounded-lg border border-yellow-200">
-                          <h6 className="font-medium text-gray-800 mb-1">Délai de récupération :</h6>
-                          <p className="text-gray-700 text-sm">{nutrient.timeline}</p>
+                          <h6 className="font-medium text-xs sm:text-sm text-gray-800 mb-1">Délai de récupération :</h6>
+                          <p className="text-xs sm:text-sm text-gray-700">{nutrient.timeline}</p>
                         </div>
                       </div>
                     </div>
@@ -280,21 +284,23 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Actions immédiates - Utilise TreatmentRecommendation.immediate_actions */}
         {result.treatment?.immediate_actions && result.treatment.immediate_actions.length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
-              Actions immédiates
-              <span className="ml-2 text-sm bg-red-100 text-red-600 px-2 py-1 rounded-full">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0">
+              <div className="flex items-center">
+                <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
+                Actions immédiates
+              </div>
+              <span className="ml-0 sm:ml-2 text-xs sm:text-sm bg-red-100 text-red-600 px-2 py-1 rounded-full">
                 {result.treatment.immediate_actions.length} action{result.treatment.immediate_actions.length > 1 ? 's' : ''}
               </span>
             </h4>
             <div className="space-y-3">
               {result.treatment.immediate_actions.map((action: string, index: number) => (
-                <div key={index} className="flex items-start space-x-4 p-4 bg-red-50 rounded-xl border border-red-100 hover:bg-red-100 transition-colors">
-                  <span className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md">
+                <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 bg-red-50 rounded-xl border border-red-100 hover:bg-red-100 transition-colors">
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shadow-md">
                     {index + 1}
                   </span>
-                  <p className="text-gray-700 leading-relaxed pt-1">{action}</p>
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed pt-0.5 sm:pt-1">{action}</p>
                 </div>
               ))}
             </div>
@@ -303,22 +309,22 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Options de traitement - Utilise TreatmentRecommendation.treatment_options */}
         {result.treatment?.treatment_options && Object.keys(result.treatment.treatment_options).length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
               Options de traitement
             </h4>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {Object.entries(result.treatment.treatment_options).map(([category, treatments], categoryIndex) => (
-                <div key={categoryIndex} className="bg-blue-50 rounded-xl border border-blue-100 p-4">
-                  <h5 className="font-semibold text-blue-800 mb-3 capitalize">{category}</h5>
+                <div key={categoryIndex} className="bg-blue-50 rounded-xl border border-blue-100 p-3 sm:p-4">
+                  <h5 className="font-semibold text-sm sm:text-base text-blue-800 mb-3 capitalize">{category}</h5>
                   <div className="space-y-2">
                     {treatments.map((treatment: string, index: number) => (
-                      <div key={index} className="flex items-start space-x-3">
-                        <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                      <div key={index} className="flex items-start space-x-2 sm:space-x-3">
+                        <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
                           {index + 1}
                         </span>
-                        <p className="text-gray-700 leading-relaxed">{treatment}</p>
+                        <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">{treatment}</p>
                       </div>
                     ))}
                   </div>
@@ -330,21 +336,23 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Suggestions de traitement - Fallback pour compatibilité */}
         {!result.treatment?.immediate_actions && result.treatmentSuggestions && result.treatmentSuggestions.length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-              Suggestions de traitement
-              <span className="ml-2 text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0">
+              <div className="flex items-center">
+                <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                Suggestions de traitement
+              </div>
+              <span className="ml-0 sm:ml-2 text-xs sm:text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
                 {result.treatmentSuggestions.length} suggestion{result.treatmentSuggestions.length > 1 ? 's' : ''}
               </span>
             </h4>
             <div className="space-y-3">
               {result.treatmentSuggestions.map((suggestion: string, index: number) => (
-                <div key={index} className="flex items-start space-x-4 p-4 bg-blue-50 rounded-xl border border-blue-100 hover:bg-blue-100 transition-colors">
-                  <span className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md">
+                <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 bg-blue-50 rounded-xl border border-blue-100 hover:bg-blue-100 transition-colors">
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shadow-md">
                     {index + 1}
                   </span>
-                  <p className="text-gray-700 leading-relaxed pt-1">{suggestion}</p>
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed pt-0.5 sm:pt-1">{suggestion}</p>
                 </div>
               ))}
             </div>
@@ -353,21 +361,23 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Stratégie de prévention - Utilise TreatmentRecommendation.prevention_strategy */}
         {result.treatment?.prevention_strategy && result.treatment.prevention_strategy.length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-              Stratégie de prévention
-              <span className="ml-2 text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0">
+              <div className="flex items-center">
+                <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                Stratégie de prévention
+              </div>
+              <span className="ml-0 sm:ml-2 text-xs sm:text-sm bg-green-100 text-green-600 px-2 py-1 rounded-full">
                 {result.treatment.prevention_strategy.length} stratégie{result.treatment.prevention_strategy.length > 1 ? 's' : ''}
               </span>
             </h4>
             <div className="space-y-3">
               {result.treatment.prevention_strategy.map((strategy: string, index: number) => (
-                <div key={index} className="flex items-start space-x-4 p-4 bg-green-50 rounded-xl border border-green-100 hover:bg-green-100 transition-colors">
-                  <div className="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md">
-                    <span className="text-sm font-bold">{index + 1}</span>
+                <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 bg-green-50 rounded-xl border border-green-100 hover:bg-green-100 transition-colors">
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-green-500 text-white rounded-full flex items-center justify-center shadow-md">
+                    <span className="text-xs sm:text-sm font-bold">{index + 1}</span>
                   </div>
-                  <p className="text-gray-700 leading-relaxed pt-1">{strategy}</p>
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed pt-0.5 sm:pt-1">{strategy}</p>
                 </div>
               ))}
             </div>
@@ -399,12 +409,12 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Niveau de sévérité - Amélioré visuellement */}
         {result.severity && (
-          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100 mb-8">
-            <span className="text-gray-700 font-semibold flex items-center">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0 p-3 sm:p-4 bg-gray-50 rounded-xl border border-gray-100 mb-6 sm:mb-8">
+            <span className="text-xs sm:text-sm text-gray-700 font-semibold flex items-center">
               <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
               Niveau de sévérité:
             </span>
-            <span className={`px-4 py-2 rounded-xl text-sm font-semibold border-2 ${getSeverityColor(result.severity)}`}>
+            <span className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold border-2 ${getSeverityColor(result.severity)}`}>
               {result.severity}
             </span>
           </div>
@@ -437,21 +447,23 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Suivi et surveillance - Utilise TreatmentRecommendation.monitoring_followup */}
         {result.treatment?.monitoring_followup && result.treatment.monitoring_followup.length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
-              Suivi et surveillance
-              <span className="ml-2 text-sm bg-purple-100 text-purple-600 px-2 py-1 rounded-full">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0">
+              <div className="flex items-center">
+                <span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+                Suivi et surveillance
+              </div>
+              <span className="ml-0 sm:ml-2 text-xs sm:text-sm bg-purple-100 text-purple-600 px-2 py-1 rounded-full">
                 {result.treatment.monitoring_followup.length} point{result.treatment.monitoring_followup.length > 1 ? 's' : ''}
               </span>
             </h4>
             <div className="space-y-3">
               {result.treatment.monitoring_followup.map((followup: string, index: number) => (
-                <div key={index} className="flex items-start space-x-4 p-4 bg-purple-50 rounded-xl border border-purple-100 hover:bg-purple-100 transition-colors">
-                  <span className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-lg shadow-md">
+                <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 bg-purple-50 rounded-xl border border-purple-100 hover:bg-purple-100 transition-colors">
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm sm:text-lg shadow-md">
                     📊
                   </span>
-                  <p className="text-gray-700 leading-relaxed pt-1">{followup}</p>
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed pt-0.5 sm:pt-1">{followup}</p>
                 </div>
               ))}
             </div>
@@ -460,17 +472,17 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Délai prévu - Utilise TreatmentRecommendation.expected_timeline */}
         {result.treatment?.expected_timeline && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>
               Délai prévu
             </h4>
-            <div className="p-4 bg-orange-50 rounded-xl border border-orange-100">
-              <div className="flex items-center space-x-3">
-                <span className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-lg shadow-md">
+            <div className="p-3 sm:p-4 bg-orange-50 rounded-xl border border-orange-100">
+              <div className="flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-3">
+                <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm sm:text-lg shadow-md">
                   ⏱️
                 </span>
-                <p className="text-gray-700 leading-relaxed">{result.treatment.expected_timeline}</p>
+                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">{result.treatment.expected_timeline}</p>
               </div>
             </div>
           </div>
@@ -478,18 +490,18 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Recommandations générales - Fallback pour compatibilité */}
         {!result.treatment?.monitoring_followup && result.recommendations && result.recommendations.length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="w-2 h-2 bg-indigo-500 rounded-full mr-3"></span>
               Recommandations générales
             </h4>
             <div className="space-y-3">
               {result.recommendations.map((recommendation: string, index: number) => (
-                <div key={index} className="flex items-start space-x-4 p-4 bg-indigo-50 rounded-xl border border-indigo-100 hover:bg-indigo-100 transition-colors">
-                  <span className="flex-shrink-0 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center text-lg shadow-md">
+                <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 bg-indigo-50 rounded-xl border border-indigo-100 hover:bg-indigo-100 transition-colors">
+                  <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center text-sm sm:text-lg shadow-md">
                     💡
                   </span>
-                  <p className="text-gray-700 leading-relaxed pt-1">{recommendation}</p>
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed pt-0.5 sm:pt-1">{recommendation}</p>
                 </div>
               ))}
             </div>
@@ -498,18 +510,18 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Mesures préventives - Améliorées visuellement */}
         {result.preventiveMeasures && result.preventiveMeasures.length > 0 && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
               Mesures préventives
             </h4>
             <div className="space-y-3">
               {result.preventiveMeasures.map((measure: string, index: number) => (
-                <div key={index} className="flex items-start space-x-4 p-4 bg-blue-50 rounded-xl border border-blue-100 hover:bg-blue-100 transition-colors">
-                  <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md">
-                    <ShieldIcon className="w-4 h-4" />
+                <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-3 sm:p-4 bg-blue-50 rounded-xl border border-blue-100 hover:bg-blue-100 transition-colors">
+                  <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-md">
+                    <ShieldIcon className="w-3 h-3 sm:w-4 sm:h-4" />
                   </div>
-                  <p className="text-gray-700 leading-relaxed pt-1">{measure}</p>
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed pt-0.5 sm:pt-1">{measure}</p>
                 </div>
               ))}
             </div>
@@ -518,40 +530,40 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
         {/* Données environnementales - Améliorées visuellement */}
         {result.environmentalData && (
-          <div className="mb-8">
-            <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+          <div className="mb-6 sm:mb-8">
+            <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="w-2 h-2 bg-teal-500 rounded-full mr-3"></span>
               Conditions environnementales
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-teal-50 rounded-xl border border-teal-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-5 bg-teal-50 rounded-xl border border-teal-200">
               {result.environmentalData.temperature && (
-                <div className="bg-white p-3 rounded-lg border border-teal-200">
-                  <span className="text-sm font-semibold text-teal-800 block">🌡️ Température:</span>
-                  <span className="text-teal-700 font-bold text-lg">{result.environmentalData.temperature}°C</span>
+                <div className="bg-white p-2 sm:p-3 rounded-lg border border-teal-200">
+                  <span className="text-xs sm:text-sm font-semibold text-teal-800 block">🌡️ Température:</span>
+                  <span className="text-teal-700 font-bold text-sm sm:text-lg">{result.environmentalData.temperature}°C</span>
                 </div>
               )}
               {result.environmentalData.humidity && (
-                <div className="bg-white p-3 rounded-lg border border-teal-200">
-                  <span className="text-sm font-semibold text-teal-800 block">💧 Humidité:</span>
-                  <span className="text-teal-700 font-bold text-lg">{result.environmentalData.humidity}%</span>
+                <div className="bg-white p-2 sm:p-3 rounded-lg border border-teal-200">
+                  <span className="text-xs sm:text-sm font-semibold text-teal-800 block">💧 Humidité:</span>
+                  <span className="text-teal-700 font-bold text-sm sm:text-lg">{result.environmentalData.humidity}%</span>
                 </div>
               )}
               {result.environmentalData.soilMoisture && (
-                <div className="bg-white p-3 rounded-lg border border-teal-200">
-                  <span className="text-sm font-semibold text-teal-800 block">🌱 Humidité du sol:</span>
-                  <span className="text-teal-700 font-bold text-lg">{result.environmentalData.soilMoisture}%</span>
+                <div className="bg-white p-2 sm:p-3 rounded-lg border border-teal-200">
+                  <span className="text-xs sm:text-sm font-semibold text-teal-800 block">🌱 Humidité du sol:</span>
+                  <span className="text-teal-700 font-bold text-sm sm:text-lg">{result.environmentalData.soilMoisture}%</span>
                 </div>
               )}
               {result.environmentalData.phLevel && (
-                <div className="bg-white p-3 rounded-lg border border-teal-200">
-                  <span className="text-sm font-semibold text-teal-800 block">⚗️ pH du sol:</span>
-                  <span className="text-teal-700 font-bold text-lg">{result.environmentalData.phLevel}</span>
+                <div className="bg-white p-2 sm:p-3 rounded-lg border border-teal-200">
+                  <span className="text-xs sm:text-sm font-semibold text-teal-800 block">⚗️ pH du sol:</span>
+                  <span className="text-teal-700 font-bold text-sm sm:text-lg">{result.environmentalData.phLevel}</span>
                 </div>
               )}
               {result.environmentalData.location && (
-                <div className="col-span-1 md:col-span-2 bg-white p-3 rounded-lg border border-teal-200">
-                  <span className="text-sm font-semibold text-teal-800 block">📍 Localisation:</span>
-                  <span className="text-teal-700 font-medium">{result.environmentalData.location}</span>
+                <div className="col-span-1 sm:col-span-2 bg-white p-2 sm:p-3 rounded-lg border border-teal-200">
+                  <span className="text-xs sm:text-sm font-semibold text-teal-800 block">📍 Localisation:</span>
+                  <span className="text-teal-700 font-medium text-xs sm:text-base">{result.environmentalData.location}</span>
                 </div>
               )}
             </div>
@@ -559,18 +571,20 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
         )}
 
         {/* Métadonnées - Améliorées visuellement */}
-        <div className="mt-6 pt-6 border-t-2 border-gray-100">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0 text-sm">
-            <div className="flex items-center text-gray-600">
-              <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
-              <span className="font-medium">Analysé le:</span>
-              <span className="ml-2 bg-gray-100 px-2 py-1 rounded font-semibold">
+        <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t-2 border-gray-100">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-3 sm:space-y-0 text-xs sm:text-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 text-gray-600">
+              <div className="flex items-center">
+                <span className="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+                <span className="font-medium">Analysé le:</span>
+              </div>
+              <span className="ml-0 sm:ml-2 bg-gray-100 px-2 py-1 rounded font-semibold text-xs sm:text-sm">
                 {new Date(result.timestamp).toLocaleDateString('fr-FR')}
               </span>
             </div>
-            <div className="flex items-center text-gray-600">
+            <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 text-gray-600">
               <span className="font-medium">Service:</span>
-              <span className="ml-2 bg-blue-100 text-blue-700 px-2 py-1 rounded font-semibold">
+              <span className="ml-0 sm:ml-2 bg-blue-100 text-blue-700 px-2 py-1 rounded font-semibold text-xs sm:text-sm">
                 {result.service}
               </span>
             </div>
@@ -580,27 +594,29 @@ export function PredictionResult({ result, className = ''}: PredictionResultProp
 
 
         {/* Instruction pour agent conversationnel AI */}
-        <div className="mb-8 p-5 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border-2 border-purple-200">
-          <h4 className="text-lg font-semibold text-gray-800 mb-3 flex items-center">
-            <span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
-            Instruction pour l'Agent AI
-            <span className="ml-2 text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full font-medium">
+        <div className="mb-6 sm:mb-8 p-3 sm:p-5 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border-2 border-purple-200">
+          <h4 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0">
+            <div className="flex items-center">
+              <span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+              Instruction pour l'Agent AI
+            </div>
+            <span className="ml-0 sm:ml-2 text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full font-medium">
               🤖 Agent IA
             </span>
           </h4>
           {isLoadingInstruction ? (
-            <div className="flex items-center space-x-3 p-4 bg-white rounded-lg border border-purple-200">
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-purple-500"></div>
-              <span className="text-gray-600 italic">Génération de l'instruction en cours...</span>
+            <div className="flex items-center space-x-3 p-3 sm:p-4 bg-white rounded-lg border border-purple-200">
+              <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-purple-500"></div>
+              <span className="text-xs sm:text-sm text-gray-600 italic">Génération de l'instruction en cours...</span>
             </div>
           ) : (
-            <div className="p-4 bg-white rounded-lg border border-purple-200 shadow-sm">
-              <div className="flex items-start space-x-3">
-                <div className="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-md">
+            <div className="p-3 sm:p-4 bg-white rounded-lg border border-purple-200 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-start space-y-3 sm:space-y-0 sm:space-x-3">
+                <div className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold shadow-md">
                   🤖
                 </div>
                 <div className="flex-1">
-                  <p className="text-gray-700 leading-relaxed text-justify font-medium">
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed text-justify font-medium">
                     {aiInstruction}
                   </p>
                   <div className="mt-3 pt-3 border-t border-purple-100">

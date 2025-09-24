@@ -358,18 +358,10 @@ export default function TerraLysAIAssistant() {
   });
 
   /**
-   * Questions visibles dans le carrousel (3 questions à la fois sur desktop, 1 sur mobile)
+   * Questions visibles dans le carrousel horizontal (toutes les questions affichées)
    */
   const getVisibleQuestions = () => {
-    const questionsPerPage = isMobile ? 1 : 3;
-    const questions = [];
-    
-    for (let i = 0; i < questionsPerPage; i++) {
-      const index = (currentQuestionIndex + i) % popularQuestions.length;
-      questions.push(popularQuestions[index]);
-    }
-    
-    return questions;
+    return popularQuestions;
   };
 
   return (
@@ -587,20 +579,155 @@ export default function TerraLysAIAssistant() {
                         <div ref={messagesEndRef} />
                       </div>
 
-                      {/* Questions populaires - Interface compacte */}
-                      <div className="border-t p-2">
-                        <div className="space-y-1">
-                          {getVisibleQuestions().map((question, index) => (
-                            <button
-                              key={`${question.id}-${currentQuestionIndex}-${index}`}
-                              onClick={() => handleQuestionSelect(question)}
-                              disabled={isTyping}
-                              className="w-full p-2 text-left text-sm text-gray-700 hover:bg-gray-50 rounded transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      {/* Questions populaires - Interface horizontale moderne */}
+                      <div className="border-t bg-gradient-to-r from-green-50 to-emerald-50 p-3 sm:p-4">
+                        <motion.div 
+                          className="flex items-center justify-between mb-3"
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <motion.h4 
+                            className="text-xs sm:text-sm font-semibold text-gray-800 flex items-center gap-1 sm:gap-2"
+                            whileHover={{ scale: 1.02 }}
+                          >
+                            <motion.div
+                              animate={{ rotate: [0, 10, -10, 0] }}
+                              transition={{ 
+                                duration: 2, 
+                                repeat: Infinity, 
+                                repeatType: "reverse",
+                                ease: "easeInOut"
+                              }}
                             >
-                              {question.question}
-                            </button>
-                          ))}
+                              <Sparkles className="w-4 h-4 text-green-600" />
+                            </motion.div>
+                            Questions populaires
+                          </motion.h4>
+                          <div className="flex items-center gap-1">
+                            <motion.button
+                              onClick={() => navigateQuestions('prev')}
+                              disabled={isTyping}
+                              whileHover={{ scale: 1.1, backgroundColor: "rgb(249 250 251)" }}
+                              whileTap={{ scale: 0.95 }}
+                              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                              aria-label="Question précédente"
+                            >
+                              <ChevronLeft className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-600" />
+                            </motion.button>
+                            <motion.button
+                              onClick={() => navigateQuestions('next')}
+                              disabled={isTyping}
+                              whileHover={{ scale: 1.1, backgroundColor: "rgb(249 250 251)" }}
+                              whileTap={{ scale: 0.95 }}
+                              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                              aria-label="Question suivante"
+                            >
+                              <ChevronRightIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-600" />
+                            </motion.button>
+                          </div>
+                        </motion.div>
+                        
+                        {/* Carrousel horizontal scrollable - Version responsive */}
+                        <div 
+                          className="overflow-x-auto scrollbar-hide"
+                          onTouchStart={handleTouchStart}
+                          onTouchMove={handleTouchMove}
+                          onTouchEnd={handleTouchEnd}
+                        >
+                          <div className="flex gap-2 sm:gap-3 pb-2" style={{ width: 'max-content' }}>
+                            {getVisibleQuestions().map((question, index) => (
+                              <motion.button
+                                key={question.id}
+                                onClick={() => handleQuestionSelect(question)}
+                                disabled={isTyping}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ 
+                                  delay: index * 0.1,
+                                  type: "spring",
+                                  stiffness: 100,
+                                  damping: 15
+                                }}
+                                whileHover={{ 
+                                  scale: 1.02, 
+                                  y: -2,
+                                  transition: { type: "spring", stiffness: 400, damping: 10 }
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                                className={`flex-shrink-0 p-3 text-left bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:border-green-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group ${
+                                  isMobile ? 'w-56' : 'w-64'
+                                }`}
+                              >
+                                <div className="flex items-start gap-2 sm:gap-3">
+                                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">
+                                    <HelpCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-600 group-hover:scale-110 transition-transform duration-200" />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p className={`font-medium text-gray-900 line-clamp-2 group-hover:text-green-700 transition-colors duration-200 ${
+                                      isMobile ? 'text-xs' : 'text-sm'
+                                    }`}>
+                                      {question.question}
+                                    </p>
+                                    <div className="flex items-center gap-1 sm:gap-2 mt-1.5 sm:mt-2">
+                                      <Badge 
+                                        variant="secondary" 
+                                        className="text-xs bg-green-100 text-green-700 hover:bg-green-200 transition-colors duration-200 px-1.5 py-0.5 sm:px-2 sm:py-1"
+                                      >
+                                        {question.tags[0]}
+                                      </Badge>
+                                      <motion.div 
+                                        className={`w-2 h-2 rounded-full ${
+                                          question.priority === 'high' ? 'bg-red-400' :
+                                          question.priority === 'medium' ? 'bg-yellow-400' : 'bg-green-400'
+                                        }`}
+                                        animate={{ scale: [1, 1.2, 1] }}
+                                        transition={{ 
+                                          duration: 2, 
+                                          repeat: Infinity, 
+                                          repeatType: "reverse",
+                                          delay: index * 0.2
+                                        }}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </motion.button>
+                            ))}
+                          </div>
                         </div>
+                        
+                        {/* Indicateurs de pagination améliorés */}
+                        <motion.div 
+                          className="flex justify-center gap-1 mt-3"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.2, duration: 0.3 }}
+                        >
+                          {popularQuestions.map((_, index) => (
+                            <motion.button
+                              key={index}
+                              onClick={() => goToQuestion(index)}
+                              whileHover={{ scale: 1.2 }}
+                              whileTap={{ scale: 0.9 }}
+                              className={`rounded-full transition-all duration-300 ${
+                                index === currentQuestionIndex 
+                                  ? 'bg-green-500 w-4 h-2 shadow-sm' 
+                                  : 'bg-gray-300 hover:bg-gray-400 w-2 h-2'
+                              }`}
+                              aria-label={`Aller à la question ${index + 1}`}
+                            >
+                              {index === currentQuestionIndex && (
+                                <motion.div
+                                  className="w-full h-full bg-green-600 rounded-full"
+                                  initial={{ scale: 0 }}
+                                  animate={{ scale: 1 }}
+                                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                />
+                              )}
+                            </motion.button>
+                          ))}
+                        </motion.div>
                       </div>
                     </>
                   ) : (

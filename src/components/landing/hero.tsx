@@ -147,11 +147,11 @@ export default function AppHero() {
   };
  
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
+    <section className="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 py-16 text-white sm:px-6 lg:px-8 lg:py-2">
       {/* Fond principal avec gradient moderne */}
       <div className="absolute inset-0 z-0 h-full w-full opacity-90">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-slate-950/80 to-black"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-primary/15 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-slate-950/80 to-black"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-indigo-600/15 via-transparent to-transparent"></div>
       </div>
 
       {/* Effet de bruit subtil */}
@@ -185,15 +185,15 @@ export default function AppHero() {
         </div>
  
         {/* Spots lumineux améliorés */}
-        <div className="absolute -left-32 top-20 h-80 w-80 rounded-full bg-primary/10 blur-[120px]"></div>
-        <div className="absolute -right-32 bottom-20 h-80 w-80 rounded-full bg-primary/15 blur-[120px]"></div>
+        <div className="absolute -left-32 top-20 h-80 w-80 rounded-full bg-blue-500/10 blur-[120px]"></div>
+        <div className="absolute -right-32 bottom-20 h-80 w-80 rounded-full bg-indigo-500/10 blur-[120px]"></div>
         <motion.div
           animate={glowAnimation}
-          className="absolute left-1/4 top-1/3 h-60 w-60 rounded-full bg-primary/8 blur-[100px]"
+          className="absolute left-1/4 top-1/3 h-60 w-60 rounded-full bg-blue-400/8 blur-[100px]"
         ></motion.div>
         <motion.div
           animate={glowAnimation}
-          className="absolute bottom-1/3 right-1/4 h-60 w-60 rounded-full bg-primary/8 blur-[100px]"
+          className="absolute bottom-1/3 right-1/4 h-60 w-60 rounded-full bg-indigo-400/8 blur-[100px]"
         ></motion.div>
  
         {/* Particle effects - subtle dots */}
@@ -308,10 +308,10 @@ export default function AppHero() {
           <div className="w-full lg:w-auto">
             <motion.div
               variants={itemVariants}
-              className="mb-6 inline-flex items-center rounded-full border border-primary/30 bg-gradient-to-r from-primary/10 to-primary/10 px-4 py-2 text-sm text-primary/80 backdrop-blur-sm"
+              className="mb-6 inline-flex items-center rounded-full border border-blue-500/30 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 px-4 py-2 text-sm text-blue-300 backdrop-blur-sm"
             >
-              <Sparkles className="mr-2 h-4 w-4 text-primary" />
-              <span className="mr-2 rounded-full bg-gradient-to-r from-green-500 to-primary px-3 py-1 text-xs font-semibold text-white shadow-lg">
+              <Sparkles className="mr-2 h-4 w-4 text-blue-400" />
+              <span className="mr-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
                 IA Avancée
               </span>
               Plateforme TerraLys - Agriculture & Meetings Intelligents
@@ -319,7 +319,7 @@ export default function AppHero() {
  
             <motion.h1
               variants={itemVariants}
-              className="mb-8 bg-gradient-to-r from-white via-primary/80 to-white bg-clip-text text-4xl font-bold leading-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl"
+              className="mb-8 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-4xl font-bold leading-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl"
             >
               L'IA au service de <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-green-400 via-primary to-primary bg-clip-text text-transparent">
@@ -350,7 +350,7 @@ export default function AppHero() {
                 </p>
                 <p className="text-xs text-gray-400">Agents IA Créés</p>
               </div>
-              <div className="rounded-lg border border-purple-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
+              <div className="rounded-lg border border-green-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
                   {statsState.precision.toFixed(1)}%
                 </p>
@@ -399,7 +399,7 @@ export default function AppHero() {
               className="mb-8 flex flex-col flex-wrap gap-4 sm:flex-row lg:justify-end"
             >
               <Button
-                className="group rounded-xl border border-primary/50 bg-gradient-to-r from-primary via-primary to-primary px-8 py-4 text-white shadow-xl shadow-primary/25 transition-all duration-300 hover:scale-105 hover:shadow-primary/40"
+                className="group rounded-xl border border-blue-400/50 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 px-8 py-4 text-white shadow-xl shadow-blue-600/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/40"
                 size="lg"
               >
                 Démarrer Gratuitement
@@ -419,23 +419,23 @@ export default function AppHero() {
             {/* Preuve sociale */}
             <motion.div
               variants={itemVariants}
-              className="mx-auto flex items-center gap-3 rounded-xl border border-primary/20 bg-gradient-to-r from-primary/20 to-primary/30 px-4 py-2 backdrop-blur-sm lg:mx-0 lg:ml-auto"
+              className="mx-auto flex items-center gap-3 rounded-xl border border-blue-500/20 bg-gradient-to-r from-blue-950/50 to-indigo-950/50 px-4 py-2 backdrop-blur-sm lg:mx-0 lg:ml-auto"
             >
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="h-7 w-7 overflow-hidden rounded-full border-2 border-primary/30 bg-gradient-to-br from-primary to-primary shadow-lg"
+                    className="h-7 w-7 overflow-hidden rounded-full border-2 border-blue-400/30 bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg"
                   >
-                    <div className="h-full w-full bg-gradient-to-br from-primary/80 to-primary opacity-90"></div>
+                    <div className="h-full w-full bg-gradient-to-br from-blue-400 to-indigo-500 opacity-90"></div>
                   </div>
                 ))}
               </div>
-              <span className="text-sm text-primary/80">
+              <span className="text-sm text-blue-100">
                 <span className="font-bold text-white">1000+</span>{' '}
                 entreprises font confiance à TerraLys
               </span>
-              <ArrowUpRight className="h-4 w-4 text-primary" />
+              <ArrowUpRight className="h-4 w-4 text-blue-400" />
             </motion.div>
           </div>
         </motion.div>

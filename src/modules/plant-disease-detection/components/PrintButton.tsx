@@ -55,10 +55,11 @@ const PrintButton: React.FC<PrintButtonProps> = ({
                 onClick={handlePrint}
                 variant={variant}
                 size={size}
-                className={`flex items-center gap-2 ${className}`}
+                className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm ${className}`}
             >
-                <Printer className="w-4 h-4" />
-                Imprimer PDF
+                <Printer className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Imprimer PDF</span>
+                <span className="sm:hidden">PDF</span>
             </Button>
 
             {/* Composant caché pour l'impression */}

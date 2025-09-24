@@ -113,7 +113,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
-      className={`relative flex flex-col items-center justify-center p-10 border-2 border-dashed rounded-2xl transition-all duration-500 transform hover:scale-[1.02]
+      className={`relative flex flex-col items-center justify-center p-6 sm:p-8 lg:p-12 border-2 border-dashed rounded-2xl transition-all duration-500 transform hover:scale-[1.02]
         ${isDragging 
           ? 'border-emerald-400 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/30 dark:to-teal-900/30 shadow-lg scale-105' 
           : 'border-gray-300 dark:border-gray-600 hover:border-emerald-300 dark:hover:border-emerald-500 hover:shadow-md'
@@ -149,41 +149,41 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       {/* Contenu principal */}
       {previewUrl ? (
         // Mode prévisualisation
-        <div className="flex flex-col items-center gap-6 text-center w-full">
+        <div className="flex flex-col items-center gap-4 sm:gap-6 text-center w-full">
           <div className="relative">
             <img 
               src={previewUrl} 
               alt="Prévisualisation de l'image sélectionnée"
-              className="max-w-full max-h-80 rounded-xl shadow-lg object-contain"
+              className="max-w-full max-h-48 sm:max-h-64 lg:max-h-80 rounded-xl shadow-lg object-contain"
             />
             <div className="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
               ✓ Sélectionnée
             </div>
           </div>
           
-          <div className="space-y-3">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+          <div className="space-y-2 sm:space-y-3">
+            <h3 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
               Image sélectionnée
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-lg leading-relaxed">
               Confirmez pour lancer l'analyse ou changez d'image
             </p>
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-emerald-500">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
                 <path d="m9 12 2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              <span>Fichier : {selectedFile?.name} ({((selectedFile?.size || 0) / 1024 / 1024).toFixed(2)} MB)</span>
+              <span className="truncate">Fichier : {selectedFile?.name} ({((selectedFile?.size || 0) / 1024 / 1024).toFixed(2)} MB)</span>
             </div>
           </div>
         </div>
       ) : (
         // Mode sélection
-        <div className="flex flex-col items-center gap-6 text-center">
+        <div className="flex flex-col items-center gap-4 sm:gap-6 text-center">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full blur-lg opacity-20 animate-pulse"></div>
-            <div className="relative bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-800 dark:to-teal-800 p-4 rounded-full">
-              <svg width="56" height="56" viewBox="0 0 24 24" fill="none" className="text-emerald-600 dark:text-emerald-400">
+            <div className="relative bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-800 dark:to-teal-800 p-3 sm:p-4 rounded-full">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="sm:w-14 sm:h-14 text-emerald-600 dark:text-emerald-400">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <polyline points="14,2 14,8 20,8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -193,14 +193,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             </div>
           </div>
           
-          <div className="space-y-3">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+          <div className="space-y-2 sm:space-y-3">
+            <h3 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
               Ajouter une image
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-lg leading-relaxed">
               Glissez une image ici ou utilisez une option ci-dessous
             </p>
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-emerald-500">
                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
                 <path d="m9 12 2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -212,7 +212,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       )}
       
       {/* Boutons d'action */}
-      <div className="mt-8 flex flex-wrap justify-center gap-4">
+      <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 w-full">
         {previewUrl ? (
           // Boutons en mode prévisualisation
           <>
@@ -220,32 +220,34 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
               onClick={handleConfirmImage}
               disabled={isLoading}
               className="group bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold 
-                       py-3 px-6 rounded-xl transition-all duration-300 flex items-center gap-3 
-                       disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-105"
+                       py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 
+                       disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base"
               aria-label="Confirmer et analyser"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-white group-hover:scale-110 transition-transform">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform">
                 <path d="m9 12 2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
               </svg>
-              Confirmer et analyser
+              <span className="hidden sm:inline">Confirmer et analyser</span>
+              <span className="sm:hidden">Analyser</span>
             </button>
             
             <button
               onClick={handleCancelImage}
               disabled={isLoading}
               className="group bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 dark:from-gray-700 dark:to-gray-600 dark:hover:from-gray-600 dark:hover:to-gray-500 
-                       text-gray-900 dark:text-white font-semibold py-3 px-6 rounded-xl 
-                       transition-all duration-300 flex items-center gap-3 disabled:opacity-50 
-                       disabled:cursor-not-allowed shadow-md hover:shadow-lg transform hover:scale-105"
+                       text-gray-900 dark:text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-xl 
+                       transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 disabled:opacity-50 
+                       disabled:cursor-not-allowed shadow-md hover:shadow-lg transform hover:scale-105 text-sm sm:text-base"
               aria-label="Changer d'image"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-white transition-colors">
                 <path d="M3 6h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              Changer d'image
+              <span className="hidden sm:inline">Changer d'image</span>
+              <span className="sm:hidden">Changer</span>
             </button>
           </>
         ) : (
@@ -255,32 +257,34 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
               onClick={() => fileInputRef.current?.click()}
               disabled={isLoading}
               className="group bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 dark:from-gray-700 dark:to-gray-600 dark:hover:from-gray-600 dark:hover:to-gray-500 
-                       text-gray-900 dark:text-white font-semibold py-3 px-6 rounded-xl 
-                       transition-all duration-300 flex items-center gap-3 disabled:opacity-50 
-                       disabled:cursor-not-allowed shadow-md hover:shadow-lg transform hover:scale-105"
+                       text-gray-900 dark:text-white font-semibold py-2 sm:py-3 px-4 sm:px-6 rounded-xl 
+                       transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 disabled:opacity-50 
+                       disabled:cursor-not-allowed shadow-md hover:shadow-lg transform hover:scale-105 text-sm sm:text-base flex-1 sm:flex-none"
               aria-label="Parcourir les fichiers"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-white transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-white transition-colors">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <polyline points="7,10 12,15 17,10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-              Parcourir les fichiers
+              <span className="hidden sm:inline">Parcourir les fichiers</span>
+              <span className="sm:hidden">Parcourir</span>
             </button>
             
             <button
               onClick={() => cameraInputRef.current?.click()}
               disabled={isLoading}
               className="group bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold 
-                       py-3 px-6 rounded-xl transition-all duration-300 flex items-center gap-3 
-                       disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-105"
+                       py-2 sm:py-3 px-4 sm:px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 
+                       disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base flex-1 sm:flex-none"
               aria-label="Prendre une photo"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-white group-hover:scale-110 transition-transform">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform">
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/>
               </svg>
-              Prendre une photo
+              <span className="hidden sm:inline">Prendre une photo</span>
+              <span className="sm:hidden">Photo</span>
             </button>
           </>
         )}
@@ -289,14 +293,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       {/* Indicateur de chargement */}
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-white/90 dark:bg-gray-800/90 rounded-2xl backdrop-blur-sm">
-          <div className="flex flex-col items-center gap-4 text-emerald-600">
+          <div className="flex flex-col items-center gap-3 sm:gap-4 text-emerald-600">
             <div className="relative">
-              <div className="animate-spin rounded-full h-12 w-12 border-4 border-emerald-200 border-t-emerald-600"></div>
+              <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-4 border-emerald-200 border-t-emerald-600"></div>
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 opacity-20 animate-pulse"></div>
             </div>
             <div className="text-center">
-              <span className="font-semibold text-lg text-gray-800 dark:text-white">Traitement en cours...</span>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Analyse de votre image</p>
+              <span className="font-semibold text-sm sm:text-lg text-gray-800 dark:text-white">Traitement en cours...</span>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1">Analyse de votre image</p>
             </div>
           </div>
         </div>

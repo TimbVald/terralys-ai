@@ -21,9 +21,9 @@ export function Spinner({
   className = '' 
 }: SpinnerProps) {
   const sizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-6 h-6',
-    lg: 'w-8 h-8'
+    sm: 'w-3 h-3 sm:w-4 sm:h-4',
+    md: 'w-5 h-5 sm:w-6 sm:h-6',
+    lg: 'w-6 h-6 sm:w-8 sm:h-8'
   };
 
   const colorClasses = {
@@ -73,9 +73,9 @@ export function LoadingSpinner({
   className = ''
 }: LoadingSpinnerProps) {
   return (
-    <div className={`flex flex-col items-center justify-center space-y-3 ${className}`}>
+    <div className={`flex flex-col items-center justify-center space-y-2 sm:space-y-3 ${className}`}>
       <Spinner size={size} />
-      <p className="text-gray-600 text-sm">{message}</p>
+      <p className="text-gray-600 text-xs sm:text-sm text-center px-2">{message}</p>
     </div>
   );
 }

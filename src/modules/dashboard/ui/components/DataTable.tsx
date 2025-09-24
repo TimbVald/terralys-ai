@@ -124,20 +124,20 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div className={cn("bg-white rounded-lg border border-gray-200", className)}>
       {/* En-tête avec titre et recherche */}
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center justify-between">
+      <div className="p-4 sm:p-6 border-b border-gray-200">
+        <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
           {title && (
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
           )}
           {searchable && (
-            <div className="relative">
+            <div className="relative w-full sm:w-auto">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
                 type="text"
                 placeholder={searchPlaceholder}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
           )}
@@ -146,25 +146,25 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="w-full min-w-full">
           <thead className="bg-gray-50">
             <tr>
               {columns.map((column) => (
                 <th
                   key={String(column.key)}
                   className={cn(
-                    "px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider",
+                    "px-3 sm:px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider",
                     column.align === 'center' && "text-center",
                     column.align === 'right' && "text-right",
                     column.sortable && "cursor-pointer hover:bg-gray-100 select-none"
                   )}
-                  style={{ width: column.width }}
+                  style={{ width: column.width, minWidth: '120px' }}
                   onClick={() => column.sortable && handleSort(column.key)}
                 >
                   <div className="flex items-center space-x-1">
-                    <span>{column.title}</span>
+                    <span className="truncate">{column.title}</span>
                     {column.sortable && (
-                      <div className="flex flex-col">
+                      <div className="flex flex-col flex-shrink-0">
                         <ChevronUp 
                           className={cn(
                             "w-3 h-3",
@@ -193,7 +193,7 @@ export function DataTable<T extends Record<string, any>>({
               <tr>
                 <td 
                   colSpan={columns.length} 
-                  className="px-6 py-8 text-center text-gray-500"
+                  className="px-3 sm:px-6 py-8 text-center text-gray-500 text-sm"
                 >
                   {emptyMessage}
                 </td>
@@ -205,15 +205,17 @@ export function DataTable<T extends Record<string, any>>({
                     <td
                       key={String(column.key)}
                       className={cn(
-                        "px-6 py-4 whitespace-nowrap text-sm text-gray-900",
+                        "px-3 sm:px-6 py-4 text-sm text-gray-900",
                         column.align === 'center' && "text-center",
                         column.align === 'right' && "text-right"
                       )}
                     >
-                      {column.render 
-                        ? column.render(row[column.key], row)
-                        : row[column.key]
-                      }
+                      <div className="truncate max-w-xs sm:max-w-none">
+                        {column.render 
+                          ? column.render(row[column.key], row)
+                          : row[column.key]
+                        }
+                      </div>
                     </td>
                   ))}
                 </tr>
@@ -225,30 +227,31 @@ export function DataTable<T extends Record<string, any>>({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="px-6 py-3 border-t border-gray-200 flex items-center justify-between">
-          <div className="text-sm text-gray-700">
-            Affichage de {startIndex + 1} à {Math.min(startIndex + pageSize, sortedData.length)} sur {sortedData.length} résultats
+        <div className="px-3 sm:px-6 py-3 border-t border-gray-200 flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+          <div className="text-xs sm:text-sm text-gray-700 text-center sm:text-left">
+            <span className="hidden sm:inline">Affichage de {startIndex + 1} à {Math.min(startIndex + pageSize, sortedData.length)} sur {sortedData.length} résultats</span>
+            <span className="sm:hidden">{startIndex + 1}-{Math.min(startIndex + pageSize, sortedData.length)} / {sortedData.length}</span>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-center space-x-1 sm:space-x-2">
             <button
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
-              className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              className="p-1.5 sm:p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
             </button>
             
             <div className="flex items-center space-x-1">
-              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              {Array.from({ length: Math.min(3, totalPages) }, (_, i) => {
                 let pageNumber;
-                if (totalPages <= 5) {
+                if (totalPages <= 3) {
                   pageNumber = i + 1;
-                } else if (currentPage <= 3) {
+                } else if (currentPage <= 2) {
                   pageNumber = i + 1;
-                } else if (currentPage >= totalPages - 2) {
-                  pageNumber = totalPages - 4 + i;
+                } else if (currentPage >= totalPages - 1) {
+                  pageNumber = totalPages - 2 + i;
                 } else {
-                  pageNumber = currentPage - 2 + i;
+                  pageNumber = currentPage - 1 + i;
                 }
 
                 return (
@@ -256,7 +259,7 @@ export function DataTable<T extends Record<string, any>>({
                     key={pageNumber}
                     onClick={() => setCurrentPage(pageNumber)}
                     className={cn(
-                      "px-3 py-1 rounded-lg text-sm",
+                      "px-2 sm:px-3 py-1 rounded-lg text-xs sm:text-sm min-w-[32px]",
                       currentPage === pageNumber
                         ? "bg-blue-600 text-white"
                         : "text-gray-700 hover:bg-gray-100"
@@ -271,9 +274,9 @@ export function DataTable<T extends Record<string, any>>({
             <button
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              className="p-1.5 sm:p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
             </button>
           </div>
         </div>

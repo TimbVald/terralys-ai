@@ -46,10 +46,10 @@ export function ChartContainer({
 }: ChartContainerProps) {
   if (loading) {
     return (
-      <div className={cn("bg-white rounded-lg border border-gray-200 p-6", className)}>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
+      <div className={cn("bg-white rounded-lg border border-gray-200 p-3 sm:p-4 lg:p-6", className)}>
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">{title}</h3>
         <div className="flex items-center justify-center" style={{ height }}>
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-blue-600"></div>
         </div>
       </div>
     );
@@ -57,9 +57,9 @@ export function ChartContainer({
 
   if (error) {
     return (
-      <div className={cn("bg-white rounded-lg border border-gray-200 p-6", className)}>
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
-        <div className="flex items-center justify-center text-red-600" style={{ height }}>
+      <div className={cn("bg-white rounded-lg border border-gray-200 p-3 sm:p-4 lg:p-6", className)}>
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">{title}</h3>
+        <div className="flex items-center justify-center text-red-600 text-sm sm:text-base" style={{ height }}>
           <p>Erreur lors du chargement des données</p>
         </div>
       </div>
@@ -67,8 +67,8 @@ export function ChartContainer({
   }
 
   return (
-    <div className={cn("bg-white rounded-lg border border-gray-200 p-6", className)}>
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
+    <div className={cn("bg-white rounded-lg border border-gray-200 p-3 sm:p-4 lg:p-6", className)}>
+      <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">{title}</h3>
       <div style={{ height }}>
         {children}
       </div>
@@ -109,24 +109,32 @@ export function TimeSeriesLineChart({
       error={error}
     >
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
+        <LineChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
           <XAxis 
             dataKey="date" 
             stroke="#6B7280"
-            fontSize={12}
+            fontSize={10}
+            className="sm:text-xs"
             tickFormatter={(value) => new Date(value).toLocaleDateString('fr-FR', { 
               month: 'short', 
               day: 'numeric' 
             })}
+            interval="preserveStartEnd"
           />
-          <YAxis stroke="#6B7280" fontSize={12} />
+          <YAxis 
+            stroke="#6B7280" 
+            fontSize={10}
+            className="sm:text-xs"
+            width={40}
+          />
           <Tooltip
             contentStyle={{
               backgroundColor: 'white',
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              fontSize: '12px'
             }}
             labelFormatter={(value) => new Date(value).toLocaleDateString('fr-FR')}
           />
@@ -135,8 +143,8 @@ export function TimeSeriesLineChart({
             dataKey={dataKey}
             stroke={color}
             strokeWidth={2}
-            dot={{ fill: color, strokeWidth: 2, r: 4 }}
-            activeDot={{ r: 6, stroke: color, strokeWidth: 2 }}
+            dot={{ fill: color, strokeWidth: 2, r: 3 }}
+            activeDot={{ r: 5, stroke: color, strokeWidth: 2 }}
           />
         </LineChart>
       </ResponsiveContainer>
@@ -166,24 +174,32 @@ export function TimeSeriesAreaChart({
       error={error}
     >
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data}>
+        <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
           <XAxis 
             dataKey="date" 
             stroke="#6B7280"
-            fontSize={12}
+            fontSize={10}
+            className="sm:text-xs"
             tickFormatter={(value) => new Date(value).toLocaleDateString('fr-FR', { 
               month: 'short', 
               day: 'numeric' 
             })}
+            interval="preserveStartEnd"
           />
-          <YAxis stroke="#6B7280" fontSize={12} />
+          <YAxis 
+            stroke="#6B7280" 
+            fontSize={10}
+            className="sm:text-xs"
+            width={40}
+          />
           <Tooltip
             contentStyle={{
               backgroundColor: 'white',
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              fontSize: '12px'
             }}
             labelFormatter={(value) => new Date(value).toLocaleDateString('fr-FR')}
           />
@@ -235,16 +251,31 @@ export function SimpleBarChart({
       error={error}
     >
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data}>
+        <BarChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-          <XAxis dataKey={nameKey} stroke="#6B7280" fontSize={12} />
-          <YAxis stroke="#6B7280" fontSize={12} />
+          <XAxis 
+            dataKey={nameKey} 
+            stroke="#6B7280" 
+            fontSize={10}
+            className="sm:text-xs"
+            interval={0}
+            angle={-45}
+            textAnchor="end"
+            height={60}
+          />
+          <YAxis 
+            stroke="#6B7280" 
+            fontSize={10}
+            className="sm:text-xs"
+            width={40}
+          />
           <Tooltip
             contentStyle={{
               backgroundColor: 'white',
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              fontSize: '12px'
             }}
           />
           <Bar dataKey={dataKey} fill={color} radius={[4, 4, 0, 0]} />
@@ -294,9 +325,10 @@ export function DistributionPieChart({
             cy="50%"
             labelLine={false}
             label={({ label, percentage }) => `${label}: ${percentage.toFixed(1)}%`}
-            outerRadius={80}
+            outerRadius={Math.min(height * 0.25, 80)}
             fill="#8884d8"
             dataKey="value"
+            fontSize={10}
           >
             {data.map((entry, index) => (
               <Cell 
@@ -310,14 +342,20 @@ export function DistributionPieChart({
               backgroundColor: 'white',
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              fontSize: '12px'
             }}
             formatter={(value: number, name: string) => [
               `${value} (${((value / data.reduce((sum, item) => sum + item.value, 0)) * 100).toFixed(1)}%)`,
               name
             ]}
           />
-          {showLegend && <Legend />}
+          {showLegend && (
+            <Legend 
+              wrapperStyle={{ fontSize: '12px' }}
+              iconSize={8}
+            />
+          )}
         </PieChart>
       </ResponsiveContainer>
     </ChartContainer>
@@ -346,40 +384,48 @@ export function DonutChart({
       loading={loading}
       error={error}
     >
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={100}
-            paddingAngle={5}
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell 
-                key={`cell-${index}`} 
-                fill={entry.color || COLORS[index % COLORS.length]} 
-              />
-            ))}
-          </Pie>
-          <Tooltip
-            contentStyle={{
-              backgroundColor: 'white',
-              border: '1px solid #E5E7EB',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-            }}
-          />
-          <Legend />
-        </PieChart>
-      </ResponsiveContainer>
-      {centerContent && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          {centerContent}
-        </div>
-      )}
+      <div className="relative">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={Math.min(height * 0.15, 60)}
+              outerRadius={Math.min(height * 0.25, 100)}
+              paddingAngle={5}
+              dataKey="value"
+            >
+              {data.map((entry, index) => (
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={entry.color || COLORS[index % COLORS.length]} 
+                />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'white',
+                border: '1px solid #E5E7EB',
+                borderRadius: '8px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                fontSize: '12px'
+              }}
+            />
+            <Legend 
+              wrapperStyle={{ fontSize: '12px' }}
+              iconSize={8}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+        {centerContent && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="text-center">
+              {centerContent}
+            </div>
+          </div>
+        )}
+      </div>
     </ChartContainer>
   );
 }

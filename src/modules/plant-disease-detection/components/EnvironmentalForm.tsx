@@ -284,59 +284,56 @@ export function EnvironmentalForm({
           </div>
         </div>
 
-        {/* Localisation avec détection automatique */}
-        <div className="md:col-span-2 group">
-          <label className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-emerald-500">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" strokeWidth="2"/>
-              <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="2"/>
-            </svg>
+        {/* Localisation */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Localisation
           </label>
-          <div className="flex gap-3">
-            <div className="flex-1 relative">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <div className="relative group flex-1">
               <input
                 type="text"
                 value={data.location}
                 onChange={(e) => updateData({ location: e.target.value })}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:border-gray-300"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:border-gray-300 text-sm sm:text-base"
                 placeholder="Paris, France"
               />
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400/10 to-teal-400/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <div className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-400/10 to-teal-400/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
             </div>
             {isIPinfoConfigured && (
               <button
                 type="button"
                 onClick={handleAutoDetectLocation}
                 disabled={isLoadingLocation}
-                className={`px-6 py-3 text-sm font-medium rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2 ${
+                className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-lg sm:rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-1 sm:gap-2 min-w-[100px] sm:min-w-[120px] ${
                   isLoadingLocation
                     ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 focus:outline-none focus:ring-4 focus:ring-emerald-200'
+                    : 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-emerald-200'
                 }`}
                 title="Détecter automatiquement votre localisation"
               >
                 {isLoadingLocation ? (
                   <div className="flex items-center">
-                    <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin mr-1"></div>
-                    <span>...</span>
+                    <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin mr-1"></div>
+                    <span className="hidden sm:inline">...</span>
                   </div>
                 ) : (
                   <>
-                    <LocationIcon className="w-4 h-4" />
-                    <span>Détecter</span>
+                    <LocationIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">Détecter</span>
+                    <span className="sm:hidden">GPS</span>
                   </>
                 )}
               </button>
             )}
           </div>
           {locationError && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-xs sm:text-sm text-red-600">
               Erreur de géolocalisation : {locationError}
             </p>
           )}
           {!isIPinfoConfigured && (
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-xs sm:text-sm text-gray-500">
               💡 Ajoutez NEXT_PUBLIC_IPINFO_TOKEN pour la détection automatique
             </p>
           )}
@@ -350,7 +347,7 @@ export function EnvironmentalForm({
           <select
             value={data.soilType}
             onChange={(e) => updateData({ soilType: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white/80 backdrop-blur-sm text-sm sm:text-base"
           >
             <option value="">Sélectionner...</option>
             <option value="argileux">Argileux</option>
@@ -370,7 +367,7 @@ export function EnvironmentalForm({
             type="date"
             value={data.lastWatering}
             onChange={(e) => updateData({ lastWatering: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white/80 backdrop-blur-sm text-sm sm:text-base"
           />
         </div>
 
@@ -383,14 +380,14 @@ export function EnvironmentalForm({
             type="text"
             value={data.fertilizer}
             onChange={(e) => updateData({ fertilizer: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white/80 backdrop-blur-sm text-sm sm:text-base"
             placeholder="NPK 10-10-10"
           />
         </div>
       </div>
 
       {/* Informations supplémentaires */}
-      <div className="mt-4">
+      <div className="mt-4 sm:mt-6">
         <label className="block text-sm font-medium text-gray-700 mb-2">
           Informations supplémentaires
         </label>
@@ -398,17 +395,17 @@ export function EnvironmentalForm({
           value={data.additionalInfo || ''}
           onChange={(e) => updateData({ additionalInfo: e.target.value })}
           rows={3}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white/80 backdrop-blur-sm text-sm sm:text-base resize-none"
           placeholder="Symptômes observés, traitements récents, etc."
         />
       </div>
 
       {/* Informations sur la géolocalisation */}
       {hasLocationData && (
-        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-md">
+        <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 border border-green-200 rounded-lg sm:rounded-xl">
           <div className="flex items-center">
             <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-            <span className="text-sm text-green-700">
+            <span className="text-xs sm:text-sm text-green-700">
               Localisation détectée automatiquement
             </span>
           </div>
