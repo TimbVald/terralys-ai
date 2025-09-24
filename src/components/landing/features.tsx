@@ -3,42 +3,42 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Video, Mic, Bot, FileText, MessageSquare, BarChart3, Sparkles } from 'lucide-react';
+import { Video, Mic, Bot, FileText, MessageSquare, BarChart3, Sparkles, Leaf, Camera, Users, Shield } from 'lucide-react';
  
 const features = [
   {
-    step: 'Fonctionnalité 1',
-    title: 'Enregistrement Automatique',
+    step: 'Module 1',
+    title: 'Détection des Maladies des Plantes',
     content:
-      'Enregistrez automatiquement vos meetings avec une qualité HD. Stockage sécurisé et accès instantané à tous vos enregistrements.',
+      'Analysez vos cultures avec l\'IA. Upload d\'images, détection automatique des maladies, parasites et carences nutritionnelles avec recommandations de traitement.',
+    icon: <Leaf className="h-6 w-6 text-primary" />,
+    image:
+      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070&auto=format&fit=crop',
+  },
+  {
+    step: 'Module 2',
+    title: 'Meetings Intelligents',
+    content:
+      'Enregistrement automatique, transcription IA en temps réel et résumés intelligents. Transformez vos réunions en insights actionables.',
     icon: <Video className="h-6 w-6 text-primary" />,
     image:
       'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=2070&auto=format&fit=crop',
   },
   {
-    step: 'Fonctionnalité 2',
-    title: 'Transcription IA Avancée',
-    content:
-      'Transcription en temps réel avec une précision de 98.5%. Support multilingue et reconnaissance des intervenants.',
-    icon: <Mic className="h-6 w-6 text-primary" />,
-    image:
-      'https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=2070&auto=format&fit=crop',
-  },
-  {
-    step: 'Fonctionnalité 3',
+    step: 'Module 3',
     title: 'Agents IA Personnalisés',
     content:
-      'Créez des agents IA spécialisés pour analyser vos meetings selon vos besoins spécifiques et votre secteur d\'activité.',
+      'Créez des agents IA spécialisés pour l\'agriculture ou le business. Analysez vos données selon vos besoins spécifiques et votre secteur d\'activité.',
     icon: <Bot className="h-6 w-6 text-primary" />,
     image:
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
   },
   {
-    step: 'Fonctionnalité 4',
-    title: 'Chat avec vos Meetings',
+    step: 'Module 4',
+    title: 'Dashboard & Analytics',
     content:
-      'Posez des questions à vos meetings enregistrés. L\'IA TerraLys répond en se basant sur le contenu de vos réunions.',
-    icon: <MessageSquare className="h-6 w-6 text-primary" />,
+      'Visualisez vos données avec des tableaux de bord interactifs. Statistiques détaillées, métriques de performance et insights pour optimiser vos activités.',
+    icon: <BarChart3 className="h-6 w-6 text-primary" />,
     image:
       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
   },
@@ -66,11 +66,11 @@ export default function FeatureSteps() {
   }, [progress]);
  
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 py-20 dark:from-slate-950 dark:via-blue-950/30 dark:to-indigo-950/50">
+    <section className="relative overflow-hidden bg-gray-50 py-20 dark:bg-gray-900">
       {/* Effets de fond */}
       <div className="absolute inset-0">
-        <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-400/10 blur-[120px]"></div>
-        <div className="absolute -right-40 bottom-20 h-80 w-80 rounded-full bg-indigo-400/10 blur-[120px]"></div>
+        <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-primary/10 blur-[120px]"></div>
+        <div className="absolute -right-40 bottom-20 h-80 w-80 rounded-full bg-primary/15 blur-[120px]"></div>
       </div>
       
       <div className="relative mx-auto w-full max-w-7xl px-8 md:px-12">
@@ -80,19 +80,19 @@ export default function FeatureSteps() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="mb-4 inline-flex items-center rounded-full border border-blue-200/50 bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 text-sm font-medium text-blue-700 dark:border-blue-500/20 dark:from-blue-950/50 dark:to-indigo-950/50 dark:text-blue-300"
+              className="mb-4 inline-flex items-center rounded-full border border-green-200/50 bg-gradient-to-r from-green-50 to-primary/10 px-4 py-2 text-sm font-medium text-green-700 dark:border-green-500/20 dark:from-green-950/50 dark:to-primary/20 dark:text-green-300"
             >
               <Sparkles className="mr-2 h-4 w-4" />
-              Fonctionnalités IA Avancées
+              Modules IA Intégrés
             </motion.div>
             
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="mb-6 bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 bg-clip-text text-4xl font-bold tracking-tight text-transparent dark:from-white dark:via-blue-200 dark:to-indigo-200 md:text-5xl lg:text-6xl"
+              className="mb-6 bg-gradient-to-r from-slate-900 via-green-800 to-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent dark:from-white dark:via-green-200 dark:to-primary md:text-5xl lg:text-6xl"
             >
-              Une Plateforme IA Révolutionnaire
+              Agriculture & Business Intelligents
             </motion.h2>
             
             <motion.p
@@ -101,18 +101,18 @@ export default function FeatureSteps() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg leading-relaxed text-slate-600 dark:text-slate-300"
             >
-              TerraLys transforme vos réunions en données exploitables grâce à l'intelligence artificielle.
-              Découvrez nos fonctionnalités révolutionnaires qui révolutionnent la productivité.
+              TerraLys combine l'expertise agricole et business avec l'intelligence artificielle.
+              Découvrez nos modules intégrés qui révolutionnent l'agriculture moderne et la productivité.
             </motion.p>
           </div>
           
           {/* Effet de lueur de fond */}
           <div className="absolute inset-0 mx-auto h-60 max-w-md blur-[100px] opacity-30">
-            <div className="h-full w-full bg-gradient-to-r from-blue-400/20 via-indigo-400/30 to-purple-400/20"></div>
+            <div className="h-full w-full bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20"></div>
           </div>
         </div>
         
-        <div className="mx-auto mb-12 h-px w-1/3 bg-gradient-to-r from-transparent via-blue-300/50 to-transparent dark:via-blue-500/30"></div>
+        <div className="mx-auto mb-12 h-px w-1/3 bg-gradient-to-r from-transparent via-primary/50 to-transparent dark:via-primary/30"></div>
  
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
           {/* Liste des fonctionnalités */}
@@ -130,13 +130,13 @@ export default function FeatureSteps() {
                 <div className={cn(
                   "relative flex items-start gap-6 rounded-2xl border p-6 transition-all duration-500",
                   index === currentFeature
-                    ? "border-blue-200 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 shadow-lg shadow-blue-100/50 dark:border-blue-500/30 dark:from-blue-950/50 dark:to-indigo-950/50 dark:shadow-blue-900/20"
-                    : "border-slate-200/50 bg-white/50 hover:border-blue-200/70 hover:bg-blue-50/30 dark:border-slate-700/50 dark:bg-slate-900/50 dark:hover:border-blue-500/30 dark:hover:bg-blue-950/20"
+                    ? "border-primary/30 bg-gradient-to-r from-primary/10 to-primary/15 shadow-lg shadow-primary/20 dark:border-primary/30 dark:from-primary/10 dark:to-primary/15 dark:shadow-primary/20"
+                  : "border-slate-200/50 bg-white/50 hover:border-primary/30 hover:bg-primary/10 dark:border-slate-700/50 dark:bg-slate-900/50 dark:hover:border-primary/30 dark:hover:bg-primary/10"
                 )}>
                   {/* Indicateur de progression */}
                   {index === currentFeature && (
                     <motion.div
-                      className="absolute left-0 top-0 h-full w-1 rounded-r-full bg-gradient-to-b from-blue-500 to-indigo-600"
+                      className="absolute left-0 top-0 h-full w-1 rounded-r-full bg-gradient-to-b from-primary to-primary"
                       initial={{ height: 0 }}
                       animate={{ height: `${progress}%` }}
                       transition={{ duration: 0.1 }}
@@ -146,11 +146,11 @@ export default function FeatureSteps() {
                   {/* Icône */}
                   <motion.div
                     className={cn(
-                      "flex h-14 w-14 items-center justify-center rounded-xl border-2 transition-all duration-300",
-                      index === currentFeature
-                        ? "border-blue-300 bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600 shadow-lg shadow-blue-200/50 dark:border-blue-400/50 dark:from-blue-900/50 dark:to-indigo-900/50 dark:text-blue-400"
-                        : "border-slate-300 bg-slate-100 text-slate-600 group-hover:border-blue-300/70 group-hover:bg-blue-100/50 group-hover:text-blue-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:border-blue-400/50 dark:group-hover:bg-blue-900/30 dark:group-hover:text-blue-400"
-                    )}
+                        "flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-500",
+                        index === currentFeature
+                          ? "border-primary/50 bg-gradient-to-br from-primary/20 to-primary/30 text-primary shadow-lg shadow-primary/20 dark:border-primary/50 dark:from-primary/20 dark:to-primary/30 dark:text-primary"
+                          : "border-slate-300 bg-slate-100 text-slate-600 group-hover:border-primary/50 group-hover:bg-primary/20 group-hover:text-primary dark:border-slate-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:border-primary/50 dark:group-hover:bg-primary/20 dark:group-hover:text-primary"
+                      )}
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -163,14 +163,14 @@ export default function FeatureSteps() {
                       <span className={cn(
                         "text-xs font-semibold uppercase tracking-wider",
                         index === currentFeature
-                          ? "text-blue-600 dark:text-blue-400"
+                          ? "text-primary dark:text-primary"
                           : "text-slate-500 dark:text-slate-400"
                       )}>
                         {feature.step}
                       </span>
                       {index === currentFeature && (
                         <motion.div
-                          className="h-2 w-2 rounded-full bg-blue-500"
+                          className="h-2 w-2 rounded-full bg-primary"
                           animate={{ scale: [1, 1.2, 1] }}
                           transition={{ duration: 2, repeat: Infinity }}
                         />
@@ -202,11 +202,11 @@ export default function FeatureSteps() {
  
           {/* Affichage des images */}
           <div className="order-1 lg:order-2">
-            <div className="relative h-[300px] overflow-hidden rounded-3xl border border-blue-200/50 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 shadow-2xl shadow-blue-100/50 backdrop-blur-sm dark:border-blue-500/20 dark:from-blue-950/30 dark:to-indigo-950/30 dark:shadow-blue-900/20 md:h-[400px] lg:h-[500px]">
+            <div className="relative h-[300px] overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/10 to-primary/15 shadow-2xl shadow-primary/20 backdrop-blur-sm dark:border-primary/20 dark:from-primary/10 dark:to-primary/15 dark:shadow-primary/20 md:h-[400px] lg:h-[500px]">
               {/* Effets de fond */}
               <div className="absolute inset-0">
-                <div className="absolute right-4 top-4 h-32 w-32 rounded-full bg-blue-400/10 blur-[60px]"></div>
-                <div className="absolute bottom-4 left-4 h-24 w-24 rounded-full bg-indigo-400/10 blur-[40px]"></div>
+                <div className="absolute right-4 top-4 h-32 w-32 rounded-full bg-primary/10 blur-[60px]"></div>
+                  <div className="absolute bottom-4 left-4 h-24 w-24 rounded-full bg-primary/15 blur-[40px]"></div>
               </div>
               
               <AnimatePresence mode="wait">
@@ -241,7 +241,7 @@ export default function FeatureSteps() {
                             transition={{ delay: 0.3, duration: 0.5 }}
                           >
                             <div className="flex items-center gap-2">
-                              <div className="h-2 w-2 rounded-full bg-blue-400"></div>
+                              <div className="h-2 w-2 rounded-full bg-primary"></div>
                               <span className="text-sm font-semibold text-white">
                                 {feature.step}
                               </span>
@@ -263,7 +263,7 @@ export default function FeatureSteps() {
                                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                               />
                               <motion.path
-                                className="stroke-blue-400"
+                                className="stroke-primary"
                                 strokeWidth="3"
                                 strokeLinecap="round"
                                 fill="none"

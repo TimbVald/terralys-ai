@@ -15,7 +15,7 @@ export function Highlight({
   return (
     <span
       className={cn(
-        'bg-blue-500/10 p-1 py-0.5 font-bold text-blue-500',
+        'bg-primary/10 p-1 py-0.5 font-bold text-primary',
         className,
       )}
     >
@@ -56,11 +56,11 @@ export function TestimonialCard({
       <div className="select-none text-sm font-normal text-muted-foreground">
         {description}
         <div className="flex flex-row py-1">
-          <Star className="size-4 fill-blue-500 text-blue-500" />
-          <Star className="size-4 fill-blue-500 text-blue-500" />
-          <Star className="size-4 fill-blue-500 text-blue-500" />
-          <Star className="size-4 fill-blue-500 text-blue-500" />
-          <Star className="size-4 fill-blue-500 text-blue-500" />
+          <Star className="size-4 fill-primary text-primary" />
+              <Star className="size-4 fill-primary text-primary" />
+              <Star className="size-4 fill-primary text-primary" />
+              <Star className="size-4 fill-primary text-primary" />
+              <Star className="size-4 fill-primary text-primary" />
         </div>
       </div>
  
@@ -70,7 +70,7 @@ export function TestimonialCard({
           height={40}
           src={img || ''}
           alt={name}
-          className="size-10 rounded-full ring-1 ring-blue-500/20 ring-offset-2"
+          className="size-10 rounded-full ring-1 ring-primary/20 ring-offset-2"
         />
  
         <div>
@@ -84,109 +84,109 @@ export function TestimonialCard({
 const testimonials = [
   {
     name: 'Pierre Dubois',
-    role: 'Responsable Maintenance - Usine Métallurgique',
+    role: 'Agriculteur - Exploitation Céréalière',
     img: 'https://randomuser.me/api/portraits/men/22.jpg',
     description: (
       <p>
-        Machine Care a révolutionné notre gestion de maintenance.
+        TerraLys a révolutionné ma gestion des cultures.
         <Highlight>
-          Nous avons réduit nos temps d'arrêt de 40% en un an.
+          J'ai détecté et traité 95% des maladies avant qu'elles ne se propagent.
         </Highlight>{' '}
-        L'interface est intuitive et nos techniciens l'adoptent facilement.
+        L'analyse d'images IA est d'une précision remarquable.
       </p>
     ),
   },
   {
     name: 'Marie Laurent',
-    role: 'Directrice Technique - Complexe Industriel',
+    role: 'Directrice Agricole - Coopérative',
     img: 'https://randomuser.me/api/portraits/women/33.jpg',
     description: (
       <p>
-        J'étais sceptique au début, mais Machine Care m'a convaincue.
+        J'étais sceptique au début, mais TerraLys m'a convaincue.
         <Highlight>
-          La gestion des stocks est maintenant optimale et nous évitons les ruptures.
+          Nos meetings sont maintenant 3x plus efficaces grâce aux agents IA.
         </Highlight>{' '}
-        Les rapports automatisés nous font gagner un temps précieux.
+        Les résumés automatiques nous font gagner un temps précieux.
       </p>
     ),
   },
   {
     name: 'Thomas Moreau',
-    role: 'Chef d\'équipe - Maintenance Préventive',
+    role: 'Ingénieur Agronome - Conseil Agricole',
     img: 'https://randomuser.me/api/portraits/men/32.jpg',
     description: (
       <p>
-        Machine Care a transformé notre façon de planifier les interventions.
-        <Highlight>Nous avons amélioré notre productivité de 35%.</Highlight> La
-        planification des équipes est maintenant optimale et efficace.
+        TerraLys a transformé notre façon de conseiller les agriculteurs.
+        <Highlight>Nous avons amélioré notre productivité de 35%.</Highlight> Les
+        agents IA personnalisés nous aident à analyser chaque situation.
       </p>
     ),
   },
   {
     name: 'Sophie Martin',
-    role: 'Responsable Qualité - Secteur Pharmaceutique',
+    role: 'Responsable Technique - Exploitation Viticole',
     img: 'https://randomuser.me/api/portraits/women/44.jpg',
     description: (
       <p>
-        La traçabilité offerte par Machine Care est exceptionnelle.
+        La détection précoce des maladies par TerraLys est exceptionnelle.
         <Highlight>
-          Nous respectons parfaitement les normes de conformité.
+          Nous avons sauvé 90% de notre récolte grâce aux alertes IA.
         </Highlight>{' '}
-        Les audits sont maintenant un jeu d'enfant avec tous les documents centralisés.
+        L'analyse des images de vignes nous aide à prendre les bonnes décisions.
       </p>
     ),
   },
   {
     name: 'Jean-Claude Bernard',
-    role: 'Directeur Maintenance - Groupe Énergétique',
+    role: 'Directeur - Coopérative Agricole',
     img: 'https://randomuser.me/api/portraits/men/55.jpg',
     description: (
       <p>
-        Notre réseau de centrales électriques nécessitait une solution robuste.
+        Notre réseau de 200+ agriculteurs nécessitait une solution robuste.
         <Highlight>
-          Machine Care gère parfaitement nos 200+ équipements critiques.
+          TerraLys centralise parfaitement toutes nos données agricoles.
         </Highlight>{' '}
-        La sécurité et la fiabilité sont au rendez-vous.
+        Les meetings avec les agents IA nous font gagner un temps précieux.
       </p>
     ),
   },
   {
     name: 'Isabelle Rousseau',
-    role: 'Responsable Logistique - Entreprise de Transport',
+    role: 'Consultante Agricole - Cabinet Conseil',
     img: 'https://randomuser.me/api/portraits/women/67.jpg',
     description: (
       <p>
-        La gestion de notre flotte de véhicules est maintenant optimale.
+        La gestion de mes consultations est maintenant optimale avec TerraLys.
         <Highlight>
-          Nous prévoyons les maintenances avant les pannes.
+          Les agents IA m'aident à préparer mes recommandations.
         </Highlight>{' '}
-        Les coûts d'exploitation ont diminué de 25% depuis l'implémentation.
+        Mes clients apprécient la qualité des analyses que je peux leur fournir.
       </p>
     ),
   },
   {
     name: 'Marc Leroy',
-    role: 'Technicien Senior - Secteur Aéronautique',
+    role: 'Agriculteur Bio - Maraîchage',
     img: 'https://randomuser.me/api/portraits/men/78.jpg',
     description: (
       <p>
-        Machine Care offre le parfait équilibre entre simplicité et puissance.
+        TerraLys offre le parfait équilibre entre simplicité et puissance.
         <Highlight>
-          Nous maintenons nos standards de qualité tout en améliorant l'efficacité.
+          Je maintiens mes standards bio tout en optimisant mes rendements.
         </Highlight>{' '}
-        L'application mobile est particulièrement pratique sur le terrain.
+        L'application mobile est particulièrement pratique dans les champs.
       </p>
     ),
   },
   {
     name: 'Catherine Dubois',
-    role: 'Responsable Production - Usine Automobile',
+    role: 'Responsable Qualité - Industrie Agroalimentaire',
     img: 'https://randomuser.me/api/portraits/women/89.jpg',
     description: (
       <p>
-        Nos temps d'arrêt ont diminué de 30% depuis l'utilisation de Machine Care.
+        Nos contrôles qualité sont plus efficaces depuis l'utilisation de TerraLys.
         <Highlight>
-          La planification préventive nous évite les arrêts imprévus.
+          L'analyse IA des matières premières nous évite les lots défectueux.
         </Highlight>{' '}
         L'intégration avec nos systèmes existants s'est faite sans problème.
       </p>
@@ -194,29 +194,29 @@ const testimonials = [
   },
   {
     name: 'François Petit',
-    role: 'Responsable Sécurité - Site Chimique',
+    role: 'Responsable R&D - Semencier',
     img: 'https://randomuser.me/api/portraits/men/92.jpg',
     description: (
       <p>
-        Machine Care respecte parfaitement nos exigences de sécurité.
+        TerraLys respecte parfaitement nos exigences de recherche.
         <Highlight>
-          La traçabilité complète nous rassure lors des audits.
+          L'analyse des maladies nous aide à développer des variétés résistantes.
         </Highlight>{' '}
-        Les procédures de maintenance sont maintenant standardisées et sécurisées.
+        Les données collectées enrichissent considérablement nos études.
       </p>
     ),
   },
   {
     name: 'Nathalie Girard',
-    role: 'Directrice Opérations - Centre Hospitalier',
+    role: 'Directrice - Chambre d\'Agriculture',
     img: 'https://randomuser.me/api/portraits/women/29.jpg',
     description: (
       <p>
-        Dans le secteur médical, la fiabilité des équipements est cruciale.
+        Dans le conseil agricole, la précision des recommandations est cruciale.
         <Highlight>
-          Machine Care nous garantit une maintenance préventive efficace.
+          TerraLys nous garantit des analyses fiables pour nos agriculteurs.
         </Highlight>{' '}
-        La conformité aux normes médicales est parfaitement respectée.
+        Les agents IA nous aident à personnaliser chaque conseil.
       </p>
     ),
   },
@@ -226,8 +226,8 @@ export default function Testimonials() {
   return (
     <section className="container relative py-10">
       {/* Decorative elements */}
-      <div className="absolute -left-20 top-20 z-10 h-64 w-64 rounded-full bg-blue-500/5 blur-3xl" />
-      <div className="absolute -right-20 bottom-20 z-10 h-64 w-64 rounded-full bg-blue-500/5 blur-3xl" />
+      <div className="absolute -left-20 top-20 z-10 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+      <div className="absolute -right-20 bottom-20 z-10 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
  
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -239,11 +239,11 @@ export default function Testimonials() {
         </h2>
         <h3 className="mx-auto mb-8 max-w-lg text-balance text-center text-lg font-medium tracking-tight text-muted-foreground">
           Ne nous croyez pas sur parole. Voici ce que{' '}
-          <span className="bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
             nos clients
           </span>{' '}
           disent de{' '}
-          <span className="font-semibold text-blue-500">Machine Care</span>
+          <span className="font-semibold text-primary">TerraLys</span>
         </h3>
       </motion.div>
  

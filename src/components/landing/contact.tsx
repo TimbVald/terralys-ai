@@ -96,7 +96,7 @@ export default function ContactUs1() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="mb-6 text-muted-foreground"
               >
-                Prêt à transformer vos meetings avec l'IA ? 
+                Prêt à révolutionner votre agriculture et vos meetings avec l'IA ? 
                 Notre équipe d'experts est là pour vous accompagner.
               </motion.p>
  
@@ -171,7 +171,7 @@ export default function ContactUs1() {
                       id="message"
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Décrivez vos besoins en matière de meetings et d'analyse IA..."
+                      placeholder="Décrivez vos besoins en agriculture, meetings IA, détection de maladies..."
                       required
                       className="h-40 resize-none"
                     />
@@ -185,7 +185,7 @@ export default function ContactUs1() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-b from-rose-500 to-rose-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]"
+                    className="w-full bg-gradient-to-b from-primary to-primary text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center justify-center">

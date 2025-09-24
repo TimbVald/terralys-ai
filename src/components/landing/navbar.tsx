@@ -13,11 +13,11 @@ interface NavItem {
 // Navigation adaptée pour TerraLys
 const navItems: NavItem[] = [
   { name: 'Accueil', href: '/' },
-  { name: 'Fonctionnalités', href: '/features' },
-  { name: 'Agents IA', href: '/agents' },
-  { name: 'Tarifs', href: '/pricing' },
-  { name: 'Ressources', href: '/resources' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Fonctionnalités', href: '#' },
+  { name: 'Agents IA', href: '#' },
+  { name: 'Tarifs', href: '#' },
+  { name: 'Ressources', href: '#' },
+  { name: 'Contact', href: '#' },
 ];
  
 export default function Navbar() {
@@ -97,7 +97,7 @@ export default function Navbar() {
             >
               <Link href="/" className="flex items-center space-x-3">
                 <div className="relative">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 shadow-lg">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary to-primary shadow-lg">
                     <img src="/logo.svg" alt="Terralys Logo" className="h-5 w-5 object-contain" />
                   </div>
                   <div className="absolute -right-1 -top-1 h-3 w-3 animate-pulse rounded-full bg-green-400"></div>

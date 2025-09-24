@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import {NuqsAdapter} from "nuqs/adapters/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
+import TerraLysAIAssistant from "@/components/terralys-ai-assistant"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,6 +25,8 @@ export default function RootLayout({
           >
             <Toaster position="top-right" richColors/>
             {children}
+            {/* Assistant TerraLys AI - Accessible sur toutes les pages */}
+            <TerraLysAIAssistant />
              <SpeedInsights/>
              <Analytics/>
           </body>

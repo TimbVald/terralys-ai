@@ -14,12 +14,14 @@ import {
   Building,
   Bot,
   Video,
+  Leaf,
+  Camera,
 } from 'lucide-react';
  
-// Statistiques adaptées à TerraLys - plateforme de meetings avec IA
+// Statistiques adaptées à TerraLys - plateforme IA complète
 const stats = [
+  { label: 'Analyses de Plantes', value: 1500, suffix: '+' },
   { label: 'Meetings Analysés', value: 250, suffix: '+' },
-  { label: 'Heures de Transcription', value: 100, suffix: '+' },
   { label: 'Agents IA Créés', value: 50, suffix: '+' },
   { label: 'Précision IA', value: 98.5, suffix: '%' },
 ];
@@ -31,8 +33,8 @@ const stats = [
 export default function AppHero() {
   // State for animated counters
   const [statsState, setStatsState] = useState({
+    plants: 0,
     meetings: 0,
-    hours: 0,
     agents: 0,
     precision: 0,
   });
@@ -41,14 +43,14 @@ export default function AppHero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setStatsState((prev) => {
-        const newMeetings = prev.meetings >= 250 ? 250 : prev.meetings + 50;
-        const newHours = prev.hours >= 100 ? 100 : prev.hours + 50;
-        const newAgents = prev.agents >= 50 ? 50 : prev.agents + 50;
-        const newPrecision = prev.precision >= 98.5 ? 98.5 : prev.precision + 4.9;
+        const newPlants = prev.plants >= 1500 ? 1500 : prev.plants + 25;
+        const newMeetings = prev.meetings >= 250 ? 250 : prev.meetings + 10;
+        const newAgents = prev.agents >= 50 ? 50 : prev.agents + 3;
+        const newPrecision = prev.precision >= 98.5 ? 98.5 : prev.precision + 2.3;
  
         if (
+          newPlants === 1500 &&
           newMeetings === 250 &&
-          newHours === 100 &&
           newAgents === 50 &&
           newPrecision === 98.5
         ) {
@@ -56,8 +58,8 @@ export default function AppHero() {
         }
  
         return {
+          plants: newPlants,
           meetings: newMeetings,
-          hours: newHours,
           agents: newAgents,
           precision: newPrecision,
         };
@@ -145,11 +147,11 @@ export default function AppHero() {
   };
  
   return (
-    <section className="relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 py-16 text-white sm:px-6 lg:px-8 lg:py-2">
+    <section className="relative min-h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
       {/* Fond principal avec gradient moderne */}
       <div className="absolute inset-0 z-0 h-full w-full opacity-90">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-slate-950/80 to-black"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-indigo-600/15 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-slate-950/80 to-black"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-primary/15 via-transparent to-transparent"></div>
       </div>
 
       {/* Effet de bruit subtil */}
@@ -183,15 +185,15 @@ export default function AppHero() {
         </div>
  
         {/* Spots lumineux améliorés */}
-        <div className="absolute -left-32 top-20 h-80 w-80 rounded-full bg-blue-500/10 blur-[120px]"></div>
-        <div className="absolute -right-32 bottom-20 h-80 w-80 rounded-full bg-indigo-500/10 blur-[120px]"></div>
+        <div className="absolute -left-32 top-20 h-80 w-80 rounded-full bg-primary/10 blur-[120px]"></div>
+        <div className="absolute -right-32 bottom-20 h-80 w-80 rounded-full bg-primary/15 blur-[120px]"></div>
         <motion.div
           animate={glowAnimation}
-          className="absolute left-1/4 top-1/3 h-60 w-60 rounded-full bg-blue-400/8 blur-[100px]"
+          className="absolute left-1/4 top-1/3 h-60 w-60 rounded-full bg-primary/8 blur-[100px]"
         ></motion.div>
         <motion.div
           animate={glowAnimation}
-          className="absolute bottom-1/3 right-1/4 h-60 w-60 rounded-full bg-indigo-400/8 blur-[100px]"
+          className="absolute bottom-1/3 right-1/4 h-60 w-60 rounded-full bg-primary/8 blur-[100px]"
         ></motion.div>
  
         {/* Particle effects - subtle dots */}
@@ -248,12 +250,24 @@ export default function AppHero() {
         />
         <motion.div
           variants={tooltipVariants}
-          className="absolute -left-4 top-4 rounded-lg border border-blue-500/30 bg-black/80 p-2 backdrop-blur-md lg:-left-20 lg:top-1/4"
+          className="absolute -left-4 top-4 rounded-lg border border-green-500/30 bg-black/80 p-2 backdrop-blur-md lg:-left-20 lg:top-1/4"
+        >
+          <div className="flex items-center gap-2">
+            <Leaf className="h-4 w-4 text-green-400" />
+            <span className="text-xs font-medium text-green-200">
+              Détection Maladies
+            </span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          variants={tooltipVariants}
+          className="absolute -left-4 top-20 rounded-lg border border-blue-500/30 bg-black/80 p-2 backdrop-blur-md lg:-left-20 lg:top-1/2"
         >
           <div className="flex items-center gap-2">
             <Video className="h-4 w-4 text-blue-400" />
             <span className="text-xs font-medium text-blue-200">
-              Enregistrement Auto
+              Meetings IA
             </span>
           </div>
         </motion.div>
@@ -275,9 +289,9 @@ export default function AppHero() {
           className="absolute bottom-4 left-4 rounded-lg border border-purple-500/30 bg-black/80 p-2 backdrop-blur-md lg:bottom-1/4 lg:left-8"
         >
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-purple-400" />
+            <Camera className="h-4 w-4 text-purple-400" />
             <span className="text-xs font-medium text-purple-200">
-              Transcription IA
+              Analyse d'Images
             </span>
           </div>
         </motion.div>
@@ -294,22 +308,22 @@ export default function AppHero() {
           <div className="w-full lg:w-auto">
             <motion.div
               variants={itemVariants}
-              className="mb-6 inline-flex items-center rounded-full border border-blue-500/30 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 px-4 py-2 text-sm text-blue-300 backdrop-blur-sm"
+              className="mb-6 inline-flex items-center rounded-full border border-primary/30 bg-gradient-to-r from-primary/10 to-primary/10 px-4 py-2 text-sm text-primary/80 backdrop-blur-sm"
             >
-              <Sparkles className="mr-2 h-4 w-4 text-blue-400" />
-              <span className="mr-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-3 py-1 text-xs font-semibold text-white shadow-lg">
+              <Sparkles className="mr-2 h-4 w-4 text-primary" />
+              <span className="mr-2 rounded-full bg-gradient-to-r from-green-500 to-primary px-3 py-1 text-xs font-semibold text-white shadow-lg">
                 IA Avancée
               </span>
-              Plateforme TerraLys - Meetings Intelligents
+              Plateforme TerraLys - Agriculture & Meetings Intelligents
             </motion.div>
  
             <motion.h1
               variants={itemVariants}
-              className="mb-8 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-4xl font-bold leading-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl"
+              className="mb-8 bg-gradient-to-r from-white via-primary/80 to-white bg-clip-text text-4xl font-bold leading-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl"
             >
-              Transformez vos <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                Réunions en Insights
+              L'IA au service de <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-green-400 via-primary to-primary bg-clip-text text-transparent">
+                l'Agriculture & Business
               </span>
             </motion.h1>
  
@@ -318,25 +332,25 @@ export default function AppHero() {
               variants={itemVariants}
               className="mb-6 flex flex-wrap justify-center gap-4 md:gap-6 lg:justify-start"
             >
-              <div className="rounded-lg border border-purple-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
+              <div className="rounded-lg border border-green-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
+                <p className="text-2xl font-bold text-white">
+                  {statsState.plants.toLocaleString()}+
+                </p>
+                <p className="text-xs text-gray-400">Analyses de Plantes</p>
+              </div>
+              <div className="rounded-lg border border-primary/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
                   {statsState.meetings.toLocaleString()}+
                 </p>
                 <p className="text-xs text-gray-400">Meetings Analysés</p>
               </div>
-              <div className="rounded-lg border border-blue-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
-                <p className="text-2xl font-bold text-white">
-                  {statsState.hours.toLocaleString()}+
-                </p>
-                <p className="text-xs text-gray-400">Heures de Transcription</p>
-              </div>
-              <div className="rounded-lg border border-indigo-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
+              <div className="rounded-lg border border-primary/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
                   {statsState.agents.toLocaleString()}+
                 </p>
                 <p className="text-xs text-gray-400">Agents IA Créés</p>
               </div>
-              <div className="rounded-lg border border-green-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
+              <div className="rounded-lg border border-purple-500/20 bg-black/40 px-4 py-2 backdrop-blur-sm">
                 <p className="text-2xl font-bold text-white">
                   {statsState.precision.toFixed(1)}%
                 </p>
@@ -352,21 +366,21 @@ export default function AppHero() {
               <span className="text-xs font-medium text-gray-400">
                 Modules intégrés:
               </span>
-              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
-                <div className="h-2 w-2 rounded-full bg-blue-400"></div>
-                Transcription IA
-              </div>
-              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
-                <div className="h-2 w-2 rounded-full bg-purple-400"></div>
-                Résumés Intelligents
-              </div>
-              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
+              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-green-950">
                 <div className="h-2 w-2 rounded-full bg-green-400"></div>
+                Détection Maladies
+              </div>
+              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-blue-950">
+                <div className="h-2 w-2 rounded-full bg-blue-400"></div>
+                Meetings IA
+              </div>
+              <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-indigo-950">
+                <div className="h-2 w-2 rounded-full bg-indigo-400"></div>
                 Agents Personnalisés
               </div>
               <div className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-2 py-1 text-xs font-medium text-slate-300 backdrop-blur-sm transition-all hover:bg-purple-950">
-                <div className="h-2 w-2 rounded-full bg-yellow-400"></div>
-                +3 modules
+                <div className="h-2 w-2 rounded-full bg-purple-400"></div>
+                Dashboard & Premium
               </div>
             </motion.div>
           </div>
@@ -376,16 +390,16 @@ export default function AppHero() {
               variants={itemVariants}
               className="mb-8 max-w-md px-6 text-center text-lg leading-relaxed text-slate-300/90 lg:text-end"
             >
-              TerraLys transforme vos réunions en insights actionables. 
-              Enregistrement automatique, transcription IA, résumés intelligents 
-              et agents personnalisés pour maximiser votre productivité.
+              TerraLys révolutionne l'agriculture et le business avec l'IA. 
+              Détection des maladies des plantes, meetings intelligents, 
+              agents IA personnalisés et analytics avancés.
             </motion.p>
             <motion.div
               variants={itemVariants}
               className="mb-8 flex flex-col flex-wrap gap-4 sm:flex-row lg:justify-end"
             >
               <Button
-                className="group rounded-xl border border-blue-400/50 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 px-8 py-4 text-white shadow-xl shadow-blue-600/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/40"
+                className="group rounded-xl border border-primary/50 bg-gradient-to-r from-primary via-primary to-primary px-8 py-4 text-white shadow-xl shadow-primary/25 transition-all duration-300 hover:scale-105 hover:shadow-primary/40"
                 size="lg"
               >
                 Démarrer Gratuitement
@@ -405,23 +419,23 @@ export default function AppHero() {
             {/* Preuve sociale */}
             <motion.div
               variants={itemVariants}
-              className="mx-auto flex items-center gap-3 rounded-xl border border-blue-500/20 bg-gradient-to-r from-blue-950/50 to-indigo-950/50 px-4 py-2 backdrop-blur-sm lg:mx-0 lg:ml-auto"
+              className="mx-auto flex items-center gap-3 rounded-xl border border-primary/20 bg-gradient-to-r from-primary/20 to-primary/30 px-4 py-2 backdrop-blur-sm lg:mx-0 lg:ml-auto"
             >
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="h-7 w-7 overflow-hidden rounded-full border-2 border-blue-400/30 bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg"
+                    className="h-7 w-7 overflow-hidden rounded-full border-2 border-primary/30 bg-gradient-to-br from-primary to-primary shadow-lg"
                   >
-                    <div className="h-full w-full bg-gradient-to-br from-blue-400 to-indigo-500 opacity-90"></div>
+                    <div className="h-full w-full bg-gradient-to-br from-primary/80 to-primary opacity-90"></div>
                   </div>
                 ))}
               </div>
-              <span className="text-sm text-blue-100">
+              <span className="text-sm text-primary/80">
                 <span className="font-bold text-white">1000+</span>{' '}
                 entreprises font confiance à TerraLys
               </span>
-              <ArrowUpRight className="h-4 w-4 text-blue-400" />
+              <ArrowUpRight className="h-4 w-4 text-primary" />
             </motion.div>
           </div>
         </motion.div>

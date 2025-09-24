@@ -74,7 +74,7 @@ const defaultMembers: TeamMember[] = [
  
 export default function Team1({
   title = 'L\'équipe TerraLys',
-  subtitle = "Une équipe passionnée d'experts en intelligence artificielle et traitement du langage, dédiée à révolutionner vos meetings.",
+  subtitle = "Une équipe passionnée d'experts en intelligence artificielle, agriculture et business, dédiée à révolutionner votre activité.",
   members = defaultMembers,
   className,
 }: TeamProps) {

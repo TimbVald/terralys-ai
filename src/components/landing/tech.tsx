@@ -5,7 +5,7 @@ export default function Page() {
     <div className="h-screen w-screen overflow-hidden bg-[#121212]">
       <div className="mx-auto mt-32 w-screen max-w-2xl">
         <div className="text-center text-3xl text-white">
-          <span className="text-rose-200">Technologies éprouvées.</span>
+          <span className="text-primary/80">Technologies éprouvées.</span>
  
           <br />
  

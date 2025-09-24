@@ -16,49 +16,49 @@ import { Sparkles, ArrowRight, Check, Star, Zap, Shield } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
  
-// Plans tarifaires adaptés à TerraLys - plateforme de meetings avec IA
+// Plans tarifaires adaptés à TerraLys - plateforme IA Agriculture & Business
 const plans = [
   {
     id: 'starter',
-    name: 'Starter',
+    name: 'Gratuit',
     icon: Star,
     price: {
-      monthly: 29,
-      yearly: 24,
+      monthly: 0,
+      yearly: 0,
     },
     description:
-      'Parfait pour les équipes qui débutent avec l\'IA',
+      'Parfait pour découvrir TerraLys',
     features: [
-      'Jusqu\'à 10 heures de meetings/mois',
-      'Transcription automatique',
-      'Résumés IA basiques',
-      '1 agent IA pré-configuré',
-      'Support par email',
-      'Stockage 30 jours',
+      '3 meetings IA gratuits/mois',
+      '3 agents IA personnalisés',
+      'Détection maladies des plantes',
+      'Analyses d\'images basiques',
+      'Dashboard standard',
+      'Support communautaire',
     ],
     cta: 'Commencer gratuitement',
   },
   {
     id: 'professional',
-    name: 'Professional',
+    name: 'Premium',
     icon: Zap,
     price: {
       monthly: 79,
       yearly: 63,
     },
-    description: 'Idéal pour les équipes productives',
+    description: 'Idéal pour les professionnels agricoles',
     features: [
-      'Jusqu\'à 50 heures de meetings/mois',
-      'Transcription multilingue avancée',
-      'Résumés IA personnalisés',
-      '5 agents IA personnalisables',
-      'Chat avec vos meetings',
-      'Analytics et insights',
+      'Meetings IA illimités',
+      'Agents IA illimités',
+      'Détection avancée des maladies',
+      'Analyses d\'images haute précision',
+      'Dashboard premium avec analytics',
+      'Historique complet',
       'Support prioritaire',
-      'Stockage 1 an',
       'API et intégrations',
+      'Rapports détaillés',
     ],
-    cta: 'Choisir Professional',
+    cta: 'Choisir Premium',
     popular: true,
   },
   {
@@ -69,10 +69,9 @@ const plans = [
       monthly: 'Sur mesure',
       yearly: 'Sur mesure',
     },
-    description: 'Solution complète pour les grandes organisations',
+    description: 'Solution complète pour les grandes exploitations',
     features: [
-      'Meetings illimités',
-      'Agents IA illimités et sur mesure',
+      'Toutes les fonctionnalités Premium',
       'Déploiement on-premise disponible',
       'Support dédié 24/7',
       'Formation et onboarding',
@@ -117,7 +116,7 @@ export default function SimplePricing() {
             transition={{ duration: 0.5 }}
             className="bg-gradient-to-b from-foreground to-foreground/30 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl"
           >
-            Choisissez le plan qui transformera vos meetings
+            Choisissez le plan qui révolutionnera votre agriculture
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -125,8 +124,8 @@ export default function SimplePricing() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="max-w-md pt-2 text-lg text-muted-foreground"
           >
-            Commencez avec notre essai gratuit de 14 jours. Tous nos plans incluent
-            la transcription IA et un support technique dédié.
+            Commencez gratuitement avec 3 meetings IA et 3 agents. Tous nos plans incluent
+            la détection des maladies des plantes et un support technique dédié.
           </motion.p>
         </div>
  

@@ -10,13 +10,13 @@ import { motion } from 'framer-motion';
  */
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-slate-950 dark:via-blue-950/30 dark:to-indigo-950/50">
-      {/* Effets de fond */}
-      <div className="absolute inset-0">
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-blue-400/10 blur-[120px]"></div>
-        <div className="absolute -right-40 -top-20 h-96 w-96 rounded-full bg-indigo-400/10 blur-[140px]"></div>
-        <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-400/5 blur-[100px]"></div>
-      </div>
+    <footer className="relative overflow-hidden bg-gray-50 dark:bg-gray-900">
+    {/* Background Effects */}
+    <div className="absolute inset-0">
+      <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-primary/10 blur-[120px]"></div>
+      <div className="absolute -right-40 -top-20 h-96 w-96 rounded-full bg-primary/15 blur-[140px]"></div>
+      <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[100px]"></div>
+    </div>
       
       {/* Grille de points décorative */}
       <div className="absolute inset-0 opacity-30">
@@ -37,34 +37,34 @@ export default function Footer() {
           >
             <div className="mb-6 flex items-center gap-3">
               <motion.div
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 shadow-lg shadow-blue-200/50 dark:shadow-blue-900/30"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary via-primary to-primary shadow-lg shadow-primary/20 dark:shadow-primary/30"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ duration: 0.2 }}
               >
                 <Sparkles className="h-5 w-5 text-white" />
               </motion.div>
-              <span className="bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 bg-clip-text text-3xl font-bold text-transparent dark:from-white dark:via-blue-200 dark:to-indigo-200">
+              <span className="bg-gradient-to-r from-slate-900 via-primary to-primary bg-clip-text text-3xl font-bold text-transparent dark:from-white dark:via-primary dark:to-primary">
                 TerraLys
               </span>
             </div>
             
             <p className="mb-6 text-lg leading-relaxed text-slate-600 dark:text-slate-300">
-              La plateforme IA révolutionnaire qui transforme vos réunions en insights exploitables
-              pour une productivité sans précédent.
+              La plateforme IA révolutionnaire qui combine agriculture intelligente et meetings IA
+              pour transformer votre business avec des insights exploitables.
             </p>
             
             {/* Informations de contact */}
             <div className="mb-8 space-y-3">
               <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
-                <Mail className="h-4 w-4 text-blue-500" />
+                <Mail className="h-4 w-4 text-primary" />
                 <span>contact@terralys.ai</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
-                <Phone className="h-4 w-4 text-blue-500" />
-                <span>+33 1 23 45 67 89</span>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
-                <MapPin className="h-4 w-4 text-blue-500" />
+                <Phone className="h-4 w-4 text-primary" />
+                  <span>+33 1 23 45 67 89</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                  <MapPin className="h-4 w-4 text-primary" />
                 <span>Paris, France</span>
               </div>
             </div>
@@ -87,11 +87,11 @@ export default function Footer() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200/50 bg-white/50 backdrop-blur-sm transition-all duration-300 hover:border-blue-300/50 hover:bg-blue-50/50 hover:shadow-lg hover:shadow-blue-100/50 dark:border-slate-700/50 dark:bg-slate-900/50 dark:hover:border-blue-500/30 dark:hover:bg-blue-950/30 dark:hover:shadow-blue-900/20"
+                    className="group relative flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200/50 bg-white/50 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20 dark:border-slate-700/50 dark:bg-slate-900/50 dark:hover:border-primary/30 dark:hover:bg-primary/10 dark:hover:shadow-primary/20"
                     aria-label={label}
                   >
-                    <Icon className="h-5 w-5 text-slate-600 transition-colors duration-300 group-hover:text-blue-600 dark:text-slate-400 dark:group-hover:text-blue-400" />
-                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 to-indigo-500/0 opacity-0 transition-opacity duration-300 group-hover:from-blue-500/10 group-hover:to-indigo-500/10 group-hover:opacity-100"></div>
+                    <Icon className="h-5 w-5 text-slate-600 transition-colors duration-300 group-hover:text-primary dark:text-slate-400 dark:group-hover:text-primary" />
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/0 to-primary/0 opacity-0 transition-opacity duration-300 group-hover:from-primary/10 group-hover:to-primary/10 group-hover:opacity-100"></div>
                   </Link>
                 </motion.div>
               ))}
@@ -115,11 +115,11 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="group relative text-slate-600 transition-all duration-300 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400"
+                      className="group relative text-slate-600 transition-all duration-300 hover:text-primary dark:text-slate-400 dark:hover:text-primary"
                     >
                       <span className="relative">
                         {link.label}
-                        <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300 group-hover:w-full"></span>
+                        <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-primary to-primary transition-all duration-300 group-hover:w-full"></span>
                       </span>
                     </Link>
                   </li>
@@ -143,11 +143,11 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="group relative text-slate-600 transition-all duration-300 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400"
+                      className="group relative text-slate-600 transition-all duration-300 hover:text-primary dark:text-slate-400 dark:hover:text-primary"
                     >
                       <span className="relative">
                         {link.label}
-                        <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300 group-hover:w-full"></span>
+                        <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-primary to-primary transition-all duration-300 group-hover:w-full"></span>
                       </span>
                     </Link>
                   </li>
@@ -171,11 +171,11 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="group relative text-slate-600 transition-all duration-300 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400"
+                      className="group relative text-slate-600 transition-all duration-300 hover:text-primary dark:text-slate-400 dark:hover:text-primary"
                     >
                       <span className="relative">
                         {link.label}
-                        <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300 group-hover:w-full"></span>
+                        <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-gradient-to-r from-primary to-primary transition-all duration-300 group-hover:w-full"></span>
                       </span>
                     </Link>
                   </li>
@@ -220,7 +220,7 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <div className="absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-blue-400/50 to-transparent"></div>
+          <div className="absolute left-1/2 top-0 h-px w-1/2 -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
           
           <div className="flex flex-col items-center justify-between gap-4 text-sm md:flex-row">
             <p className="text-slate-600 dark:text-slate-400">
