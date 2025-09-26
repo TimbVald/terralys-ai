@@ -13,9 +13,9 @@ export const UpdateAgentDialog = ({ open, onOpenChange, initialValues }: UpdateA
   return (
     <ResponsiveDialog
       open={open}
-      description="Edit an agent"
+      description="Modifier un agent"
       onOpenChange={onOpenChange}
-      title="Edit Agent"
+      title="Modifier l'agent"
     >
       <AgentForm
         onSuccess={() => {

@@ -15,18 +15,18 @@ export const UpcomingState =({meetingId, onCancelMeeting, isCancelling}: Props) 
         <div className="bg-white rounded-lg px-4 py-5 flex flex-col gap-y-8 items-center justify-center">
             <EmptyState
              image="/upcoming.svg"
-             title="Not Started yet"
-             description="Once you start this meeting, a summary will appear here"
+             title="Pas encore commencée"
+             description="Une fois que vous démarrez cette réunion, un résumé apparaîtra ici"
             />
             <div className="flex flex-col-reverse lg:flex-row lg:justify-center items-center gap-2 w-full">
                 <Button variant="secondary" onClick={onCancelMeeting} disabled={isCancelling}>
                     <BanIcon />
-                    Cancel meeting
+                    Annuler la réunion
                 </Button>
                 <Button disabled={isCancelling} asChild className="w-full lg:w-auto">
                     <Link href={`/call/${meetingId}`}>
                         <VideoIcon />
-                        Start meeting
+                        Démarrer la réunion
                     </Link>
                 </Button>
             </div>

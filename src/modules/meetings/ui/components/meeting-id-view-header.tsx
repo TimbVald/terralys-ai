@@ -18,7 +18,7 @@ export const MeetingIdViewHeader = ({ meetingId, meetingName, onEdit, onRemove }
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild className="font-medium text-xl">
-                            <Link href="/meetings">My Meeting</Link>
+                            <Link href="/meetings">Mes Réunions</Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator className=" text-foreground text-xl font-medium [&>svg]:size-4">
@@ -40,11 +40,11 @@ export const MeetingIdViewHeader = ({ meetingId, meetingName, onEdit, onRemove }
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={onEdit}>
                         <PencilIcon className="h-4 w-4 text-black" />
-                        Edit
+                        Modifier
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={onRemove}>
                         <TrashIcon className="h-4 w-4 text-red-500" />
-                        Remove
+                        Supprimer
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

@@ -28,7 +28,7 @@ const statusColorMap = {
 export const columns: ColumnDef<MeetingGetMany[number]>[] = [
     {
         accessorKey: "name",
-        header: "Meeting Name",
+        header: "Nom de la réunion",
         cell: ({ row }) => (
             <div className="flex flex-col gap-y-1">
                 <span className="font-semibold capitalize">
@@ -55,7 +55,7 @@ export const columns: ColumnDef<MeetingGetMany[number]>[] = [
     },
     {
         accessorKey: "status",
-        header: "Status",
+        header: "Statut",
         cell: ({row}) => {
             const Icon = statusIconMap[row.original.status as keyof typeof statusIconMap]
 
@@ -78,7 +78,7 @@ export const columns: ColumnDef<MeetingGetMany[number]>[] = [
     },
     {
         accessorKey: "duration",
-        header: "Duration",
+        header: "Durée",
         cell: ({row}) => (
             <Badge variant="outline"
             className={cn(
@@ -87,7 +87,7 @@ export const columns: ColumnDef<MeetingGetMany[number]>[] = [
                     )} 
             >
                 <ClockFadingIcon className="text-blue-700" />
-                {row.original.duration ? formatDuration(row.original.duration) : "No duration"}
+                {row.original.duration ? formatDuration(row.original.duration) : "Aucune durée"}
             </Badge>
         )
 

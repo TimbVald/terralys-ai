@@ -17,9 +17,9 @@ export const UpdateMeetingDialog = ({ open, onOpenChange, initialValues }: Updat
   return (
     <ResponsiveDialog
       open={open}
-      description="Update details of this Meeting"
+      description="Modifier les détails de cette réunion"
       onOpenChange={onOpenChange}
-      title="Edit Meeting"
+      title="Modifier la réunion"
       
     >
       <MeetingForm onSuccess={(id) => {

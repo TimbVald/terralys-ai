@@ -32,7 +32,7 @@ export const MeetingsView = () => {
             onPageChange={(page) => setFilters({page})}
             />
             {data.items.length === 0 && (
-            <EmptyState title="Create your first meeting" description="Schedule a meeting to connect with others. Each meeting lets you collaborate, share ideas, and interact with participants in real-time." />
+            <EmptyState title="Créez votre première réunion" description="Planifiez une réunion pour vous connecter avec d'autres personnes. Chaque réunion vous permet de collaborer, partager des idées et interagir avec les participants en temps réel." />
            )}
         </div>
     )
@@ -40,12 +40,12 @@ export const MeetingsView = () => {
 
 export const MeetingViewloading = () => {
     return (
-        <LoadingState title="Loading meetings" description="Please wait, this may take a few moments..." />
+        <LoadingState title="Chargement des réunions" description="Veuillez patienter, cela peut prendre quelques instants..." />
     )
 }
 
 export const MeetingViewError = () => {
     return (
-        <ErrorState title="Error loading meetings" description="Please try again later." />
+        <ErrorState title="Erreur lors du chargement des réunions" description="Veuillez réessayer plus tard." />
     )
 }

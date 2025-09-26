@@ -11,9 +11,9 @@ export const NewAgentDialog = ({ open, onOpenChange }: NewAgentDialogProps) => {
   return (
     <ResponsiveDialog
       open={open}
-      description="Create a new agent"
+      description="Créer un nouvel agent"
       onOpenChange={onOpenChange}
-      title="New Agent"
+      title="Nouvel Agent"
     >
        <AgentForm 
         onSuccess={() => {

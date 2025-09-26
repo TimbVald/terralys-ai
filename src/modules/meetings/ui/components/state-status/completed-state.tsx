@@ -28,28 +28,28 @@ export const CompletedState = ({ data }: Props) => {
                                 className="text-muted-foreground rounded-none bg-background data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-b-primary data-[state=active]:text-accent-foreground h-full hover:text-accent-foreground"
                             >
                                 <BookOpenTextIcon />
-                                Summary
+                                Résumé
                             </TabsTrigger>
                             <TabsTrigger
                                 value="transcript"
                                 className="text-muted-foreground rounded-none bg-background data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-b-primary data-[state=active]:text-accent-foreground h-full hover:text-accent-foreground"
                             >
                                 <FileTextIcon />
-                                Transcript
+                                Transcription
                             </TabsTrigger>
                             <TabsTrigger
                                 value="recording"
                                 className="text-muted-foreground rounded-none bg-background data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-b-primary data-[state=active]:text-accent-foreground h-full hover:text-accent-foreground"
                             >
                                 <FileVideoIcon />
-                                Recording
+                                Enregistrement
                             </TabsTrigger>
                             <TabsTrigger
                                 value="chat"
                                 className="text-muted-foreground rounded-none bg-background data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-b-primary data-[state=active]:text-accent-foreground h-full hover:text-accent-foreground"
                             >
                                 <BookOpenTextIcon />
-                                Ask Terralys AI
+                                Demander à Terralys AI
                             </TabsTrigger>
                         </TabsList>
                         <ScrollBar orientation="horizontal" />
@@ -87,13 +87,13 @@ export const CompletedState = ({ data }: Props) => {
                             </div>
                             <div className="flex gap-x-2 items-center">
                                 <SparklesIcon className="size-4" />
-                                <p>General Summary</p>
+                                <p>Résumé général</p>
                             </div>
                             <Badge
                                 variant="outline"
                                 className="flex items-center gap-x-2 [&>svg]:size-4">
                                 <ClockFadingIcon className="text-blue-700"/>
-                                {data.duration ? formatDuration(data.duration) : "No duration"}
+                                {data.duration ? formatDuration(data.duration) : "Aucune durée"}
                             </Badge>
                         </div>
                         <div>

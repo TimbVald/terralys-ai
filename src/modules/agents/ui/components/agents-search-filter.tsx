@@ -9,7 +9,7 @@ export const AgentsSearchFilter = () => {
   return (
     <div className="relative">
         <Input
-            placeholder="Filter by name"
+            placeholder="Filtrer par nom"
             value={filters.search}
             onChange={(e) => setFilters({ search: e.target.value })}
             className="h-9 bg-white w-[200px] pl-7"

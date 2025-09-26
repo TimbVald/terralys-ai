@@ -118,12 +118,12 @@ export const AgentForm = ({
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Agent Name
+                                Nom de l'agent
                             </FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
-                                    placeholder="e.g. My Agent"
+                                    placeholder="ex. Mon Agent"
                                 />
                             </FormControl>
                             <FormMessage className="text-red-500" />
@@ -136,12 +136,12 @@ export const AgentForm = ({
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Agent Instruction
+                                Instructions de l'agent
                             </FormLabel>
                             <FormControl>
                                 <Textarea
                                     {...field}
-                                    placeholder="e.g. You are a helpful agent"
+                                    placeholder="ex. Vous êtes un agent utile"
                                 />
                             </FormControl>
                             <FormMessage className="text-red-500" />
@@ -151,11 +151,11 @@ export const AgentForm = ({
                 <div className="flex justify-between gap-x-2">
                     {onCancel && (
                         <Button onClick={onCancel} variant="outline" type="button" disabled={isPending}>
-                            {isPending ? "Cancelling..." : "Cancel"}
+                            {isPending ? "Annulation..." : "Annuler"}
                         </Button>
                     )}
                     <Button disabled={isPending} type="submit">
-                        {isEdit ? "Update" : "Create"}
+                        {isEdit ? "Modifier" : "Créer"}
                     </Button>
                 </div>
             </form>

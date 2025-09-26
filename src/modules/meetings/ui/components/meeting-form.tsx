@@ -118,12 +118,12 @@ export const MeetingForm = ({
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Meeting Name
+                                Nom de la réunion
                             </FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
-                                    placeholder="e.g. My Consultation of Plant Disease"
+                                    placeholder="ex. Ma consultation sur les maladies des plantes"
                                 />
                             </FormControl>
                             <FormMessage className="text-red-500" />
@@ -136,7 +136,7 @@ export const MeetingForm = ({
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Agent Name
+                                Nom de l'agent
                             </FormLabel>
                             <FormControl>
                                 <CommandSelect
@@ -159,13 +159,13 @@ export const MeetingForm = ({
                                     onSelect={field.onChange}
                                     onSearch={setAgentSearch}
                                     value={field.value}
-                                    placeholder="Search an agent"
+                                    placeholder="Rechercher un agent"
                                 />
                             </FormControl>
                             <FormDescription>
-                                Not found what you're looking for? {" "}
+                                Vous ne trouvez pas ce que vous cherchez ? {" "}
                                 <button type="button" className="text-primary hover:underline" onClick={() => setOpenNewAgentDialog(true)}>
-                                    Create new agent
+                                    Créer un nouvel agent
                                 </button>
                             </FormDescription>
 
@@ -176,11 +176,11 @@ export const MeetingForm = ({
                 <div className="flex justify-between gap-x-2">
                     {onCancel && (
                         <Button onClick={onCancel} variant="outline" type="button" disabled={isPending}>
-                            {isPending ? "Cancelling..." : "Cancel"}
+                            {isPending ? "Annulation..." : "Annuler"}
                         </Button>
                     )}
                     <Button disabled={isPending} type="submit">
-                        {isEdit ? "Update" : "Create"}
+                        {isEdit ? "Modifier" : "Créer"}
                     </Button>
                 </div>
             </form>

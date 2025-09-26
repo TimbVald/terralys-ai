@@ -44,8 +44,8 @@ export const MeetingIdView = ({ meetingId }: Props) => {
     }))
 
      const [RemoveConfirmation, confirmRemove] = useConfirm(
-        "Are you sure ?",
-        `This action cannot be undone and will remove ${data.name} associated meetings.`,
+        "Êtes-vous sûr ?",
+        `Cette action ne peut pas être annulée et supprimera ${data.name} réunions associées.`,
     )
 
     const handleRemoveMeeting = async () => {
@@ -55,9 +55,9 @@ export const MeetingIdView = ({ meetingId }: Props) => {
         }
         try {
             await removeMeeting.mutateAsync({ id: meetingId });
-            toast.success("Meeting removed");
+            toast.success("Réunion supprimée");
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : 'An unknown error occurred');
+            toast.error(error instanceof Error ? error.message : 'Une erreur inconnue s\'est produite');
         }
     }
 
@@ -111,12 +111,12 @@ export const MeetingIdView = ({ meetingId }: Props) => {
 
 export const MeetingIdViewloading = () => {
     return (
-        <LoadingState title="Loading meeting" description="Please wait, this may take a few moments..." />
+        <LoadingState title="Chargement de la réunion" description="Veuillez patienter, cela peut prendre quelques instants..." />
     )
 }
 
 export const MeetingIdViewError = () => {
     return (
-        <ErrorState title="Error loading meeting" description="Please try again later." />
+        <ErrorState title="Erreur lors du chargement de la réunion" description="Veuillez réessayer plus tard." />
     )
 }

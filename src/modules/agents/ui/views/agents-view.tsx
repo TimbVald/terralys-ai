@@ -25,7 +25,7 @@ export const AgentView = () => {
 
            <DataPagination page={filters.page} totalPages={data.totalPages} onPageChange={(page) => setFilters({page})} />
            {data.items.length === 0 && (
-            <EmptyState title="No agents found" description="No agents have been created yet." />
+            <EmptyState title="Aucun agent trouvé" description="Aucun agent n'a encore été créé." />
            )}
         </div>
     )
@@ -33,12 +33,12 @@ export const AgentView = () => {
 
 export const AgentViewloading = () => {
     return (
-        <LoadingState title="Loading agents" description="Please wait, this may take a few moments..." />
+        <LoadingState title="Chargement des agents" description="Veuillez patienter, cela peut prendre quelques instants..." />
     )
 }
 
 export const AgentViewError = () => {
     return (
-        <ErrorState title="Error loading agents" description="Please try again later." />
+        <ErrorState title="Erreur lors du chargement des agents" description="Veuillez réessayer plus tard." />
     )
 }

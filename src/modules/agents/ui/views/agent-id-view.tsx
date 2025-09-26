@@ -41,8 +41,8 @@ export const AgentIdView = ({ agentId }: Props) => {
     }))
 
     const [RemoveConfirmation, confirmRemove] = useConfirm(
-        "Are you sure ?",
-        `This action cannot be undone and will remove ${data.meetingCount} associated meetings.`,
+        "Êtes-vous sûr ?",
+        `Cette action ne peut pas être annulée et supprimera ${data.meetingCount} réunions associées.`,
     )
 
     const handleRemoveAgent = async () => {
@@ -52,7 +52,7 @@ export const AgentIdView = ({ agentId }: Props) => {
         }
         try {
             await removeAgent.mutateAsync({ id: agentId });
-            toast.success("Agent removed");
+            toast.success("Agent supprimé");
         } catch (error) {
             toast.error(error instanceof Error ? error.message : 'An unknown error occurred');
         }
@@ -77,11 +77,11 @@ export const AgentIdView = ({ agentId }: Props) => {
                         </div>
                         <Badge variant="outline" className="flex items-center gap-x-2 [&>svg]:size-4">
                             <VideoIcon className="text-blue-700" />
-                            {data.meetingCount} {data.meetingCount === 1 ? "meeting" : "meetings"}
+                            {data.meetingCount} {data.meetingCount === 1 ? "réunion" : "réunions"}
                         </Badge>
                         <div className="flex flex-col gap-y-4">
                             <p className="text-lg font-medium">Instructions</p>
-                            <p className="text-neutral-500">{data.instruction || "No instructions"}</p>
+                            <p className="text-neutral-500">{data.instruction || "Aucune instruction"}</p>
                         </div>
                     </div>
                 </div>
@@ -92,12 +92,12 @@ export const AgentIdView = ({ agentId }: Props) => {
 
 export const AgentIdViewloading = () => {
     return (
-        <LoadingState title="Loading agent" description="Please wait, this may take a few moments..." />
+        <LoadingState title="Chargement de l'agent" description="Veuillez patienter, cela peut prendre quelques instants..." />
     )
 }
 
 export const AgentIdViewError = () => {
     return (
-        <ErrorState title="Error loading agent" description="Please try again later." />
+        <ErrorState title="Erreur lors du chargement de l'agent" description="Veuillez réessayer plus tard." />
     )
 }

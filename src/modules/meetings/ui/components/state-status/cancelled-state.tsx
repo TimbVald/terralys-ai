@@ -6,8 +6,8 @@ export const CancelledState =() => {
         <div className="bg-white rounded-lg px-4 py-5 flex flex-col gap-y-8 items-center justify-center">
             <EmptyState
              image="/cancelled.svg"
-             title="Meeting is cancelled"
-             description="Meeting has been cancelled."
+             title="Réunion annulée"
+             description="La réunion a été annulée."
             />
         </div>
     )
