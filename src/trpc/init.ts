@@ -5,7 +5,7 @@ import { polarClient } from '@/lib/polar';
 import { MAX_FREE_AGENTS, MAX_FREE_MEETINGS } from '@/modules/premium/constants';
 import { initTRPC, TRPCError } from '@trpc/server';
 import { count, eq } from 'drizzle-orm';
-import { headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { cache } from 'react';
 export const createTRPCContext = cache(async () => {
   /**
@@ -30,9 +30,13 @@ export const baseProcedure = t.procedure;
 
 export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
   try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    })
+    // Création d'un objet Headers à partir des cookies
+    const cookieStore = cookies();
+    const cookieHeader = cookieStore.toString();
+    const headers = new Headers();
+    headers.append('Cookie', cookieHeader);
+    
+    const session = await auth.api.getSession({ headers })
     if (!session) {
       throw new TRPCError({ code: 'UNAUTHORIZED' })
     }
