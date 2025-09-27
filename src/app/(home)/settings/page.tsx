@@ -61,6 +61,14 @@ const SettingsPage = () => {
   });
 
   /**
+   * Navigation vers l'explorateur de données
+   *
+  const navigateToDataExplorer = () => {
+    router.push('/data-explorer');
+  };
+  */
+
+  /**
    * Gestion de la sauvegarde des paramètres utilisateur
    */
   const handleSaveSettings = async () => {
@@ -81,7 +89,7 @@ const SettingsPage = () => {
       toast.success('Accès administrateur accordé');
       // Rediriger vers la page admin après 1 seconde
       setTimeout(() => {
-        router.push('/admin');
+        router.push('/data-explorer');
       }, 1000);
     } else {
       toast.error('Code d\'accès incorrect');
@@ -405,6 +413,15 @@ const SettingsPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* <Button
+              variant="outline"
+              onClick={navigateToDataExplorer}
+              className="w-full mb-2"
+            >
+              <Database className="h-4 w-4 mr-2" />
+              Explorateur de données
+            </Button> */}
+            
             {!adminAccess.showAdminSection ? (
               <Button
                 variant="outline"
