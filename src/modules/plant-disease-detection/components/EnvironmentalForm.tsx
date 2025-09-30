@@ -6,6 +6,7 @@ import { LocationIcon } from './icons';
 import { useIPLocation } from '../hooks/useIPLocation';
 import { useTRPC } from '@/trpc/client';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 /**
  * Interface pour les props du composant EnvironmentalForm
@@ -49,9 +50,11 @@ export function EnvironmentalForm({
     trpc.plantDiseaseDetection.addEnvironmentalData.mutationOptions({
       onSuccess: () => {
         console.log('Données environnementales enregistrées avec succès');
+        toast.success('Données environnementales enregistrées avec succès');
       },
       onError: (error) => {
         console.error('Erreur lors de l\'enregistrement des données environnementales:', error);
+        toast.error('Erreur lors de l\'enregistrement des données environnementales');
       }
     })
   );
@@ -99,6 +102,7 @@ export function EnvironmentalForm({
       };
 
       addEnvironmentalDataMutation.mutate(environmentalDataForDB);
+      toast.info('Enregistrement automatique en cours...');
     }
   };
 
@@ -108,6 +112,7 @@ export function EnvironmentalForm({
   const handleAutoDetectLocation = async () => {
     if (!isIPinfoConfigured) {
       console.warn('Service IPinfo non configuré. Ajoutez NEXT_PUBLIC_IPINFO_TOKEN à votre fichier .env');
+      toast.warning('Service IPinfo non configuré. Ajoutez NEXT_PUBLIC_IPINFO_TOKEN à votre fichier .env');
       return;
     }
 
@@ -115,6 +120,7 @@ export function EnvironmentalForm({
       await fetchCurrentLocation();
     } catch (error) {
       console.error('Erreur lors de la détection automatique de la localisation:', error);
+      toast.error('Erreur lors de la détection automatique de la localisation');
     }
   };
 
@@ -296,7 +302,7 @@ export function EnvironmentalForm({
                 value={data.location}
                 onChange={(e) => updateData({ location: e.target.value })}
                 className="w-full px-3 sm:px-4 py-2 sm:py-3 border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-emerald-400 focus:ring-2 sm:focus:ring-4 focus:ring-emerald-100 transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:border-gray-300 text-sm sm:text-base"
-                placeholder="Paris, France"
+                placeholder="Douala, Cameroun"
               />
               <div className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-r from-emerald-400/10 to-teal-400/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
             </div>

@@ -467,7 +467,7 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
           /* Onglet Historique des analyses avec design amélioré */
           <div className="max-w-7xl mx-auto">
             <div className="bg-white/70 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-white/30 p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+              {/* <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                 <div className="p-2 sm:p-3 bg-indigo-100 rounded-xl">
                   <svg className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -477,7 +477,7 @@ export function PlantDiseaseDetectionApp({ className = '' }: PlantDiseaseDetecti
                   <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">Historique des Analyses</h2>
                   <p className="text-gray-600 mt-1 text-sm sm:text-base">Consultez vos analyses précédentes et suivez l'évolution de vos plantes</p>
                 </div>
-              </div>
+              </div> */}
               <AnalysisHistory />
             </div>
           </div>

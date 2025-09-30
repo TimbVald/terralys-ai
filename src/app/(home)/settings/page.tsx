@@ -89,7 +89,7 @@ const SettingsPage = () => {
       toast.success('Accès administrateur accordé');
       // Rediriger vers la page admin après 1 seconde
       setTimeout(() => {
-        router.push('/data-explorer');
+        router.push('/admin');
       }, 1000);
     } else {
       toast.error('Code d\'accès incorrect');

@@ -16,20 +16,37 @@ export interface EnhancedAnalysisResponse {
 }
 
 // 1. Configuration de l'API Gemini
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// Utilisation de NEXT_PUBLIC_ pour s'assurer que la variable est disponible côté client et serveur
+const GEMINI_API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
 let gemini: GoogleGenerativeAI | null = null;
-if (GEMINI_API_KEY) {
+
+// Fonction pour initialiser Gemini de manière sécurisée
+function initGemini() {
+  if (!GEMINI_API_KEY) {
+    console.warn("GEMINI_API_KEY non trouvée dans les variables d'environnement.");
+    console.warn("Veuillez ajouter votre clé API Gemini dans le fichier .env.local");
+    console.warn("Exemple: NEXT_PUBLIC_GEMINI_API_KEY=votre_cle_api_ici");
+    return null;
+  }
+
   try {
-    gemini = new GoogleGenerativeAI(GEMINI_API_KEY);
-    console.log("Service Gemini API configuré avec succès.");
+    const instance = new GoogleGenerativeAI(GEMINI_API_KEY);
+    if (process.env.NODE_ENV === 'development') {
+      console.log("Service Gemini API configuré avec succès.");
+    }
+    return instance;
   } catch (error) {
     console.error("Erreur lors de l'initialisation de Gemini:", error);
-    gemini = null;
+    return null;
   }
-} else {
-  console.warn("GEMINI_API_KEY non trouvée dans les variables d'environnement.");
-  console.warn("Veuillez ajouter votre clé API Gemini dans le fichier .env.local");
-  console.warn("Exemple: GEMINI_API_KEY=votre_cle_api_ici");
+}
+
+// Initialisation lazy pour éviter les problèmes lors du build sur Vercel
+const getGeminiInstance = () => {
+  if (!gemini) {
+    gemini = initGemini();
+  }
+  return gemini;
 }
 
 /**
@@ -37,7 +54,7 @@ if (GEMINI_API_KEY) {
  * @returns true si l'API Gemini est configurée, false sinon
  */
 export function isGeminiConfigured(): boolean {
-    return gemini !== null && GEMINI_API_KEY !== undefined;
+    return getGeminiInstance() !== null && GEMINI_API_KEY !== undefined;
 }
 
 /**
@@ -156,15 +173,17 @@ export async function getEnhancedRemedySuggestions(
 ): Promise<EnhancedAnalysisResponse> {
     const confidenceLevel = confidence > 0.8 ? "Élevée" : confidence > 0.6 ? "Moyenne" : "Faible";
     
-    if (!gemini || disease === "Sain") {
+    // Utilisation de getGeminiInstance pour obtenir l'instance Gemini
+    const geminiInstance = getGeminiInstance();
+    
+    if (!geminiInstance || disease === "Sain") {
         return getOfflineRemedySuggestions(crop, disease, confidenceLevel);
     }
     
     // Liste des modèles à essayer par ordre de préférence
     const modelsToTry = [
-        "gemini-2.0-flash-exp", 
-        "gemini-1.5-flash",
-        "gemini-1.5-pro"
+        "gemini-1.5-pro", // Modèle le plus stable en production
+        "gemini-1.5-flash"
     ];
     
     const prompt = buildPrompt(crop, disease, environmentalData);
@@ -173,9 +192,25 @@ export async function getEnhancedRemedySuggestions(
     // Essayer chaque modèle jusqu'à ce qu'un fonctionne
     for (const modelName of modelsToTry) {
         try {
+            if (!geminiInstance) {
+                throw new Error('Client Gemini non initialisé');
+            }
+            
             console.log(`Tentative avec le modèle: ${modelName}`);
-            const geminiModel = gemini.getGenerativeModel({ model: modelName });
-            const result = await geminiModel.generateContent(prompt);
+            const geminiModel = geminiInstance.getGenerativeModel({ model: modelName });
+            
+            // Ajout d'un timeout pour éviter les blocages en production
+            const timeoutPromise = new Promise<never>((_, reject) => {
+                setTimeout(() => reject(new Error('Timeout de la requête Gemini')), 15000);
+            });
+            
+            const resultPromise = geminiModel.generateContent(prompt);
+            const result = await Promise.race([resultPromise, timeoutPromise]) as any;
+            
+            if (!result || !result.response) {
+                throw new Error('Réponse Gemini invalide');
+            }
+            
             const responseText = result.response.text();
             
             // Nettoyer la réponse en supprimant les markdown code blocks si présents
