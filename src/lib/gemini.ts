@@ -182,6 +182,7 @@ export async function getEnhancedRemedySuggestions(
     
     // Liste des modèles à essayer par ordre de préférence
     const modelsToTry = [
+      "gemini-2.0-flash-exp",
         "gemini-1.5-pro", // Modèle le plus stable en production
         "gemini-1.5-flash"
     ];
