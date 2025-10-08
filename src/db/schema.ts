@@ -108,27 +108,6 @@ export const meeting = pgTable("meeting", {
     .notNull(),
 });
 
-
-// ========================================
-// TABLE DE SUIVI DES CULTURES
-// ========================================
-
-export const cultures = pgTable("cultures", {
-  id: text("id").primaryKey().$defaultFn(() => nanoid()),
-  userId: text("user_id")
-    .notNull()
-    .references(() => user.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
-  description: text("description"),
-  startDate: timestamp("start_date").$defaultFn(() => /* @__PURE__ */ new Date()),
-  endDate: timestamp("end_date"),
-  location: text("location"),
-  cropType: text("crop_type"),
-  notes: text("notes"),
-  createdAt: timestamp("created_at").$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
-  updatedAt: timestamp("updated_at").$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
-});
-
 // ========================================
 // SCHÉMAS POUR LE MODULE PLANT DISEASE DETECTION
 // ========================================
@@ -159,8 +138,6 @@ export const plantAnalyses = pgTable("plant_analyses", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  cultureId: text("culture_id")
-    .references(() => cultures.id, { onDelete: "set null" }),
   imageUrl: text("image_url").notNull(),
   plantName: text("plant_name").notNull(),
   isHealthy: boolean("is_healthy").notNull(),

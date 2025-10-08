@@ -1,294 +1,168 @@
-'use client';
- 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Video, Mic, Bot, FileText, MessageSquare, BarChart3, Sparkles, Leaf, Camera, Users, Shield } from 'lucide-react';
- 
+"use client"
+
+import { motion } from "framer-motion"
+import { Brain, Camera, Database, Zap, Users, Settings2, LayoutDashboard, Server, Target, BarChart2, FileJson, ShieldCheck } from "lucide-react"
+import SectionBadge from "@/components/ui/section-badge"
+import { cn } from "@/lib/utils"
+
 const features = [
   {
-    step: 'Module 1',
-    title: 'Détection des Maladies des Plantes',
-    content:
-      'Analysez vos cultures avec l\'IA. Upload d\'images, détection automatique des maladies, parasites et carences nutritionnelles avec recommandations de traitement.',
-    icon: <Leaf className="h-6 w-6 text-primary" />,
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070&auto=format&fit=crop',
+    title: "Détection instantanée",
+    info: "Identifiez maladies, parasites et carences sur vos plantes en temps réel, dès l'envoi d'une image ou d'une vidéo.\nExemple : Recevez un diagnostic immédiat après la prise de photo d'une feuille suspecte.",
+    icon: Zap,
+    gradient: "from-pink-500 to-rose-500",
   },
   {
-    step: 'Module 2',
-    title: 'Meetings Intelligents',
-    content:
-      'Enregistrement automatique, transcription IA en temps réel et résumés intelligents. Transformez vos réunions en insights actionables.',
-    icon: <Video className="h-6 w-6 text-primary" />,
-    image:
-      'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=2070&auto=format&fit=crop',
+    title: "Précision et fiabilité IA",
+    info: "Nos modèles avancés garantissent une reconnaissance fiable des symptômes et des ravageurs.\nExemple : L'IA distingue le mildiou du stress hydrique avec plus de 95% de précision.",
+    icon: Target,
+    gradient: "from-blue-500 to-cyan-500",
   },
   {
-    step: 'Module 3',
-    title: 'Agents IA Personnalisés',
-    content:
-      'Créez des agents IA spécialisés pour l\'agriculture ou le business. Analysez vos données selon vos besoins spécifiques et votre secteur d\'activité.',
-    icon: <Bot className="h-6 w-6 text-primary" />,
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
+    title: "Suivi multi-plantes et multi-parcelles",
+    info: "Analysez simultanément plusieurs cultures ou parcelles et suivez leur évolution dans le temps.\nExemple : Visualisez l'historique des analyses pour chaque champ ou serre.",
+    icon: Users,
+    gradient: "from-green-500 to-emerald-500",
   },
   {
-    step: 'Module 4',
-    title: 'Dashboard & Analytics',
-    content:
-      'Visualisez vos données avec des tableaux de bord interactifs. Statistiques détaillées, métriques de performance et insights pour optimiser vos activités.',
-    icon: <BarChart3 className="h-6 w-6 text-primary" />,
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
+    title: "Modèles personnalisables",
+    info: "Adaptez l'algorithme à vos besoins : ajoutez vos propres maladies ou configurez la détection selon vos cultures.\nExemple : Ajoutez un modèle pour la rouille du café ou la tache noire du rosier.",
+    icon: Settings2,
+    gradient: "from-purple-500 to-violet-500",
   },
-];
- 
-/**
- * Composant Features modernisé pour TerraLys
- * Présente les fonctionnalités principales avec des animations et un design cohérent
- */
-export default function FeatureSteps() {
-  const [currentFeature, setCurrentFeature] = useState(0);
-  const [progress, setProgress] = useState(0);
- 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (progress < 100) {
-        setProgress((prev) => prev + 100 / (5000 / 100));
-      } else {
-        setCurrentFeature((prev) => (prev + 1) % features.length);
-        setProgress(0);
-      }
-    }, 100);
- 
-    return () => clearInterval(timer);
-  }, [progress]);
- 
-  return (
-    <section className="relative overflow-hidden bg-gray-50 py-20 dark:bg-gray-900">
-      {/* Effets de fond */}
-      <div className="absolute inset-0">
-        <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-primary/10 blur-[120px]"></div>
-        <div className="absolute -right-40 bottom-20 h-80 w-80 rounded-full bg-primary/15 blur-[120px]"></div>
-      </div>
-      
-      <div className="relative mx-auto w-full max-w-7xl px-8 md:px-12">
-        <div className="relative mx-auto mb-16 max-w-3xl text-center">
-          <div className="relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="mb-4 inline-flex items-center rounded-full border border-green-200/50 bg-gradient-to-r from-green-50 to-primary/10 px-4 py-2 text-sm font-medium text-green-700 dark:border-green-500/20 dark:from-green-950/50 dark:to-primary/20 dark:text-green-300"
-            >
-              <Sparkles className="mr-2 h-4 w-4" />
-              Modules IA Intégrés
-            </motion.div>
-            
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mb-6 bg-gradient-to-r from-slate-900 via-green-800 to-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent dark:from-white dark:via-green-200 dark:to-primary md:text-5xl lg:text-6xl"
-            >
-              Agriculture & Business Intelligents
-            </motion.h2>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg leading-relaxed text-slate-600 dark:text-slate-300"
-            >
-              TerraLys combine l'expertise agricole et business avec l'intelligence artificielle.
-              Découvrez nos modules intégrés qui révolutionnent l'agriculture moderne et la productivité.
-            </motion.p>
-          </div>
-          
-          {/* Effet de lueur de fond */}
-          <div className="absolute inset-0 mx-auto h-60 max-w-md blur-[100px] opacity-30">
-            <div className="h-full w-full bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20"></div>
-          </div>
-        </div>
-        
-        <div className="mx-auto mb-12 h-px w-1/3 bg-gradient-to-r from-transparent via-primary/50 to-transparent dark:via-primary/30"></div>
- 
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-          {/* Liste des fonctionnalités */}
-          <div className="order-2 space-y-6 lg:order-1">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                className="group relative cursor-pointer"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ x: 8 }}
-                onClick={() => setCurrentFeature(index)}
-              >
-                <div className={cn(
-                  "relative flex items-start gap-6 rounded-2xl border p-6 transition-all duration-500",
-                  index === currentFeature
-                    ? "border-primary/30 bg-gradient-to-r from-primary/10 to-primary/15 shadow-lg shadow-primary/20 dark:border-primary/30 dark:from-primary/10 dark:to-primary/15 dark:shadow-primary/20"
-                  : "border-slate-200/50 bg-white/50 hover:border-primary/30 hover:bg-primary/10 dark:border-slate-700/50 dark:bg-slate-900/50 dark:hover:border-primary/30 dark:hover:bg-primary/10"
-                )}>
-                  {/* Indicateur de progression */}
-                  {index === currentFeature && (
-                    <motion.div
-                      className="absolute left-0 top-0 h-full w-1 rounded-r-full bg-gradient-to-b from-primary to-primary"
-                      initial={{ height: 0 }}
-                      animate={{ height: `${progress}%` }}
-                      transition={{ duration: 0.1 }}
-                    />
-                  )}
-                  
-                  {/* Icône */}
-                  <motion.div
-                    className={cn(
-                        "flex h-12 w-12 items-center justify-center rounded-xl border transition-all duration-500",
-                        index === currentFeature
-                          ? "border-primary/50 bg-gradient-to-br from-primary/20 to-primary/30 text-primary shadow-lg shadow-primary/20 dark:border-primary/50 dark:from-primary/20 dark:to-primary/30 dark:text-primary"
-                          : "border-slate-300 bg-slate-100 text-slate-600 group-hover:border-primary/50 group-hover:bg-primary/20 group-hover:text-primary dark:border-slate-600 dark:bg-slate-800 dark:text-slate-400 dark:group-hover:border-primary/50 dark:group-hover:bg-primary/20 dark:group-hover:text-primary"
-                      )}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {feature.icon}
-                  </motion.div>
- 
-                  {/* Contenu */}
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center gap-3">
-                      <span className={cn(
-                        "text-xs font-semibold uppercase tracking-wider",
-                        index === currentFeature
-                          ? "text-primary dark:text-primary"
-                          : "text-slate-500 dark:text-slate-400"
-                      )}>
-                        {feature.step}
-                      </span>
-                      {index === currentFeature && (
-                        <motion.div
-                          className="h-2 w-2 rounded-full bg-primary"
-                          animate={{ scale: [1, 1.2, 1] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                        />
-                      )}
-                    </div>
-                    
-                    <h3 className={cn(
-                      "text-xl font-bold transition-colors duration-300 md:text-2xl",
-                      index === currentFeature
-                        ? "text-slate-900 dark:text-white"
-                        : "text-slate-700 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-white"
-                    )}>
-                      {feature.title}
-                    </h3>
-                    
-                    <p className={cn(
-                      "text-sm leading-relaxed transition-colors duration-300 md:text-base",
-                      index === currentFeature
-                        ? "text-slate-600 dark:text-slate-300"
-                        : "text-slate-500 group-hover:text-slate-600 dark:text-slate-400 dark:group-hover:text-slate-300"
-                    )}>
-                      {feature.content}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
- 
-          {/* Affichage des images */}
-          <div className="order-1 lg:order-2">
-            <div className="relative h-[300px] overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/10 to-primary/15 shadow-2xl shadow-primary/20 backdrop-blur-sm dark:border-primary/20 dark:from-primary/10 dark:to-primary/15 dark:shadow-primary/20 md:h-[400px] lg:h-[500px]">
-              {/* Effets de fond */}
-              <div className="absolute inset-0">
-                <div className="absolute right-4 top-4 h-32 w-32 rounded-full bg-primary/10 blur-[60px]"></div>
-                  <div className="absolute bottom-4 left-4 h-24 w-24 rounded-full bg-primary/15 blur-[40px]"></div>
-              </div>
-              
-              <AnimatePresence mode="wait">
-                {features.map(
-                  (feature, index) =>
-                    index === currentFeature && (
-                      <motion.div
-                        key={index}
-                        className="absolute inset-0 overflow-hidden rounded-3xl"
-                        initial={{ scale: 0.8, opacity: 0, rotateY: -15 }}
-                        animate={{ scale: 1, opacity: 1, rotateY: 0 }}
-                        exit={{ scale: 1.1, opacity: 0, rotateY: 15 }}
-                        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-                      >
-                        <div className="relative h-full w-full">
-                          <img
-                            src={feature.image}
-                            alt={feature.title}
-                            className="h-full w-full object-cover transition-transform duration-700 hover:scale-110"
-                            width={1000}
-                            height={500}
-                          />
-                          
-                          {/* Overlay gradient */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
-                          
-                          {/* Badge de fonctionnalité */}
-                          <motion.div
-                            className="absolute bottom-6 left-6 rounded-xl border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-md"
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.3, duration: 0.5 }}
-                          >
-                            <div className="flex items-center gap-2">
-                              <div className="h-2 w-2 rounded-full bg-primary"></div>
-                              <span className="text-sm font-semibold text-white">
-                                {feature.step}
-                              </span>
-                            </div>
-                          </motion.div>
-                          
-                          {/* Indicateur de progression circulaire */}
-                          <motion.div
-                            className="absolute right-6 top-6 h-12 w-12"
-                            initial={{ scale: 0, rotate: -90 }}
-                            animate={{ scale: 1, rotate: 0 }}
-                            transition={{ delay: 0.2, duration: 0.5 }}
-                          >
-                            <svg className="h-full w-full -rotate-90 transform" viewBox="0 0 36 36">
-                              <path
-                                className="stroke-white/20"
-                                strokeWidth="3"
-                                fill="none"
-                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                              />
-                              <motion.path
-                                className="stroke-primary"
-                                strokeWidth="3"
-                                strokeLinecap="round"
-                                fill="none"
-                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                initial={{ pathLength: 0 }}
-                                animate={{ pathLength: progress / 100 }}
-                                transition={{ duration: 0.1 }}
-                              />
-                            </svg>
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <span className="text-xs font-bold text-white">
-                                {Math.round(progress)}%
-                              </span>
-                            </div>
-                          </motion.div>
-                        </div>
-                      </motion.div>
-                    ),
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  {
+    title: "Analytique agronomique",
+    info: "Suivez les tendances, la fréquence des maladies et l'efficacité des traitements grâce à des tableaux de bord interactifs.\nExemple : Comparez le taux de maladies avant/après application d'un fongicide.",
+    icon: BarChart2,
+    gradient: "from-red-500 to-rose-500",
+  },
+  {
+    title: "Journalisation et export des données",
+    info: "Conservez l'historique complet des analyses et exportez vos résultats au format CSV ou JSON pour vos rapports.\nExemple : Téléchargez le suivi des analyses pour une saison entière.",
+    icon: FileJson,
+    gradient: "from-indigo-500 to-purple-500",
+  },
+  {
+    title: "Interface intuitive",
+    info: "Profitez d'une interface claire et accessible, adaptée aux agriculteurs comme aux conseillers techniques.\nExemple : Lancez une analyse en 2 clics depuis votre smartphone.",
+    icon: LayoutDashboard,
+    gradient: "from-orange-500 to-amber-500",
+  },
+  {
+    title: "Architecture évolutive",
+    info: "La plateforme s'adapte à vos besoins, du petit jardin à l'exploitation agricole connectée.\nExemple : Ajoutez facilement de nouvelles parcelles ou capteurs au fil du temps.",
+    icon: Server,
+    gradient: "from-yellow-500 to-orange-500",
+  },
+  {
+    title: "Sécurité et fiabilité",
+    info: "Vos données sont protégées et la plateforme reste performante même en cas de forte affluence.\nExemple : Accédez à vos analyses en toute sécurité, même en déplacement.",
+    icon: ShieldCheck,
+    gradient: "from-teal-500 to-cyan-400",
+  },
+]
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
 }
- 
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+}
+
+export function Features() {
+  return (
+    <section className="py-20 sm:py-24 lg:py-32">
+      <div className="text-center">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-8 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl"
+        >
+          Fonctionnalités principales de la plateforme IA
+        </motion.h2>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground"
+        >
+          Découvrez comment notre système d'analyse IA végétale vous aide à diagnostiquer, suivre et protéger vos cultures, du diagnostic instantané à l'export des données pour vos rapports.
+        </motion.p>
+        <SectionBadge title="Fonctionnalités" />
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-8 text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl"
+        >
+          Points forts pour l'agriculture connectée
+        </motion.h2>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground"
+        >
+          L'IA végétale vous accompagne dans la gestion quotidienne de vos cultures : exemples concrets, analyses comparatives et conseils personnalisés pour chaque étape.
+        </motion.p>
+      </div>
+
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="mt-16 grid grid-cols-1 gap-6 sm:mt-20 sm:grid-cols-2 lg:mt-24 lg:grid-cols-3"
+      >
+        {features.map((feature) => {
+          const Icon = feature.icon;
+          return (
+            <motion.div
+              key={feature.title}
+              variants={item}
+              className={cn(
+                "group relative overflow-hidden rounded-2xl bg-gradient-to-b from-muted/50 to-muted p-8",
+                "ring-1 ring-foreground/10 backdrop-blur-xl transition-all duration-300 hover:ring-foreground/20",
+                "dark:from-muted/30 dark:to-background/80"
+              )}
+            >
+              <div className="flex items-center gap-4">
+                <div className={cn(
+                  "flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br",
+                  feature.gradient,
+                  "ring-1 ring-foreground/10"
+                )}>
+                  <Icon className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">
+                  {feature.title}
+                </h3>
+              </div>
+              <p className="mt-4 text-muted-foreground">
+                {feature.info}
+              </p>
+              <div className={cn(
+                "absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r",
+                feature.gradient,
+                "opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              )} />
+            </motion.div>
+          );
+        })}
+      </motion.div>
+    </section>
+  )
+} 

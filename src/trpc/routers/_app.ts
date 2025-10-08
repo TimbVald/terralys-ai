@@ -1,13 +1,12 @@
 // import { z } from 'zod';
 import { createTRPCRouter } from '../init';
-
 import { agentsRouter } from '@/modules/agents/server/procedures';
 import { meetingRouter } from '@/modules/meetings/server/procedures';
 import { premiumRouter } from '@/modules/premium/server/procedure';
 import { plantDiseaseDetectionRouter } from '@/modules/plant-disease-detection/server/procedures';
 import { dataExplorerRouter } from '@/modules/data-explorer/server/procedures';
 import { adminRouter } from '@/modules/admin/server/procedures';
-import { profileRouter } from '@/modules/profile/server/router';
+
 
 export const appRouter = createTRPCRouter({
   agents: agentsRouter,
@@ -16,7 +15,6 @@ export const appRouter = createTRPCRouter({
   plantDiseaseDetection: plantDiseaseDetectionRouter,
   dataExplorer: dataExplorerRouter,
   admin: adminRouter,
-  profile: profileRouter,
 });
 // export type definition of API
 export type AppRouter = typeof appRouter;
